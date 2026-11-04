@@ -1,0 +1,8 @@
+// Copyright (c) 2026 Aiden Isik
+// SPDX-License-Identifier: AGPL-3.0-or-later
+
+// localized strings for language: UK English (01)
+#define STR_CutcrossApplication_3 "Cutcross"
+#define STR_CutcrossApplication_4 "Cutcross"
+#define STR_CutcrossApplication_1 ""
+#define STR_CutcrossApplication_2 ""

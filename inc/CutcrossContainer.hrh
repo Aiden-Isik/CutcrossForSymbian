@@ -1,0 +1,7 @@
+// Copyright (c) 2026 Aiden Isik
+// SPDX-License-Identifier: AGPL-3.0-or-later
+
+enum TCutcrossContainerViewCommands
+{
+	ECutcrossContainerViewDebugging_InfoMenuItemCommand = 0x6000
+};

@@ -1,0 +1,33 @@
+; Copyright (c) 2026 Aiden Isik
+; SPDX-License-Identifier: AGPL-3.0-or-later
+
+; Language
+&EN
+
+; It has been impossible to sign with Symbian keys for protected UID3s
+; (0x20000000-0x2FFFFFFF) for over a decade now. However, we require one of
+; these UID3s for full functionality/access to hardware. So, use our own
+; randomly generated UID3 in this range, and just require a jailbroken device
+; (which is very easy to do nowadays).
+;
+; Last three numbers make uo a version number (e.g. 0,0,1 == 0.0.1)
+#{"Cutcross"},(0x27B05413),0,0,1
+
+; Localised Vendor name
+%{"Aiden Isik"}
+
+; Unique Vendor name
+:"Aiden Isik"
+
+; Supports S60v3 (Symbian 9.1)
+[0x101F7961], 0, 0, 0, {"S60v3"}
+
+; Files to install
+; <source>															<destination>
+"$(EPOCROOT)Epoc32\release\$(PLATFORM)\$(TARGET)\Cutcross.exe"		-"!:\sys\bin\Cutcross.exe"
+"$(EPOCROOT)Epoc32\data\z\resource\apps\Cutcross.r01"				-"!:\resource\apps\Cutcross.r01"
+"$(EPOCROOT)Epoc32\data\z\private\10003a3f\apps\Cutcross_reg.r01"	-"!:\private\10003a3f\import\apps\Cutcross_reg.r01"
+"$(EPOCROOT)epoc32\data\z\resource\apps\Cutcross_aif.mif"			-"!:\resource\apps\Cutcross_aif.mif"
+"$(EPOCROOT)epoc32\data\z\resource\apps\Cutcross.mbm"				-"!:\resource\apps\Cutcross.mbm"
+;"Cutcross.txt"														-"!:\private\0x27B05413\Cutcross.txt"
+

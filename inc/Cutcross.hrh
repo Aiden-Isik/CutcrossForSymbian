@@ -1,0 +1,7 @@
+// Copyright (c) 2026 Aiden Isik
+// SPDX-License-Identifier: AGPL-3.0-or-later
+
+enum TCutcrossViewUids
+{
+	ECutcrossContainerViewId = 1
+};
