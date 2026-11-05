@@ -16,9 +16,9 @@ RESOURCE MENU_BAR r_cutcross_container_options_menu
 	titles =
 	{
 		MENU_TITLE
-		{
+			{
 			menu_pane = r_cutcross_container_menu_pane1_menu_pane;
-		}
+			}
 	};
 }
 
@@ -27,11 +27,11 @@ RESOURCE STATUS_PANE_APP_MODEL r_cutcross_container_status_pane
 	panes =
 	{
 		SPANE_PANE
-		{
+			{
 			id = EEikStatusPaneUidTitle;
 			type = EAknCtTitlePane;
 			resource = r_cutcross_container_title_resource;
-		}
+			}
 	};
 }
 
@@ -45,9 +45,9 @@ RESOURCE MENU_PANE r_cutcross_container_menu_pane1_menu_pane
 	items =
 	{
 		MENU_ITEM
-		{
-		command = ECutcrossContainerViewDebugging_InfoMenuItemCommand;
-		txt = STR_CutcrossContainerView_4;
-		}
+			{
+			command = ECutcrossContainerViewDebugging_InfoMenuItemCommand;
+			txt = STR_CutcrossContainerView_4;
+			}
 	};
 }

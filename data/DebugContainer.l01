@@ -1,0 +1,9 @@
+// Copyright (c) 2026 Aiden Isik
+// SPDX-License-Identifier: AGPL-3.0-or-later
+
+// localized strings for language: UK English (01)
+#define STR_DebugContainerView_1 ""
+#define STR_DebugContainerView_2 ""
+#define STR_DebugContainerView_3 "Cutcross - Debug Info"
+#define STR_DebugContainerView_8 "Positioning modules"
+#define STR_DebugContainerView_9 "N/A"

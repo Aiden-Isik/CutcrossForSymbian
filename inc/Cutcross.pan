@@ -7,14 +7,14 @@
 /** Cutcross application panic codes */
 enum TCutcrossPanics
 {
-	ECutcrossUi = 1
-	// add further panics here
+    ECutcrossUi = 1
+// add further panics here
 };
 
 inline void Panic(TCutcrossPanics aReason)
 {
-	_LIT(applicationName,"Cutcross");
-	User::Panic(applicationName, aReason);
+    _LIT(applicationName, "Cutcross");
+    User::Panic(applicationName, aReason);
 }
 
 #endif // CUTCROSS_PAN_H

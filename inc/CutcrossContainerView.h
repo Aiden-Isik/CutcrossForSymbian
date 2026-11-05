@@ -23,62 +23,60 @@ class CCutcrossContainer;
  * Avkon view class for CutcrossContainerView. It is register with the view server
  * by the AppUi. It owns the container control.
  * @class	CCutcrossContainerView CutcrossContainerView.h
- */						
-			
-class CCutcrossContainerView : public CAknView
+ */
+
+class CCutcrossContainerView: public CAknView
 {
-	// [[[ begin [Public Section]
-public:
-	// constructors and destructor
-	CCutcrossContainerView();
-	static CCutcrossContainerView* NewL();
-	static CCutcrossContainerView* NewLC();        
-	void ConstructL();
-	virtual ~CCutcrossContainerView();
-						
-	// from base class CAknView
-	TUid Id() const;
-	void HandleCommandL( TInt aCommand );
-	
-	// [[[ begin generated region: do not modify [Generated Methods]
-	CCutcrossContainer* CreateContainerL();
-	// ]]] end generated region [Generated Methods]
-	
-	// ]]] end [Public Section]
+        // [[[ begin [Public Section]
+    public:
+        // constructors and destructor
+        CCutcrossContainerView();
+        static CCutcrossContainerView* NewL();
+        static CCutcrossContainerView* NewLC();
+        void ConstructL();
+        virtual ~CCutcrossContainerView();
 
-	// [[[ begin [Protected Section]
-protected:
-	// from base class CAknView
-	void DoActivateL(
-		const TVwsViewId& aPrevViewId,
-		TUid aCustomMessageId,
-		const TDesC8& aCustomMessage );
-	void DoDeactivate();
-	void HandleStatusPaneSizeChange();
-	
-	// [[[ begin generated region: do not modify [Overridden Methods]
-	// ]]] end generated region [Overridden Methods]
-	
-	
-	// [[[ begin [User Handlers]
-	// ]]] end [User Handlers]
-	
-	// ]]] end [Protected Section]
+        // from base class CAknView
+        TUid Id() const;
+        void HandleCommandL(TInt aCommand);
 
-	// [[[ begin [Private Section]
-private:
-	void SetupStatusPaneL();
-	void CleanupStatusPane();
-	
-	// [[[ begin generated region: do not modify [Generated Instance Variables]
-	CCutcrossContainer* iCutcrossContainer;
-	// ]]] end generated region [Generated Instance Variables]
-	
-	// [[[ begin generated region: do not modify [Generated Methods]
-	// ]]] end generated region [Generated Methods]
-	
-	// ]]] end [Private Section]
-	
-	};
+        // [[[ begin generated region: do not modify [Generated Methods]
+        CCutcrossContainer* CreateContainerL();
+        // ]]] end generated region [Generated Methods]
+
+        // ]]] end [Public Section]
+
+        // [[[ begin [Protected Section]
+    protected:
+        // from base class CAknView
+        void DoActivateL(const TVwsViewId& aPrevViewId, TUid aCustomMessageId, const TDesC8& aCustomMessage);
+        void DoDeactivate();
+        void HandleStatusPaneSizeChange();
+
+        // [[[ begin generated region: do not modify [Overridden Methods]
+        // ]]] end generated region [Overridden Methods]
+
+
+        // [[[ begin [User Handlers]
+        TBool HandleDebugging_InfoMenuItemSelectedL(TInt aCommand);
+        // ]]] end [User Handlers]
+
+        // ]]] end [Protected Section]
+
+        // [[[ begin [Private Section]
+    private:
+        void SetupStatusPaneL();
+        void CleanupStatusPane();
+
+        // [[[ begin generated region: do not modify [Generated Instance Variables]
+        CCutcrossContainer* iCutcrossContainer;
+        // ]]] end generated region [Generated Instance Variables]
+
+        // [[[ begin generated region: do not modify [Generated Methods]
+        // ]]] end generated region [Generated Methods]
+
+        // ]]] end [Private Section]
+
+};
 
 #endif // CUTCROSSCONTAINERVIEW_H

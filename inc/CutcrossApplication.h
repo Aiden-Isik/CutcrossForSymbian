@@ -19,11 +19,11 @@ const TUid KUidCutcrossApplication = { 0x27B05413 };
  *          framework. It is subclassed to create the application's document 
  *          object.
  */
-class CCutcrossApplication : public CAknApplication
+class CCutcrossApplication: public CAknApplication
 {
-	private:
-		TUid AppDllUid() const;
-		CApaDocument* CreateDocumentL();
+    private:
+        TUid AppDllUid() const;
+        CApaDocument* CreateDocumentL();
 };
-			
+
 #endif // CUTCROSSAPPLICATION_H		

@@ -30,9 +30,9 @@
  */
 CCutcrossContainerView::CCutcrossContainerView()
 {
-	// [[[ begin generated region: do not modify [Generated Contents]
+    // [[[ begin generated region: do not modify [Generated Contents]
 	iCutcrossContainer = NULL;
-	// ]]] end generated region [Generated Contents]
+    // ]]] end generated region [Generated Contents]
 }
 
 /** 
@@ -41,10 +41,10 @@ CCutcrossContainerView::CCutcrossContainerView()
  */
 CCutcrossContainerView::~CCutcrossContainerView()
 {
-	// [[[ begin generated region: do not modify [Generated Contents]
+    // [[[ begin generated region: do not modify [Generated Contents]
 	delete iCutcrossContainer;
 	iCutcrossContainer = NULL;
-	// ]]] end generated region [Generated Contents]
+    // ]]] end generated region [Generated Contents]
 }
 
 /**
@@ -55,9 +55,9 @@ CCutcrossContainerView::~CCutcrossContainerView()
  */
 CCutcrossContainerView* CCutcrossContainerView::NewL()
 {
-	CCutcrossContainerView* self = CCutcrossContainerView::NewLC();
-	CleanupStack::Pop(self);
-	return self;
+    CCutcrossContainerView* self = CCutcrossContainerView::NewLC();
+    CleanupStack::Pop(self);
+    return self;
 }
 
 /**
@@ -68,25 +68,24 @@ CCutcrossContainerView* CCutcrossContainerView::NewL()
  */
 CCutcrossContainerView* CCutcrossContainerView::NewLC()
 {
-	CCutcrossContainerView* self = new (ELeave)CCutcrossContainerView();
-	CleanupStack::PushL(self);
-	self->ConstructL();
-	return self;
+    CCutcrossContainerView* self = new (ELeave) CCutcrossContainerView();
+    CleanupStack::PushL(self);
+    self->ConstructL();
+    return self;
 }
-
 
 /**
  * Second-phase constructor for view.  
  * Initialize contents from resource.
- */ 
+ */
 void CCutcrossContainerView::ConstructL()
 {
-	// [[[ begin generated region: do not modify [Generated Code]
+    // [[[ begin generated region: do not modify [Generated Code]
 	BaseConstructL( R_CUTCROSS_CONTAINER_CUTCROSS_CONTAINER_VIEW );
 				
-	// ]]] end generated region [Generated Code]
-	
-	// add your own initialization code here
+    // ]]] end generated region [Generated Code]
+
+    // add your own initialization code here
 }
 
 /**
@@ -94,7 +93,7 @@ void CCutcrossContainerView::ConstructL()
  */
 TUid CCutcrossContainerView::Id() const
 {
-	return TUid::Uid( ECutcrossContainerViewId );
+    return TUid::Uid(ECutcrossContainerViewId);
 }
 
 /**
@@ -103,10 +102,13 @@ TUid CCutcrossContainerView::Id() const
  */
 void CCutcrossContainerView::HandleCommandL(TInt aCommand)
 {
-	// [[[ begin generated region: do not modify [Generated Code]
+    // [[[ begin generated region: do not modify [Generated Code]
 	TBool commandHandled = EFalse;
 	switch ( aCommand )
 		{	// code to dispatch to the AknView's menu and CBA commands is generated here
+		case ECutcrossContainerViewDebugging_InfoMenuItemCommand:
+			commandHandled = HandleDebugging_InfoMenuItemSelectedL( aCommand );
+			break;
 		default:
 			break;
 		}
@@ -121,18 +123,16 @@ void CCutcrossContainerView::HandleCommandL(TInt aCommand)
 			}
 	
 		}
-	// ]]] end generated region [Generated Code]
+    // ]]] end generated region [Generated Code]
 }
 
 /**
  *	Handles user actions during activation of the view, 
  *	such as initializing the content.
  */
-void CCutcrossContainerView::DoActivateL(const TVwsViewId& /*aPrevViewId*/,
-										 TUid /*aCustomMessageId*/,
-										 const TDesC8& /*aCustomMessage*/ )
-	{
-	// [[[ begin generated region: do not modify [Generated Contents]
+void CCutcrossContainerView::DoActivateL(const TVwsViewId& /*aPrevViewId*/, TUid /*aCustomMessageId*/, const TDesC8& /*aCustomMessage*/)
+{
+    // [[[ begin generated region: do not modify [Generated Contents]
 	SetupStatusPaneL();
 	
 				
@@ -142,14 +142,14 @@ void CCutcrossContainerView::DoActivateL(const TVwsViewId& /*aPrevViewId*/,
 		iCutcrossContainer->SetMopParent( this );
 		AppUi()->AddToStackL( *this, iCutcrossContainer );
 		} 
-	// ]]] end generated region [Generated Contents]
-	}
+    // ]]] end generated region [Generated Contents]
+}
 
 /**
  */
 void CCutcrossContainerView::DoDeactivate()
 {
-	// [[[ begin generated region: do not modify [Generated Contents]
+    // [[[ begin generated region: do not modify [Generated Contents]
 	CleanupStatusPane();
 	
 	if ( iCutcrossContainer != NULL )
@@ -158,7 +158,7 @@ void CCutcrossContainerView::DoDeactivate()
 		delete iCutcrossContainer;
 		iCutcrossContainer = NULL;
 		}
-	// ]]] end generated region [Generated Contents]
+    // ]]] end generated region [Generated Contents]
 }
 
 /** 
@@ -166,19 +166,19 @@ void CCutcrossContainerView::DoDeactivate()
  */
 void CCutcrossContainerView::HandleStatusPaneSizeChange()
 {
-	CAknView::HandleStatusPaneSizeChange();
+    CAknView::HandleStatusPaneSizeChange();
 
-	// this may fail, but we're not able to propagate exceptions here
-	TVwsViewId view;
-	AppUi()->GetActiveViewId( view );
-	if (view.iViewUid == Id())
-	{
-		TInt result;
-		TRAP(result, SetupStatusPaneL());
-	}
+    // this may fail, but we're not able to propagate exceptions here
+    TVwsViewId view;
+    AppUi()->GetActiveViewId(view);
+    if(view.iViewUid == Id())
+    {
+        TInt result;
+        TRAP(result, SetupStatusPaneL());
+    }
 
-	// [[[ begin generated region: do not modify [Generated Code]
-	// ]]] end generated region [Generated Code]
+    // [[[ begin generated region: do not modify [Generated Code]
+    // ]]] end generated region [Generated Code]
 }
 
 // [[[ begin generated function: do not modify
@@ -228,6 +228,17 @@ void CCutcrossContainerView::CleanupStatusPane()
  */
 CCutcrossContainer* CCutcrossContainerView::CreateContainerL()
 {
-	return CCutcrossContainer::NewL(ClientRect(), NULL, this);
+    return CCutcrossContainer::NewL(ClientRect(), NULL, this);
+}
+
+/** 
+ * Handle the selected event.
+ * @param aCommand the command id invoked
+ * @return ETrue if the command was handled, EFalse if not
+ */
+TBool CCutcrossContainerView::HandleDebugging_InfoMenuItemSelectedL(TInt aCommand)
+{
+    AppUi()->ActivateLocalViewL(TUid::Uid(EDebugContainerViewId));
+    return ETrue;
 }
 

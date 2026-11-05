@@ -173,9 +173,9 @@ TKeyResponse CCutcrossContainer::OfferKeyEventL(const TKeyEvent& aKeyEvent, TEve
  *	Initialize each control upon creation.
  */				
 void CCutcrossContainer::InitializeControlsL()
-{
+	{
 	
-}
+	}
 // ]]] end generated function
 
 /** 

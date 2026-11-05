@@ -3,5 +3,6 @@
 
 enum TCutcrossViewUids
 {
-	ECutcrossContainerViewId = 1
+    ECutcrossContainerViewId = 1,
+    EDebugContainerViewId
 };

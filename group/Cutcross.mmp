@@ -41,4 +41,4 @@ SOURCEPATH		..\src
 DEBUGGABLE_UDEBONLY
 #endif
 
-SOURCE CutcrossContainerView.cpp CutcrossContainer.cpp CutcrossDocument.cpp CutcrossAppUi.cpp CutcrossApplication.cpp
+SOURCE CutcrossContainerView.cpp CutcrossContainer.cpp CutcrossDocument.cpp CutcrossAppUi.cpp CutcrossApplication.cpp DebugContainerView.cpp DebugContainer.cpp ConditionController.cpp

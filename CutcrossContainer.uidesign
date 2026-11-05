@@ -113,6 +113,7 @@
             <property id="width">312</property>
             <property id="height">45</property>
           </compoundProperty>
+          <eventBinding id="selected" handlerDisplay="HandleDebugging_InfoMenuItemSelectedL" handlerSymbol="cpp@src//CutcrossContainerView.cpp/function(CCutcrossContainerView::HandleDebugging_InfoMenuItemSelectedL(TInt))"/>
         </component>
       </component>
     </component>
@@ -121,7 +122,7 @@
     <stringTable language="LANG_English">
       <string id="STR_CutcrossContainerView_1"/>
       <string id="STR_CutcrossContainerView_2"/>
-      <string id="STR_CutcrossContainerView_3">CutcrossContainer</string>
+      <string id="STR_CutcrossContainerView_3">Cutcross</string>
       <string id="STR_CutcrossContainerView_4">Debugging info</string>
     </stringTable>
   </stringBundle>
@@ -148,12 +149,15 @@
     <file>src/cutcrosscontainer.cpp</file>
     <file>inc/cutcrosscontainer.h</file>
     <file>data/cutcross.rss</file>
+    <file>data/debugcontainer.rssi</file>
     <file>inc/cutcross.hrh</file>
     <file>data/cutcrosscontainer.rssi</file>
+    <file>inc/cutcrosscontainer.hrh</file>
     <file>data/cutcross.loc</file>
     <file>data/cutcross.l01</file>
     <file>data/cutcrosscontainer.loc</file>
     <file>data/cutcrosscontainer.l01</file>
-    <file>inc/cutcrosscontainer.hrh</file>
+    <file>data/debugcontainer.loc</file>
+    <file>data/debugcontainer.l01</file>
   </generatedFiles>
 </designerData>

@@ -3,5 +3,5 @@
 
 enum TCutcrossContainerViewCommands
 {
-	ECutcrossContainerViewDebugging_InfoMenuItemCommand = 0x6000
+    ECutcrossContainerViewDebugging_InfoMenuItemCommand = 0x6000
 };

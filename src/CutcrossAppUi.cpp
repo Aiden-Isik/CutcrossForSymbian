@@ -11,7 +11,9 @@
 // [[[ begin generated region: do not modify [Generated User Includes]
 #include "CutcrossAppUi.h"
 #include "Cutcross.hrh"
+#include "CutcrossContainer.hrh"
 #include "CutcrossContainerView.h"
+#include "DebugContainerView.h"
 // ]]] end generated region [Generated User Includes]
 
 // [[[ begin generated region: do not modify [Generated Constants]
@@ -38,11 +40,13 @@ CCutcrossAppUi::~CCutcrossAppUi()
 
 // [[[ begin generated function: do not modify
 void CCutcrossAppUi::InitializeContainersL()
-{
+	{
 	iCutcrossContainerView = CCutcrossContainerView::NewL();
-	AddViewL(iCutcrossContainerView);
-	SetDefaultViewL(*iCutcrossContainerView);
-}
+	AddViewL( iCutcrossContainerView );
+	SetDefaultViewL( *iCutcrossContainerView );
+	iDebugContainerView = CDebugContainerView::NewL();
+	AddViewL( iDebugContainerView );
+	}
 // ]]] end generated function
 
 /**
@@ -53,19 +57,20 @@ void CCutcrossAppUi::HandleCommandL(TInt aCommand)
 {
 	// [[[ begin generated region: do not modify [Generated Code]
 	TBool commandHandled = EFalse;
-	switch(aCommand)
-	{ // code to dispatch to the AppUi's menu and CBA commands is generated here
+	switch ( aCommand )
+		{ // code to dispatch to the AppUi's menu and CBA commands is generated here
 		default:
 			break;
-	}
-
-	if(!commandHandled)
-	{
-		if(aCommand == EAknSoftkeyExit || aCommand == EEikCmdExit)
-		{
-			Exit();
 		}
-	}
+	
+		
+	if ( !commandHandled ) 
+		{
+		if ( aCommand == EAknSoftkeyExit || aCommand == EEikCmdExit )
+			{
+			Exit();
+			}
+		}
 	// ]]] end generated region [Generated Code]
 }
 

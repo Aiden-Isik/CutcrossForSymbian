@@ -10,6 +10,7 @@
 
 // [[[ begin generated region: do not modify [Generated Forward Declarations]
 class CCutcrossContainerView;
+class CDebugContainerView;
 // ]]] end generated region [Generated Forward Declarations]
 
 /**
@@ -17,40 +18,39 @@ class CCutcrossContainerView;
  * @brief The AppUi class handles application-wide aspects of the user interface, including
  *        view management and the default menu, control pane, and status pane.
  */
-class CCutcrossAppUi : public CAknViewAppUi
+class CCutcrossAppUi: public CAknViewAppUi
 {
-	public: 
-		// constructor and destructor
-		CCutcrossAppUi();
-		virtual ~CCutcrossAppUi();
-		void ConstructL();
+    public:
+        // constructor and destructor
+        CCutcrossAppUi();
+        virtual ~CCutcrossAppUi();
+        void ConstructL();
 
-		// from CCoeAppUi
-		TKeyResponse HandleKeyEventL(const TKeyEvent& aKeyEvent,
-									 TEventCode aType);
+        // from CCoeAppUi
+        TKeyResponse HandleKeyEventL(const TKeyEvent& aKeyEvent, TEventCode aType);
 
-		// from CEikAppUi
-		void HandleCommandL(TInt aCommand);
-		void HandleResourceChangeL(TInt aType);
+        // from CEikAppUi
+        void HandleCommandL(TInt aCommand);
+        void HandleResourceChangeL(TInt aType);
 
-		// from CAknAppUi
-		void HandleViewDeactivation(const TVwsViewId& aViewIdToBeDeactivated,
-									const TVwsViewId& aNewlyActivatedViewId);
+        // from CAknAppUi
+        void HandleViewDeactivation(const TVwsViewId& aViewIdToBeDeactivated, const TVwsViewId& aNewlyActivatedViewId);
 
-	private:
-		void InitializeContainersL();
-	// [[[ begin generated region: do not modify [Generated Methods]
+    private:
+        void InitializeContainersL();
+        // [[[ begin generated region: do not modify [Generated Methods]
 public: 
-	// ]]] end generated region [Generated Methods]
-	
-	// [[[ begin generated region: do not modify [Generated Instance Variables]
+        // ]]] end generated region [Generated Methods]
+
+        // [[[ begin generated region: do not modify [Generated Instance Variables]
 private: 
 	CCutcrossContainerView* iCutcrossContainerView;
-	// ]]] end generated region [Generated Instance Variables]
+	CDebugContainerView* iDebugContainerView;
+        // ]]] end generated region [Generated Instance Variables]
 
-	// [[[ begin [User Handlers]
-protected: 
-	// ]]] end [User Handlers]
-	};
+        // [[[ begin [User Handlers]
+    protected:
+        // ]]] end [User Handlers]
+};
 
 #endif // CUTCROSSAPPUI_H			
