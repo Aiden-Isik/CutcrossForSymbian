@@ -10,6 +10,12 @@
 class CActionController: public CBase
 {
     public:
+        // Send global notification
+        void SendGlobalNotificationL(string aBodyText);
+
+        // Run the vibration motor
+        void VibrateL(TUint aDuration, TInt8 aIntensity);
+
         // Destructor
         ~CActionController();
 
