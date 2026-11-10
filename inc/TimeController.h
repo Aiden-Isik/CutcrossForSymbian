@@ -11,7 +11,7 @@ class CTimeController: public CBase
 {
     public:
         // Stand-in constructor
-        static CActionController *GetInstanceL;
+        static CActionController *GetInstanceL();
 
         // Update the stored time
         void UpdateTime();

@@ -11,7 +11,7 @@ class CActionController: public CBase
 {
     public:
         // Stand-in constructor
-        static CActionController *GetInstanceL;
+        static CActionController *GetInstanceL();
 
         // Send global notification
         void SendGlobalNotificationL(string aBodyText);

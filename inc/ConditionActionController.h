@@ -11,7 +11,10 @@ class CConditionActionController: public CBase
 {
     public:
         // Stand-in constructor
-        static CConditionActionController *GetInstanceL;
+        static CConditionActionController *GetInstanceL();
+
+        // Main condition-action loop, the heart of the application
+        void RunLoop();
 
     private:
         // The singleton object created from this class
