@@ -10,26 +10,22 @@
 class CTimeController: public CBase
 {
     public:
+        // Stand-in constructor
+        static CActionController *GetInstanceL;
+
         // Update the stored time
         void UpdateTime();
 
         // Retrieve the stored time
         TDateTime GetTime();
 
-        // Destructor
-        ~CTimeController();
-
-        // Symbian second-phase constructors
-        static CTimeController* NewL();
-        static CTimeController* NewLC();
-
     private:
-        // First-phase constructor
+        // The singleton object created from this class
+        // Initialised to NULL as per C++ standard for static variables
+        static CActionController *iInstance;
+
+        // Constructor
         CTimeController();
-
-        // EPOC second-phase constructor
-        void ConstructL();
-
 };
 
 #endif // TIMECONTROLLER_H

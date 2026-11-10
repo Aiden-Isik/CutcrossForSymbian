@@ -31,6 +31,7 @@ void CActionController::SendGlobalNotificationL(TDesC *aBodyText)
 void CActionController::VibrateL(TUint aDuration, TInt8 aIntensity)
 {
     // Verify that the intensity falls between the valid range of -100 to 100
+    // TODO: Ensure this is absolutely correct
     if(aIntensity < -100 || aIntensity > 100)
     {
         // Leave with invalid argument
@@ -45,33 +46,21 @@ void CActionController::VibrateL(TUint aDuration, TInt8 aIntensity)
     CleanupStack::PopAndDestroy(); // Pop the vibration motor off the cleanup stack
 }
 
-// Constructor
-CActionController::CActionController()
+// Stand-in constructor
+// This should be called in place of the standard constructor, to enforce
+// only one object for this class (singleton)
+static *CActionController::GetInstanceL()
 {
+    if(iInstance == NULL)
+    {
+        // NOTE: there is no need to deal with the cleanup stack here,
+        // as this is a static method.
+        iInstance = new(ELeave) CActionController();
+    }
+    
+    return iInstance;
 }
 
-// Destructor
-CActionController::~CActionController()
-{
-}
-
-// Symbian second-phase constructors
-CActionController* CActionController::NewLC()
-{
-    CActionController* self = new (ELeave) CActionController();
-    CleanupStack::PushL(self);
-    self->ConstructL();
-    return self;
-}
-
-CActionController* CActionController::NewL()
-{
-    CActionController* self = CActionController::NewLC();
-    CleanupStack::Pop(); // self;
-    return self;
-}
-
-// EPOC second-phase constructor
-void CActionController::ConstructL()
-{
-}
+// Enforce only one object for this class (singleton)
+CActionController::CActionController(const CActionController&) = delete;
+CActionController &CActionController::operator=(const CActionController&) = delete;

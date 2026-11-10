@@ -35,28 +35,21 @@ CTimeController::CTimeController()
     UpdateTime();
 }
 
-// Destructor
-CTimeController::~CTimeController()
+// Stand-in constructor
+// This should be called in place of the standard constructor, to enforce
+// only one object for this class (singleton)
+static *CTimeController::GetInstanceL()
 {
+    if(iInstance == NULL)
+    {
+        // NOTE: there is no need to deal with the cleanup stack here,
+        // as this is a static method.
+        iInstance = new(ELeave) CTimeController();
+    }
+    
+    return iInstance;
 }
 
-// Symbian second-phase constructors
-CTimeController *CTimeController::NewLC()
-{
-    CTimeController *self = new (ELeave) CTimeController();
-    CleanupStack::PushL(self);
-    self->ConstructL();
-    return self;
-}
-
-CTimeController *CTimeController::NewL()
-{
-    CTimeController *self = CTimeController::NewLC();
-    CleanupStack::Pop(); // self;
-    return self;
-}
-
-// EPOC second-phase constructor
-void CTimeController::ConstructL()
-{
-}
+// Enforce only one object for this class (singleton)
+CTimeController::CTimeController(const CTimeController&) = delete;
+CTimeController &CTimeController::operator=(const CTimeController&) = delete;
