@@ -3,6 +3,8 @@
 
 #include "TimeController.h"
 
+CTimeController *CTimeController::iInstance = NULL;
+
 // Store the current date/time
 // We run each controller *once* per condition-action cycle,
 // so that all functions to the OS to get the current time, for example,
@@ -38,7 +40,7 @@ CTimeController::CTimeController()
 // Stand-in constructor
 // This should be called in place of the standard constructor, to enforce
 // only one object for this class (singleton)
-static *CTimeController::GetInstanceL()
+CTimeController *CTimeController::GetInstanceL()
 {
     if(iInstance == NULL)
     {
@@ -49,7 +51,3 @@ static *CTimeController::GetInstanceL()
     
     return iInstance;
 }
-
-// Enforce only one object for this class (singleton)
-CTimeController::CTimeController(const CTimeController&) = delete;
-CTimeController &CTimeController::operator=(const CTimeController&) = delete;

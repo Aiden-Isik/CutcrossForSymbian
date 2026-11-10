@@ -14,7 +14,7 @@ class CActionController: public CBase
         static CActionController *GetInstanceL();
 
         // Send global notification
-        void SendGlobalNotificationL(string aBodyText);
+        void SendGlobalNotificationL(TDesC &aBodyText);
 
         // Run the vibration motor
         void VibrateL(TUint aDuration, TInt8 aIntensity);

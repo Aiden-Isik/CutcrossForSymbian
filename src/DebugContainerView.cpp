@@ -25,8 +25,6 @@
 #include "DebugContainer.h"
 // ]]] end generated region [Generated User Includes]
 
-#include "LocationHelper.h"
-
 // [[[ begin generated region: do not modify [Generated Constants]
 // ]]] end generated region [Generated Constants]
 
@@ -92,8 +90,6 @@ void CDebugContainerView::ConstructL()
     BaseConstructL( R_DEBUG_CONTAINER_DEBUG_CONTAINER_VIEW);
 
     // ]]] end generated region [Generated Code]
-
-AppUi()->
 }
 
 /**

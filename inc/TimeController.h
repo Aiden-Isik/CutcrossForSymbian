@@ -11,7 +11,7 @@ class CTimeController: public CBase
 {
     public:
         // Stand-in constructor
-        static CActionController *GetInstanceL();
+        static CTimeController *GetInstanceL();
 
         // Update the stored time
         void UpdateTime();
@@ -22,7 +22,7 @@ class CTimeController: public CBase
     private:
         // The singleton object created from this class
         // Initialised to NULL as per C++ standard for static variables
-        static CActionController *iInstance;
+        static CTimeController *iInstance;
 
         // Constructor
         CTimeController();

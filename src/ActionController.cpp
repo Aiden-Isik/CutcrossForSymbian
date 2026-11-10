@@ -2,16 +2,18 @@
 // Copyright (c) 2026 Aiden Isik
 
 #include <aknnotewrappers.h>
+#include <aknglobalnote.h>
 #include <hwrmvibra.h>
 
 #include "ActionController.h"
 
+CActionController *CActionController::iInstance = NULL;
+
 // Send global notification
-void CActionController::SendGlobalNotificationL(TDesC *aBodyText)
+void CActionController::SendGlobalNotificationL(TDesC &aBodyText)
 {
     // Send the notification
-    CAknGlobalNote *notification;
-    notification = new(ELeave) CAknGlobalNote::NewLC(); // Added to cleanup stack
+    CAknGlobalNote *notification = CAknGlobalNote::NewLC(); // Added to cleanup stack
     TInt notificationId = notification->ShowNoteL(EAknGlobalInformationNote, aBodyText);
     
     // Sleep for 5 seconds to allow the user to see the notification.
@@ -19,7 +21,7 @@ void CActionController::SendGlobalNotificationL(TDesC *aBodyText)
     // Multithreading may be implemented at a later date to prevent this,
     // although for reasonable use-cases it is not a big deal (and multithreading
     // may carry a vital resource usage penalty on such weak hardware).
-    sleep(5);
+    //sleep(5);
     
     // Delete the notification
     notification->CancelNoteL(notificationId);
@@ -39,17 +41,23 @@ void CActionController::VibrateL(TUint aDuration, TInt8 aIntensity)
     }
 
     // Set the vibration motor to vibrate for a set length of time and intensity
-    vibrationMotor = new(ELeave) CHWRMVibra::NewLC(); // Added to cleanup stack
+    CHWRMVibra *vibrationMotor = CHWRMVibra::NewLC(); // Added to cleanup stack
     vibrationMotor->StartVibraL(aDuration, aIntensity);
 
-    // Cleanup  
+    // Cleanup
     CleanupStack::PopAndDestroy(); // Pop the vibration motor off the cleanup stack
+}
+
+// Constructor
+// Unused
+CActionController::CActionController()
+{
 }
 
 // Stand-in constructor
 // This should be called in place of the standard constructor, to enforce
 // only one object for this class (singleton)
-static *CActionController::GetInstanceL()
+CActionController *CActionController::GetInstanceL()
 {
     if(iInstance == NULL)
     {
@@ -60,7 +68,3 @@ static *CActionController::GetInstanceL()
     
     return iInstance;
 }
-
-// Enforce only one object for this class (singleton)
-CActionController::CActionController(const CActionController&) = delete;
-CActionController &CActionController::operator=(const CActionController&) = delete;
