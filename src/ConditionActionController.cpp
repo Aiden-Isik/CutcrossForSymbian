@@ -10,7 +10,6 @@
 CConditionActionController *CConditionActionController::iInstance = NULL;
 
 // Run the main condition-action loop
-// TODO: proper cleanup stack/leave handling
 void CConditionActionController::RunLoopL()
 {
     // Condition and action controllers
@@ -59,7 +58,7 @@ void CConditionActionController::RunLoopL()
                 }
                 else
                 {
-                    // The time condition has not been met. Not firing until next time.
+                    // The time condition has not been met. Fire next time it is.
                     iConditions.conditions[i].hasFired = false;
                 }
             }
@@ -68,7 +67,13 @@ void CConditionActionController::RunLoopL()
             // was satisfied. Fire the appropriate actions.
             if(totalConditions == metConditions)
             {
-                // TODO: fire actions
+                // Fire the vibration action, if it exists
+                if(iConditions.conditions[i].vibrationAction)
+                {
+                    TUint16 duration = iConditions.conditions[i].vibrationAction->duration;
+                    TInt8 intensity = iConditions.conditions[i].vibrationAction->intensity;
+                    actionController->VibrateL(duration, intensity);
+                }
             }
         }
     }

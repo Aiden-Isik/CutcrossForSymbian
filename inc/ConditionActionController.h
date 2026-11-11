@@ -7,6 +7,12 @@
 #include <e32std.h>
 #include <e32base.h>
 
+struct VibrationAction
+{
+        TUint16 duration;
+        TInt8 intensity;
+};
+
 // Struct for a simple time condition
 // Contains the time at which the condition is met
 struct TimeCondition
@@ -24,10 +30,11 @@ struct TimeCondition
 // It also contains a boolean specifying whether or not the current met conditions
 // have already caused the actions to fire, in order to prevent duplicate firing.
 //
-// TODO: It also contains information on which actions to fire.
+// It also contains information on which actions to fire.
 struct Condition
 {
         struct TimeCondition *timeCondition;
+        struct VibrationAction *vibrationAction;
         TBool hasFired;
 };
 
