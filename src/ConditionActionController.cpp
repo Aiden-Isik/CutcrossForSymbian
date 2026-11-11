@@ -17,7 +17,8 @@ void CConditionActionController::RunLoopL()
     CActionController *actionController = CActionController::GetInstanceL();
 
     // Loop forever until something deliberately breaks out of the loop
-    while(true)
+    // TODO: Currently only run once, until condition-action functionality is separated from UI and daemonised.
+    //while(true)
     {
         // Update all conditions
         timeController->UpdateTime();
