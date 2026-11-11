@@ -5,8 +5,6 @@
 #include "TimeController.h"
 #include "ActionController.h"
 
-#define KTIME_FIELD_IGNORE -1
-
 CConditionActionController *CConditionActionController::iInstance = NULL;
 
 // Run the main condition-action loop
@@ -39,15 +37,14 @@ void CConditionActionController::RunLoopL()
 
                 TDateTime *targetDateTime = &(iConditions.conditions[i].timeCondition->time);
                 TDateTime currentDateTime = timeController->GetTime();
+                TUint8 usedTimes = iConditions.conditions[i].timeCondition->used;
 
                 // Check that the time specified by the user is the current time.
-                // KTIME_FIELD_IGNORE is used to ignore e.g. the year, if the user wishes to fire
-                // actions every year for a certain month/day/hour/minute.
-                if((currentDateTime.Year() == targetDateTime->Year() || targetDateTime->Year() == KTIME_FIELD_IGNORE)
-                   && (currentDateTime.Month() == targetDateTime->Month() || targetDateTime->Month() == KTIME_FIELD_IGNORE)
-                   && (currentDateTime.Day() == targetDateTime->Month() || targetDateTime->Month() == KTIME_FIELD_IGNORE)
-                   && (currentDateTime.Hour() == targetDateTime->Hour() || targetDateTime->Hour() == KTIME_FIELD_IGNORE)
-                   && (currentDateTime.Minute() == targetDateTime->Minute() || targetDateTime->Minute() == KTIME_FIELD_IGNORE))
+                if((currentDateTime.Year() == targetDateTime->Year() || !BITFIELD_BIT(usedTimes, TIME_USED_YEAR_BIT))
+                   && (currentDateTime.Month() == targetDateTime->Month() || !BITFIELD_BIT(usedTimes, TIME_USED_MONTH_BIT))
+                   && (currentDateTime.Day() == targetDateTime->Day() || !BITFIELD_BIT(usedTimes, TIME_USED_DAY_BIT))
+                   && (currentDateTime.Hour() == targetDateTime->Hour() || !BITFIELD_BIT(usedTimes, TIME_USED_HOUR_BIT))
+                   && (currentDateTime.Minute() == targetDateTime->Minute() || !BITFIELD_BIT(usedTimes, TIME_USED_MINUTE_BIT)))
                 {
                     // If this time condition has not yet fired actions, count as a valid condition.
                     // Also set hasFired to prevent duplicate firings.
