@@ -21,6 +21,8 @@
 #include "CutcrossContainer.h"
 // ]]] end generated region [Generated User Includes]
 
+#include "ActionController.h"
+
 // [[[ begin generated region: do not modify [Generated Constants]
 // ]]] end generated region [Generated Constants]
 
@@ -108,6 +110,9 @@ void CCutcrossContainerView::HandleCommandL(TInt aCommand)
 		{	// code to dispatch to the AknView's menu and CBA commands is generated here
 		case ECutcrossContainerViewDebugging_InfoMenuItemCommand:
 			commandHandled = HandleDebugging_InfoMenuItemSelectedL( aCommand );
+			break;
+		case ECutcrossContainerViewRun_vibration_motorMenuItemCommand:
+			commandHandled = HandleRun_vibration_motorMenuItemSelectedL( aCommand );
 			break;
 		default:
 			break;
@@ -242,3 +247,15 @@ TBool CCutcrossContainerView::HandleDebugging_InfoMenuItemSelectedL(TInt aComman
     return ETrue;
 }
 
+/** 
+ * Handle the selected event.
+ * @param aCommand the command id invoked
+ * @return ETrue if the command was handled, EFalse if not
+ */
+TBool CCutcrossContainerView::HandleRun_vibration_motorMenuItemSelectedL(TInt aCommand)
+{
+	CActionController *actionController = CActionController::GetInstanceL();
+	actionController->VibrateL(5000, 100);
+	return ETrue;
+}
+				

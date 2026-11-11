@@ -17,7 +17,7 @@ class CActionController: public CBase
         void SendGlobalNotificationL(TDesC &aBodyText);
 
         // Run the vibration motor
-        void VibrateL(TUint aDuration, TInt8 aIntensity);
+        void VibrateL(TUint16 aDuration, TInt8 aIntensity);
 
     private:
         // The singleton object created from this class

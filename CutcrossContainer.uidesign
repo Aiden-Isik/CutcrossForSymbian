@@ -88,18 +88,18 @@
     <component id="com.nokia.sdt.series60.MenuBar">
       <compoundProperty id="location">
         <property id="x">12</property>
-        <property id="y">321</property>
+        <property id="y">227</property>
       </compoundProperty>
       <property id="name">optionsMenu</property>
       <compoundProperty id="size">
-        <property id="height">54</property>
+        <property id="height">148</property>
         <property id="width">327</property>
       </compoundProperty>
       <component id="com.nokia.sdt.series60.MenuPane">
         <compoundProperty id="location"/>
         <property id="name">menuPane1</property>
         <compoundProperty id="size">
-          <property id="height">54</property>
+          <property id="height">148</property>
           <property id="width">327</property>
         </compoundProperty>
         <component id="com.nokia.sdt.series60.MenuItem">
@@ -115,6 +115,19 @@
           </compoundProperty>
           <eventBinding id="selected" handlerDisplay="HandleDebugging_InfoMenuItemSelectedL" handlerSymbol="cpp@src//CutcrossContainerView.cpp/function(CCutcrossContainerView::HandleDebugging_InfoMenuItemSelectedL(TInt))"/>
         </component>
+        <component id="com.nokia.sdt.series60.MenuItem">
+          <compoundProperty id="location">
+            <property id="x">5</property>
+            <property id="y">49</property>
+          </compoundProperty>
+          <property id="name">run_vibration_motorMenuItem</property>
+          <property id="text" type="i18n">STR_CutcrossContainerView_5</property>
+          <compoundProperty id="size">
+            <property id="width">312</property>
+            <property id="height">45</property>
+          </compoundProperty>
+          <eventBinding id="selected" handlerDisplay="HandleRun_vibration_motorMenuItemSelectedL" handlerSymbol="cpp@src//CutcrossContainerView.cpp/function(CCutcrossContainerView::HandleRun_vibration_motorMenuItemSelectedL(TInt))"/>
+        </component>
       </component>
     </component>
   </component>
@@ -124,21 +137,23 @@
       <string id="STR_CutcrossContainerView_2"/>
       <string id="STR_CutcrossContainerView_3">Cutcross</string>
       <string id="STR_CutcrossContainerView_4">Debugging info</string>
+      <string id="STR_CutcrossContainerView_5">Run vibration motor</string>
     </stringTable>
   </stringBundle>
   <macroTable/>
   <sourceMappingState>
     <resourceMappings>
-      <resourceMapping instanceName="CutcrossContainerView">r_cutcross_container_cutcross_container_view</resourceMapping>
       <resourceMapping instanceName="optionsMenu">r_cutcross_container_options_menu</resourceMapping>
-      <resourceMapping instanceName="menuPane1">r_cutcross_container_menu_pane1_menu_pane</resourceMapping>
+      <resourceMapping instanceName="CutcrossContainerView">r_cutcross_container_cutcross_container_view</resourceMapping>
       <resourceMapping instanceName="title">r_cutcross_container_title_resource</resourceMapping>
+      <resourceMapping instanceName="menuPane1">r_cutcross_container_menu_pane1_menu_pane</resourceMapping>
       <resourceMapping instanceName="statusPane">r_cutcross_container_status_pane</resourceMapping>
     </resourceMappings>
     <enumMappings>
+      <enumMapping instanceName="run_vibration_motorMenuItem" propertyId="command" nameAlgorithm="com.nokia.sdt.component.symbian.NAME_ALG_COMMANDS">ECutcrossContainerViewRun_vibration_motorMenuItemCommand</enumMapping>
       <enumMapping instanceName="debugging_InfoMenuItem" propertyId="command" nameAlgorithm="com.nokia.sdt.component.symbian.NAME_ALG_COMMANDS">ECutcrossContainerViewDebugging_InfoMenuItemCommand</enumMapping>
-      <enumMapping instanceName="title" propertyId="" nameAlgorithm="com.nokia.sdt.component.symbian.NAME_ALG_STATUS_PANE_ID">EEikStatusPaneUidTitle</enumMapping>
       <enumMapping instanceName="CutcrossContainerView" propertyId="" nameAlgorithm="com.nokia.sdt.component.symbian.NAME_ALG_VIEW_UID">ECutcrossContainerViewId</enumMapping>
+      <enumMapping instanceName="title" propertyId="" nameAlgorithm="com.nokia.sdt.component.symbian.NAME_ALG_STATUS_PANE_ID">EEikStatusPaneUidTitle</enumMapping>
       <enumMapping instanceName="title" propertyId="" nameAlgorithm="com.nokia.sdt.component.symbian.NAME_ALG_CONTROL_TYPE">EAknCtTitlePane</enumMapping>
     </enumMappings>
     <arrayMappings/>
@@ -149,10 +164,10 @@
     <file>src/cutcrosscontainer.cpp</file>
     <file>inc/cutcrosscontainer.h</file>
     <file>data/cutcross.rss</file>
-    <file>data/debugcontainer.rssi</file>
-    <file>inc/cutcross.hrh</file>
     <file>data/cutcrosscontainer.rssi</file>
+    <file>inc/cutcross.hrh</file>
     <file>inc/cutcrosscontainer.hrh</file>
+    <file>data/debugcontainer.rssi</file>
     <file>data/cutcross.loc</file>
     <file>data/cutcross.l01</file>
     <file>data/cutcrosscontainer.loc</file>

@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // Copyright (c) 2026 Aiden Isik
 
+#include <unistd.h>
+
 #include <aknnotewrappers.h>
 #include <aknglobalnote.h>
 #include <hwrmvibra.h>
@@ -21,7 +23,7 @@ void CActionController::SendGlobalNotificationL(TDesC &aBodyText)
     // Multithreading may be implemented at a later date to prevent this,
     // although for reasonable use-cases it is not a big deal (and multithreading
     // may carry a vital resource usage penalty on such weak hardware).
-    //sleep(5);
+    sleep(5);
     
     // Delete the notification
     notification->CancelNoteL(notificationId);
@@ -30,7 +32,7 @@ void CActionController::SendGlobalNotificationL(TDesC &aBodyText)
 
 // Run the vibration motor
 // Duration is in ms, intensity is between -100 and 100 (as a percentage)
-void CActionController::VibrateL(TUint aDuration, TInt8 aIntensity)
+void CActionController::VibrateL(TUint16 aDuration, TInt8 aIntensity)
 {
     // Verify that the intensity falls between the valid range of -100 to 100
     // TODO: Ensure this is absolutely correct
@@ -44,8 +46,11 @@ void CActionController::VibrateL(TUint aDuration, TInt8 aIntensity)
     CHWRMVibra *vibrationMotor = CHWRMVibra::NewLC(); // Added to cleanup stack
     vibrationMotor->StartVibraL(aDuration, aIntensity);
 
+    // Sleep for the same length of time the motor is set to run (in seconds).
+    sleep(aDuration / 1000);
+
     // Cleanup
-    CleanupStack::PopAndDestroy(); // Pop the vibration motor off the cleanup stack
+    CleanupStack::PopAndDestroy(); // Pop the vibration motor off the cleanup stack.
 }
 
 // Constructor

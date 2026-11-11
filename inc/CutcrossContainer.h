@@ -13,7 +13,7 @@
 // ]]] end [Event Handler Includes]
 
 // [[[ begin generated region: do not modify [Generated Forward Declarations]
-class MEikCommandObserver;
+class MEikCommandObserver;		
 // ]]] end generated region [Generated Forward Declarations]
 
 /**
@@ -56,15 +56,15 @@ class CCutcrossContainer: public CCoeControl
         MEikCommandObserver* iCommandObserver;
 
         // [[[ begin generated region: do not modify [Generated Methods]
-    public:
+public: 
         // ]]] end generated region [Generated Methods]
 
         // [[[ begin generated region: do not modify [Generated Type Declarations]
-    public:
+public: 
         // ]]] end generated region [Generated Type Declarations]
 
         // [[[ begin generated region: do not modify [Generated Instance Variables]
-    private:
+private: 
         // ]]] end generated region [Generated Instance Variables]
 
 
@@ -81,7 +81,7 @@ class CCutcrossContainer: public CCoeControl
         enum TControls
         {
             // [[[ begin generated region: do not modify [Generated Contents]
-
+		
             // ]]] end generated region [Generated Contents]
 
             // add any user-defined entries here...

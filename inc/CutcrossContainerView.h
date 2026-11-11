@@ -41,7 +41,7 @@ class CCutcrossContainerView: public CAknView
         void HandleCommandL(TInt aCommand);
 
         // [[[ begin generated region: do not modify [Generated Methods]
-        CCutcrossContainer* CreateContainerL();
+	CCutcrossContainer* CreateContainerL();
         // ]]] end generated region [Generated Methods]
 
         // ]]] end [Public Section]
@@ -59,6 +59,7 @@ class CCutcrossContainerView: public CAknView
 
         // [[[ begin [User Handlers]
         TBool HandleDebugging_InfoMenuItemSelectedL(TInt aCommand);
+	TBool HandleRun_vibration_motorMenuItemSelectedL( TInt aCommand );
         // ]]] end [User Handlers]
 
         // ]]] end [Protected Section]
@@ -69,7 +70,7 @@ class CCutcrossContainerView: public CAknView
         void CleanupStatusPane();
 
         // [[[ begin generated region: do not modify [Generated Instance Variables]
-        CCutcrossContainer* iCutcrossContainer;
+	CCutcrossContainer* iCutcrossContainer;
         // ]]] end generated region [Generated Instance Variables]
 
         // [[[ begin generated region: do not modify [Generated Methods]

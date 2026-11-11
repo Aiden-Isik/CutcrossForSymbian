@@ -6,3 +6,4 @@
 #define STR_CutcrossContainerView_1 ""
 #define STR_CutcrossContainerView_2 ""
 #define STR_CutcrossContainerView_4 "Debugging info"
+#define STR_CutcrossContainerView_5 "Run vibration motor"
