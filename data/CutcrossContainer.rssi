@@ -53,6 +53,11 @@ RESOURCE MENU_PANE r_cutcross_container_menu_pane1_menu_pane
 			{
 			command = ECutcrossContainerViewRun_vibration_motorMenuItemCommand;
 			txt = STR_CutcrossContainerView_5;
+			},
+		MENU_ITEM
+			{
+			command = ECutcrossContainerViewRun_condition_action_loopMenuItemCommand;
+			txt = STR_CutcrossContainerView_6;
 			}
 	};
 }

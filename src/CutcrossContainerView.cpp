@@ -21,7 +21,10 @@
 #include "CutcrossContainer.h"
 // ]]] end generated region [Generated User Includes]
 
+// TEMPORARY - TESTING
+#include "ConditionActionController.h"
 #include "ActionController.h"
+// TEMPORARY - TESTING
 
 // [[[ begin generated region: do not modify [Generated Constants]
 // ]]] end generated region [Generated Constants]
@@ -113,6 +116,9 @@ void CCutcrossContainerView::HandleCommandL(TInt aCommand)
 			break;
 		case ECutcrossContainerViewRun_vibration_motorMenuItemCommand:
 			commandHandled = HandleRun_vibration_motorMenuItemSelectedL( aCommand );
+			break;
+		case ECutcrossContainerViewRun_condition_action_loopMenuItemCommand:
+			commandHandled = HandleRun_condition_action_loopMenuItemSelectedL( aCommand );
 			break;
 		default:
 			break;
@@ -257,5 +263,17 @@ TBool CCutcrossContainerView::HandleRun_vibration_motorMenuItemSelectedL(TInt aC
 	CActionController *actionController = CActionController::GetInstanceL();
 	actionController->VibrateL(5000, 100);
 	return ETrue;
+}
+				
+/** 
+ * Handle the selected event.
+ * @param aCommand the command id invoked
+ * @return ETrue if the command was handled, EFalse if not
+ */
+TBool CCutcrossContainerView::HandleRun_condition_action_loopMenuItemSelectedL( TInt aCommand )
+{
+    CConditionActionController *conditionActionController = CConditionActionController::GetInstanceL();
+    conditionActionController->RunLoopL();
+    return ETrue;
 }
 				

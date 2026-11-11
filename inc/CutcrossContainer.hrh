@@ -4,5 +4,6 @@
 enum TCutcrossContainerViewCommands
 {
     ECutcrossContainerViewDebugging_InfoMenuItemCommand = 0x6000,
-    ECutcrossContainerViewRun_vibration_motorMenuItemCommand
+    ECutcrossContainerViewRun_vibration_motorMenuItemCommand,
+    ECutcrossContainerViewRun_condition_action_loopMenuItemCommand
 };

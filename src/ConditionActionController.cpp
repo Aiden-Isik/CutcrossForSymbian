@@ -10,6 +10,22 @@ CConditionActionController *CConditionActionController::iInstance = NULL;
 // Run the main condition-action loop
 void CConditionActionController::RunLoopL()
 {
+    // TEST CODE
+    // Create a simple time condition for testing
+    iConditions.conditions = new(ELeave) struct Condition[1];
+
+    iConditions.conditions[0].timeCondition = new(ELeave) struct TimeCondition;
+
+    iConditions.conditions[0].timeCondition->time.SetYear(2026);
+    iConditions.conditions[0].timeCondition->used = BIT(TIME_USED_YEAR_BIT);
+
+    iConditions.conditions[0].vibrationAction = new(ELeave) struct VibrationAction;
+    iConditions.conditions[0].vibrationAction->duration = 3000;
+    iConditions.conditions[0].vibrationAction->intensity = 100;
+
+    iConditions.count = 1;
+    // TEST CODE
+
     // Condition and action controllers
     CTimeController *timeController = CTimeController::GetInstanceL();
     CActionController *actionController = CActionController::GetInstanceL();
