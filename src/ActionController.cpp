@@ -46,8 +46,8 @@ void CActionController::VibrateL(TUint16 aDuration, TInt8 aIntensity)
     CHWRMVibra *vibrationMotor = CHWRMVibra::NewLC(); // Added to cleanup stack
     vibrationMotor->StartVibraL(aDuration, aIntensity);
 
-    // Sleep for the same length of time the motor is set to run (in seconds).
-    sleep(aDuration / 1000);
+    // Sleep for at least as long as the motor is set to run (in seconds).
+    sleep((aDuration / 1000) + 1);
 
     // Cleanup
     CleanupStack::PopAndDestroy(); // Pop the vibration motor off the cleanup stack.
