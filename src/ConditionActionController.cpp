@@ -62,18 +62,7 @@ void CConditionActionController::RunLoopL()
                    && (currentDateTime.Hour() == targetDateTime->Hour() || !BITFIELD_BIT(usedTimes, TIME_USED_HOUR_BIT))
                    && (currentDateTime.Minute() == targetDateTime->Minute() || !BITFIELD_BIT(usedTimes, TIME_USED_MINUTE_BIT)))
                 {
-                    // If this time condition has not yet fired actions, count as a valid condition.
-                    // Also set hasFired to prevent duplicate firings.
-                    if(!iConditions.conditions[i].hasFired)
-                    {
-                        iConditions.conditions[i].hasFired = true;
-                        metConditions++;
-                    }
-                }
-                else
-                {
-                    // The time condition has not been met. Fire next time it is.
-                    iConditions.conditions[i].hasFired = false;
+                    metConditions++;
                 }
             }
 
@@ -81,13 +70,25 @@ void CConditionActionController::RunLoopL()
             // was satisfied. Fire the appropriate actions.
             if(totalConditions == metConditions)
             {
-                // Fire the vibration action, if it exists
-                if(iConditions.conditions[i].vibrationAction)
+                // If we have already fired actions for these conditions, don't do it again.
+                // This prevents duplicate firing on every condition-action loop.
+                if(!iConditions.conditions[i].hasFired)
                 {
-                    TUint16 duration = iConditions.conditions[i].vibrationAction->duration;
-                    TInt8 intensity = iConditions.conditions[i].vibrationAction->intensity;
-                    actionController->VibrateL(duration, intensity);
+                    iConditions.conditions[i].hasFired = true;
+    
+                    // Fire the vibration action, if it exists
+                    if(iConditions.conditions[i].vibrationAction)
+                    {
+                        TUint16 duration = iConditions.conditions[i].vibrationAction->duration;
+                        TInt8 intensity = iConditions.conditions[i].vibrationAction->intensity;
+                        actionController->VibrateL(duration, intensity);
+                    }
                 }
+            }
+            else // If totalConditions != metConditions
+            {
+                // The conditions have not been met. Fire the next time they are.
+                iConditions.conditions[i].hasFired = false;
             }
         }
     }
