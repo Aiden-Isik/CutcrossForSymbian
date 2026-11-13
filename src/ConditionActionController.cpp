@@ -5,6 +5,10 @@
 #include "TimeController.h"
 #include "ActionController.h"
 
+// TEMP
+#include "FileHandler.h"
+// TEMP
+
 CConditionActionController *CConditionActionController::iInstance = NULL;
 
 // Run the main condition-action loop
@@ -17,13 +21,18 @@ void CConditionActionController::RunLoopL()
     iConditions.conditions[0].timeCondition = new(ELeave) struct TimeCondition;
 
     iConditions.conditions[0].timeCondition->time.SetYear(2026);
-    iConditions.conditions[0].timeCondition->used = BIT(TIME_USED_YEAR_BIT);
+    iConditions.conditions[0].timeCondition->used = BIT(KTIME_USED_YEAR_BIT);
 
     iConditions.conditions[0].vibrationAction = new(ELeave) struct VibrationAction;
     iConditions.conditions[0].vibrationAction->duration = 3000;
     iConditions.conditions[0].vibrationAction->intensity = 100;
 
     iConditions.count = 1;
+
+    // Save the condition data to file for testing
+    _LIT(KFilename, "c:\\cutcrosstest.bin");
+    CFileHandler *fileHandler = CFileHandler::GetInstanceL();
+    fileHandler->SaveConditionData(&iConditions, KFilename);
     // TEST CODE
 
     // Condition and action controllers
@@ -56,11 +65,11 @@ void CConditionActionController::RunLoopL()
                 TUint8 usedTimes = iConditions.conditions[i].timeCondition->used;
 
                 // Check that the time specified by the user is the current time.
-                if((currentDateTime.Year() == targetDateTime->Year() || !BITFIELD_BIT(usedTimes, TIME_USED_YEAR_BIT))
-                   && (currentDateTime.Month() == targetDateTime->Month() || !BITFIELD_BIT(usedTimes, TIME_USED_MONTH_BIT))
-                   && (currentDateTime.Day() == targetDateTime->Day() || !BITFIELD_BIT(usedTimes, TIME_USED_DAY_BIT))
-                   && (currentDateTime.Hour() == targetDateTime->Hour() || !BITFIELD_BIT(usedTimes, TIME_USED_HOUR_BIT))
-                   && (currentDateTime.Minute() == targetDateTime->Minute() || !BITFIELD_BIT(usedTimes, TIME_USED_MINUTE_BIT)))
+                if((currentDateTime.Year() == targetDateTime->Year() || !BITFIELD_BIT(usedTimes, KTIME_USED_YEAR_BIT))
+                   && (currentDateTime.Month() == targetDateTime->Month() || !BITFIELD_BIT(usedTimes, KTIME_USED_MONTH_BIT))
+                   && (currentDateTime.Day() == targetDateTime->Day() || !BITFIELD_BIT(usedTimes, KTIME_USED_DAY_BIT))
+                   && (currentDateTime.Hour() == targetDateTime->Hour() || !BITFIELD_BIT(usedTimes, KTIME_USED_HOUR_BIT))
+                   && (currentDateTime.Minute() == targetDateTime->Minute() || !BITFIELD_BIT(usedTimes, KTIME_USED_MINUTE_BIT)))
                 {
                     metConditions++;
                 }

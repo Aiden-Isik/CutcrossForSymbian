@@ -18,13 +18,13 @@ struct VibrationAction
 };
 
 // Time condition bitfield definitions
-#define TIME_USED_MICROSECOND_BIT 0
-#define TIME_USED_SECOND_BIT 1
-#define TIME_USED_MINUTE_BIT 2
-#define TIME_USED_HOUR_BIT 3
-#define TIME_USED_DAY_BIT 4
-#define TIME_USED_MONTH_BIT 5
-#define TIME_USED_YEAR_BIT 6
+#define KTIME_USED_MICROSECOND_BIT 0
+#define KTIME_USED_SECOND_BIT 1
+#define KTIME_USED_MINUTE_BIT 2
+#define KTIME_USED_HOUR_BIT 3
+#define KTIME_USED_DAY_BIT 4
+#define KTIME_USED_MONTH_BIT 5
+#define KTIME_USED_YEAR_BIT 6
 
 // Struct for a simple time condition
 //
