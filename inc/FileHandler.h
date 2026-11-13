@@ -7,11 +7,16 @@
 #include <e32std.h>
 #include <e32base.h>
 
+#include "ConditionActionController.h"
+
 class CFileHandler: public CBase
 {
     public:
         // Stand-in constructor
         static CFileHandler *GetInstanceL();
+        
+        struct Conditions *LoadConditionData();
+        void SaveConditionData();
 
     private:
         // The singleton object created from this class
