@@ -1,0 +1,25 @@
+// Copyright (c) 2026 Aiden Isik
+// SPDX-License-Identifier: AGPL-3.0-or-later
+
+#ifndef FILEHANDLER_H
+#define FILEHANDLER_H
+
+#include <e32std.h>
+#include <e32base.h>
+
+class CFileHandler: public CBase
+{
+    public:
+        // Stand-in constructor
+        static CFileHandler *GetInstanceL();
+
+    private:
+        // The singleton object created from this class
+        // Initialised to NULL as per C++ standard for static variables
+        static CFileHandler *iInstance;
+
+        // Constructor
+        CFileHandler();
+};
+
+#endif // FILEHANDLER_H
