@@ -16,7 +16,7 @@ class CFileHandler: public CBase
         static CFileHandler *GetInstanceL();
         
         struct Conditions *LoadConditionData();
-        void SaveConditionData();
+        void SaveConditionData(const struct Conditions *aConditions, const TDesC &aFilename);
 
     private:
         // The singleton object created from this class
