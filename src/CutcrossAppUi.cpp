@@ -13,7 +13,6 @@
 #include "Cutcross.hrh"
 #include "CutcrossContainer.hrh"
 #include "CutcrossContainerView.h"
-#include "DebugContainerView.h"
 // ]]] end generated region [Generated User Includes]
 
 // [[[ begin generated region: do not modify [Generated Constants]
@@ -44,8 +43,6 @@ void CCutcrossAppUi::InitializeContainersL()
 	iCutcrossContainerView = CCutcrossContainerView::NewL();
 	AddViewL( iCutcrossContainerView );
 	SetDefaultViewL( *iCutcrossContainerView );
-	iDebugContainerView = CDebugContainerView::NewL();
-	AddViewL( iDebugContainerView );
 	}
 // ]]] end generated function
 

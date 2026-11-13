@@ -111,9 +111,6 @@ void CCutcrossContainerView::HandleCommandL(TInt aCommand)
 	TBool commandHandled = EFalse;
 	switch ( aCommand )
 		{	// code to dispatch to the AknView's menu and CBA commands is generated here
-		case ECutcrossContainerViewDebugging_InfoMenuItemCommand:
-			commandHandled = HandleDebugging_InfoMenuItemSelectedL( aCommand );
-			break;
 		case ECutcrossContainerViewRun_vibration_motorMenuItemCommand:
 			commandHandled = HandleRun_vibration_motorMenuItemSelectedL( aCommand );
 			break;
@@ -240,17 +237,6 @@ void CCutcrossContainerView::CleanupStatusPane()
 CCutcrossContainer* CCutcrossContainerView::CreateContainerL()
 {
     return CCutcrossContainer::NewL(ClientRect(), NULL, this);
-}
-
-/** 
- * Handle the selected event.
- * @param aCommand the command id invoked
- * @return ETrue if the command was handled, EFalse if not
- */
-TBool CCutcrossContainerView::HandleDebugging_InfoMenuItemSelectedL(TInt aCommand)
-{
-    AppUi()->ActivateLocalViewL(TUid::Uid(EDebugContainerViewId));
-    return ETrue;
 }
 
 /** 

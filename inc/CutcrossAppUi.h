@@ -10,7 +10,6 @@
 
 // [[[ begin generated region: do not modify [Generated Forward Declarations]
 class CCutcrossContainerView;
-class CDebugContainerView;
 // ]]] end generated region [Generated Forward Declarations]
 
 /**
@@ -45,7 +44,6 @@ public:
         // [[[ begin generated region: do not modify [Generated Instance Variables]
 private: 
 	CCutcrossContainerView* iCutcrossContainerView;
-	CDebugContainerView* iDebugContainerView;
         // ]]] end generated region [Generated Instance Variables]
 
         // [[[ begin [User Handlers]
