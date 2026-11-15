@@ -15,8 +15,8 @@ class CFileHandler: public CBase
         // Stand-in constructor
         static CFileHandler *GetInstanceL();
         
-        struct Conditions *LoadConditionData();
-        void SaveConditionData(const struct Conditions *aConditions, const TDesC &aFilename);
+        struct Conditions LoadConditionDataL(const TDesC &aFilename);
+        void SaveConditionDataL(const struct Conditions *aConditions, const TDesC &aFilename);
 
     private:
         // The singleton object created from this class

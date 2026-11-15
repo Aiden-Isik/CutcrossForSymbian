@@ -16,29 +16,35 @@ void CConditionActionController::RunLoopL()
 {
     // TEST CODE
     // Create a simple time condition for testing
-    iConditions.conditions = new(ELeave) struct Condition[1];
+    //iConditions.conditions = new(ELeave) struct Condition[1];
 
-    iConditions.conditions[0].timeCondition = new(ELeave) struct TimeCondition;
+    //iConditions.conditions[0].timeCondition = new(ELeave) struct TimeCondition;
 
-    iConditions.conditions[0].timeCondition->time.SetYear(2026);
-    iConditions.conditions[0].timeCondition->used = BIT(KTIME_USED_YEAR_BIT);
+    //iConditions.conditions[0].timeCondition->time.SetYear(2026);
+    //iConditions.conditions[0].timeCondition->used = BIT(KTIME_USED_YEAR_BIT);
 
-    iConditions.conditions[0].vibrationAction = new(ELeave) struct VibrationAction;
-    iConditions.conditions[0].vibrationAction->duration = 3000;
-    iConditions.conditions[0].vibrationAction->intensity = 100;
+    //iConditions.conditions[0].vibrationAction = new(ELeave) struct VibrationAction;
+    //iConditions.conditions[0].vibrationAction->duration = 3000;
+    //iConditions.conditions[0].vibrationAction->intensity = 100;
 
-    iConditions.count = 1;
+    //iConditions.count = 1;
 
     // Save the condition data to file for testing
+    //_LIT(KFilename, "c:\\cutcrosstest.bin");
+    //CFileHandler *fileHandler = CFileHandler::GetInstanceL();
+    //fileHandler->SaveConditionDataL(&iConditions, KFilename);
+
+    // Load the condition data from file for testing
     _LIT(KFilename, "c:\\cutcrosstest.bin");
     CFileHandler *fileHandler = CFileHandler::GetInstanceL();
-    fileHandler->SaveConditionData(&iConditions, KFilename);
+    iConditions = fileHandler->LoadConditionDataL(KFilename);
     // TEST CODE
 
     // Condition and action controllers
     CTimeController *timeController = CTimeController::GetInstanceL();
     CActionController *actionController = CActionController::GetInstanceL();
 
+    //actionController->VibrateL(10000, 100); // TEST
     // Loop forever until something deliberately breaks out of the loop
     // TODO: Currently only run once, until condition-action functionality is separated from UI and daemonised.
     //while(true)

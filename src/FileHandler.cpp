@@ -2,12 +2,15 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 #include <limits.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 #include <e32err.h>
 #include <e32cmn.h>
 #include <f32file.h>
 
 #include "FileHandler.h"
+#include "ActionController.h" // TEMP TEST
 
 // Condition-action file format structs
 //
@@ -98,14 +101,145 @@ struct __attribute__((packed)) ConditionsFileConditionActionV0
 
 CFileHandler *CFileHandler::iInstance = NULL;
 
-struct Conditions *CFileHandler::LoadConditionData()
+// Read in condition-action data from file and translate it
+// to the in-memory format.
+struct Conditions CFileHandler::LoadConditionDataL(const TDesC &aFilename)
 {
-    
+    // We're just using the standard C file operations here. Previously, a native Symbian
+    // method was attempted for reading the file, however that code ended up completely unreadable,
+    // long, and unreliable. It may be revisited.
+
+    // Check filename validity
+    if(!aFilename.Ptr())
+    {
+        User::Leave(KErrPathNotFound);
+    }
+
+    // Convert from 16-bit Symbian descriptor format to traditional null-terminated char pointer
+    char *filename = new(ELeave) char[aFilename.Length() + 1];
+    CleanupStack::PushL(filename);
+
+    // Copy wide-char data from the descriptor into our own buffer, null terminated
+    wchar_t *wideCharFilename = new(ELeave) wchar_t[aFilename.Length() + 1];
+    CleanupStack::PushL(wideCharFilename);
+    memcpy(wideCharFilename, aFilename.Ptr(), aFilename.Length() * sizeof(wchar_t));
+    wideCharFilename[aFilename.Length()] = '\0';
+
+    // Wide-char to single-char conversion
+    User::LeaveIfError(wcstombs(filename, (const wchar_t*)wideCharFilename, aFilename.Length() + 1));
+    CleanupStack::PopAndDestroy(); // wideCharFilename
+
+    // Now that we finally have a standard C string for the file path, open the file
+    FILE *file = (FILE*)User::LeaveIfNull(fopen(filename, "rb"));
+    CleanupStack::PopAndDestroy(); // filename
+    CleanupStack::PushL(TCleanupItem((TCleanupOperation)fclose, file));
+
+    // Create header data, read in the magic and version
+    struct ConditionsFileHeaderV0 *header = new(ELeave) struct ConditionsFileHeaderV0;
+    CleanupStack::PushL(header);
+    size_t readResult = fread(header, sizeof(TUint8), sizeof(header->magicAndVersion), file);
+
+    // If we couldn't read fully, we must have hit an unexpected EOF. Abort.
+    if(readResult != sizeof(header->magicAndVersion))
+    {
+        User::Leave(KErrEof);
+    }
+
+    // Validate magic and version
+    if(header->magicAndVersion.magic != KCONDITION_ACTION_FILE_MAGIC || header->magicAndVersion.version != 0)
+    {
+        User::Leave(KErrCorrupt);
+    }
+
+    // Read condition-action count
+    readResult = fread(&(header->conditionActionCount), sizeof(TUint8), sizeof(header->conditionActionCount), file);
+
+    if(readResult != sizeof(header->conditionActionCount))
+    {
+        User::Leave(KErrEof);
+    }
+
+    // Create condition-action data, read it all in
+    struct ConditionsFileConditionActionV0 *conditionAction =
+        new(ELeave) ConditionsFileConditionActionV0[header->conditionActionCount];
+    CleanupStack::PushL(conditionAction);
+
+    readResult = fread(conditionAction,
+                       sizeof(TUint8),
+                       sizeof(ConditionsFileConditionActionV0) * header->conditionActionCount,
+                       file);
+
+    if(readResult != sizeof(ConditionsFileConditionActionV0))
+    {
+        User::Leave(KErrEof);
+    }
+
+    // All seems to have been read in okay, convert to the in-memory format and validate
+    struct Conditions conditions;
+    conditions.conditions = new(ELeave) struct Condition[header->conditionActionCount];
+    CleanupStack::PushL(conditions.conditions);
+    memset(conditions.conditions, 0, sizeof(struct Condition) * header->conditionActionCount);
+
+    // Keep track of how many instances of dynamic memory allocation
+    // we do inside the condition-action structs, so we can pop them all
+    // off the cleanup stack later.
+    TUint32 conditionActionCleanups = 0;
+
+    conditions.count = header->conditionActionCount;
+
+    for(TUint16 i = 0; i < conditions.count; i++)
+    {
+        // Conditions
+        conditions.conditions->hasFired = false;
+
+        // Time condition
+        if(BITFIELD_BIT(conditionAction[i].conditionData.conditionsSet, KCONDITION_USED_TIME_BIT))
+        {
+            conditions.conditions[i].timeCondition = new(ELeave) struct TimeCondition;
+            CleanupStack::PushL(conditions.conditions[i].timeCondition);
+            conditionActionCleanups++;
+
+            struct ConditionsFileConditionTimeV0 *time = &(conditionAction[i].conditionData.time);
+            conditions.conditions[i].timeCondition->used = time->used;
+            User::LeaveIfError(conditions.conditions[i].timeCondition->time.Set(time->year,
+                                                                                (TMonth)time->month,
+                                                                                time->day,
+                                                                                time->hour,
+                                                                                time->minute,
+                                                                                0,
+                                                                                0));
+        }
+
+        // Actions
+        // Vibration action
+        if(BITFIELD_BIT(conditionAction[i].actionData.actionsSet, KACTION_USED_VIBRATE_BIT))
+        {
+            conditions.conditions[i].vibrationAction = new(ELeave) struct VibrationAction;
+            CleanupStack::PushL(conditions.conditions[i].vibrationAction);
+            conditionActionCleanups++;
+
+            // Make sure the intensity is between -100% and 100%
+            TInt8 intensity = conditionAction[i].actionData.vibrate.intensity;
+
+            if(intensity < -100 || intensity > 100)
+            {
+                User::Leave(KErrArgument);
+            }
+
+            conditions.conditions[i].vibrationAction->duration = conditionAction[i].actionData.vibrate.duration;
+            conditions.conditions[i].vibrationAction->intensity = intensity;
+        }
+    }
+
+    // Cleanup
+    CleanupStack::Pop(conditionActionCleanups + 1); // conditionActionCleanups, conditions.conditions
+    CleanupStack::PopAndDestroy(3); // conditionAction, header, file
+    return conditions;
 }
 
 // Convert condition data to condition-action file format
 // and write it to a file.
-void CFileHandler::SaveConditionData(const struct Conditions *aConditions, const TDesC &aFilename)
+void CFileHandler::SaveConditionDataL(const struct Conditions *aConditions, const TDesC &aFilename)
 {
     // Populate the header
     struct ConditionsFileHeaderV0 header;
@@ -196,6 +330,7 @@ void CFileHandler::SaveConditionData(const struct Conditions *aConditions, const
     User::LeaveIfError(file.Write(sizeof(ConditionsFileHeaderV0), *dataDescriptor));
 
     // Cleanup
+    file.Flush();
     CleanupStack::PopAndDestroy(4); // dataDescriptor, file, fileServer, conditionActionData
     return;
 }
