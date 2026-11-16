@@ -115,22 +115,14 @@ struct Conditions CFileHandler::LoadConditionDataL(const TDesC &aFilename)
         User::Leave(KErrPathNotFound);
     }
 
-    // Convert from 16-bit Symbian descriptor format to traditional null-terminated char pointer
-    char *filename = new(ELeave) char[aFilename.Length() + 1];
-    CleanupStack::PushL(filename);
-
     // Copy wide-char data from the descriptor into our own buffer, null terminated
-    wchar_t *wideCharFilename = new(ELeave) wchar_t[aFilename.Length() + 1];
-    CleanupStack::PushL(wideCharFilename);
-    memcpy(wideCharFilename, aFilename.Ptr(), aFilename.Length() * sizeof(wchar_t));
-    wideCharFilename[aFilename.Length()] = '\0';
-
-    // Wide-char to single-char conversion
-    User::LeaveIfError(wcstombs(filename, (const wchar_t*)wideCharFilename, aFilename.Length() + 1));
-    CleanupStack::PopAndDestroy(); // wideCharFilename
+    wchar_t *filename = new(ELeave) wchar_t[aFilename.Length() + 1];
+    CleanupStack::PushL(filename);
+    memcpy(filename, aFilename.Ptr(), aFilename.Length() * sizeof(wchar_t));
+    filename[aFilename.Length()] = '\0';
 
     // Now that we finally have a standard C string for the file path, open the file
-    FILE *file = (FILE*)User::LeaveIfNull(fopen(filename, "rb"));
+    FILE *file = (FILE*)User::LeaveIfNull(wfopen(filename, L"rb"));
     CleanupStack::PopAndDestroy(); // filename
     CleanupStack::PushL(TCleanupItem((TCleanupOperation)fclose, file));
 
