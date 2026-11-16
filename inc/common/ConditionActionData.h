@@ -1,16 +1,18 @@
 // Copyright (c) 2026 Aiden Isik
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
-#ifndef CONDITIONACTIONCONTROLLER_H
-#define CONDITIONACTIONCONTROLLER_H
+#ifndef CONDITIONACTIONDATA_H_
+#define CONDITIONACTIONDATA_H_
 
-#include <e32std.h>
-#include <e32base.h>
+#include <e32def.h>
 
-// Bitfield manipulation macros
-#define BIT(bit) (1 << bit)
-#define BITFIELD_BIT(field, bit) ((field >> bit) & 1)
+#include "common/Bit.h"
 
+// Struct for a simple vibration action
+//
+// Contains the duration, in milliseconds, to vibrate for,
+// and an intensity between -100% and 100%
+// (negative values run the motor backwards).
 struct VibrationAction
 {
         TUint16 duration;
@@ -61,25 +63,4 @@ struct Conditions
         TUint16 count;
 };
 
-class CConditionActionController: public CBase
-{
-    public:
-        // Stand-in constructor
-        static CConditionActionController *GetInstanceL();
-
-        // Main condition-action loop, the heart of the application
-        void RunLoopL();
-
-    private:
-        // The singleton object created from this class
-        // Initialised to NULL as per C++ standard for static variables
-        static CConditionActionController *iInstance;
-
-        // The main conditions struct, holding all conditions and associated actions
-        struct Conditions iConditions;
-
-        // Constructor
-        CConditionActionController();
-};
-
-#endif // CONDITIONACTIONCONTROLLER_H
+#endif /* CONDITIONACTIONDATA_H_ */

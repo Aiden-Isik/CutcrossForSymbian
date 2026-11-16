@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // Copyright (c) 2026 Aiden Isik
 
-#include "TimeController.h"
+#include "server/TimeController.h"
 
 CTimeController *CTimeController::iInstance = NULL;
 

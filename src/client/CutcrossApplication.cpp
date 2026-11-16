@@ -5,8 +5,8 @@
 // ]]] end generated region [Generated System Includes]
 
 // [[[ begin generated region: do not modify [Generated Includes]
-#include "CutcrossApplication.h"
-#include "CutcrossDocument.h"
+#include "client/CutcrossApplication.h"
+#include "client/CutcrossDocument.h"
 #ifdef EKA2
 #include <eikstart.h>
 #endif

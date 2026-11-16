@@ -58,9 +58,6 @@ class CCutcrossContainerView: public CAknView
 
 
         // [[[ begin [User Handlers]
-        TBool HandleDebugging_InfoMenuItemSelectedL(TInt aCommand);
-	TBool HandleRun_vibration_motorMenuItemSelectedL( TInt aCommand );
-	TBool HandleRun_condition_action_loopMenuItemSelectedL( TInt aCommand );
         // ]]] end [User Handlers]
 
         // ]]] end [Protected Section]

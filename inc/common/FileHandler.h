@@ -7,14 +7,14 @@
 #include <e32std.h>
 #include <e32base.h>
 
-#include "ConditionActionController.h"
+#include "common/ConditionActionData.h"
 
 class CFileHandler: public CBase
 {
     public:
         // Stand-in constructor
         static CFileHandler *GetInstanceL();
-        
+
         struct Conditions LoadConditionDataL(const TDesC &aFilename);
         void SaveConditionDataL(const struct Conditions *aConditions, const TDesC &aFilename);
 

@@ -88,6 +88,12 @@ private:
 
             ELastControl
         };
+	enum TListBoxImages
+		{
+		// [[[ begin generated region: do not modify [Generated Enums]
+		// ]]] end generated region [Generated Enums]
+		
+		};
 };
 
 #endif // CUTCROSSCONTAINER_H

@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 // [[[ begin generated region: do not modify [Generated User Includes]
-#include "CutcrossDocument.h"
-#include "CutcrossAppUi.h"
+#include "client/CutcrossDocument.h"
+#include "client/CutcrossAppUi.h"
 // ]]] end generated region [Generated User Includes]
 
 /**

@@ -13,18 +13,14 @@
 #include <Cutcross.rsg>
 // ]]] end generated region [Generated System Includes]
 
+// TODO: UI designer regenerates these without the client/. Will be fixed when executables are split.
 // [[[ begin generated region: do not modify [Generated User Includes]
 
-#include "Cutcross.hrh"
-#include "CutcrossContainerView.h"
-#include "CutcrossContainer.hrh"
-#include "CutcrossContainer.h"
+#include "client/Cutcross.hrh"
+#include "client/CutcrossContainerView.h"
+#include "client/CutcrossContainer.hrh"
+#include "client/CutcrossContainer.h"
 // ]]] end generated region [Generated User Includes]
-
-// TEMPORARY - TESTING
-#include "ConditionActionController.h"
-#include "ActionController.h"
-// TEMPORARY - TESTING
 
 // [[[ begin generated region: do not modify [Generated Constants]
 // ]]] end generated region [Generated Constants]
@@ -111,12 +107,6 @@ void CCutcrossContainerView::HandleCommandL(TInt aCommand)
 	TBool commandHandled = EFalse;
 	switch ( aCommand )
 		{	// code to dispatch to the AknView's menu and CBA commands is generated here
-		case ECutcrossContainerViewRun_vibration_motorMenuItemCommand:
-			commandHandled = HandleRun_vibration_motorMenuItemSelectedL( aCommand );
-			break;
-		case ECutcrossContainerViewRun_condition_action_loopMenuItemCommand:
-			commandHandled = HandleRun_condition_action_loopMenuItemSelectedL( aCommand );
-			break;
 		default:
 			break;
 		}
@@ -238,28 +228,3 @@ CCutcrossContainer* CCutcrossContainerView::CreateContainerL()
 {
     return CCutcrossContainer::NewL(ClientRect(), NULL, this);
 }
-
-/** 
- * Handle the selected event.
- * @param aCommand the command id invoked
- * @return ETrue if the command was handled, EFalse if not
- */
-TBool CCutcrossContainerView::HandleRun_vibration_motorMenuItemSelectedL(TInt aCommand)
-{
-	CActionController *actionController = CActionController::GetInstanceL();
-	actionController->VibrateL(5000, 100);
-	return ETrue;
-}
-				
-/** 
- * Handle the selected event.
- * @param aCommand the command id invoked
- * @return ETrue if the command was handled, EFalse if not
- */
-TBool CCutcrossContainerView::HandleRun_condition_action_loopMenuItemSelectedL( TInt aCommand )
-{
-    CConditionActionController *conditionActionController = CConditionActionController::GetInstanceL();
-    conditionActionController->RunLoopL();
-    return ETrue;
-}
-				

@@ -7,8 +7,8 @@ NAME CUTC
 #include <avkon.rh>
 #include <eikon.rh>
 #include <appinfo.rh>
-#include "Cutcross.hrh"
-#include "Cutcross.loc"
+#include "client/Cutcross.hrh"
+#include "client/Cutcross.loc"
 
 RESOURCE RSS_SIGNATURE
 {
@@ -39,4 +39,4 @@ RESOURCE TBUF r_application_akn_view_reference1
 }
 
 
-#include "CutcrossContainer.rssi"
+#include "client/CutcrossContainer.rssi"

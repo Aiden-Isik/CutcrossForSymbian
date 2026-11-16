@@ -18,13 +18,13 @@
     <manifestEntry id="com.nokia.sdt.series60.AvkonViewReference" version="1.0.0"/>
     <manifestEntry id="com.nokia.sdt.series60.DesignReference" version="1.0.0"/>
   </componentManifest>
-  <property id="com.nokia.sdt.symbian.dm.RESOURCE_DIRECTORY_ID">data</property>
+  <property id="com.nokia.sdt.symbian.dm.RESOURCE_DIRECTORY_ID">data/client</property>
   <property id="com.nokia.sdt.component.symbian.version">3.0.0</property>
   <property id="com.nokia.sdt.component.symbian.vendor">com.nokia.series60</property>
   <property id="com.nokia.sdt.symbian.dm.COMPONENT_PROVIDER">com.nokia.sdt.component.symbian.Symbian-Provider</property>
-  <property id="com.nokia.sdt.symbian.dm.INCLUDE_DIRECTORY_ID">inc</property>
+  <property id="com.nokia.sdt.symbian.dm.INCLUDE_DIRECTORY_ID">inc/client</property>
   <property id="com.nokia.sdt.symbian.dm.ROOT_CONTAINER">CutcrossAppUi</property>
-  <property id="com.nokia.sdt.symbian.dm.SOURCE_DIRECTORY_ID">src</property>
+  <property id="com.nokia.sdt.symbian.dm.SOURCE_DIRECTORY_ID">src/client</property>
   <property id="com.nokia.sdt.symbian.dm.ROOT_APPLICATION_NAME">Cutcross</property>
   <property id="com.nokia.sdt.symbian.dm.SOURCEGEN_PROVIDER">com.nokia.sdt.sourcegen.Symbian-Provider</property>
   <property id="com.nokia.sdt.symbian.dm.BUILD_DIRECTORY_ID">group</property>
@@ -115,24 +115,21 @@
     <arrayMappings/>
   </sourceMappingState>
   <generatedFiles>
-    <file>inc/cutcrossapplication.h</file>
-    <file>inc/cutcrosscontainerview.h</file>
-    <file>src/cutcrosscontainerview.cpp</file>
-    <file>src/cutcrossdocument.cpp</file>
-    <file>src/cutcrossappui.cpp</file>
-    <file>inc/cutcrossappui.h</file>
-    <file>inc/cutcrossdocument.h</file>
-    <file>src/cutcrossapplication.cpp</file>
-    <file>data/cutcross.rss</file>
-    <file>inc/cutcross.hrh</file>
-    <file>data/cutcrosscontainer.rssi</file>
-    <file>inc/cutcrosscontainer.hrh</file>
-    <file>data/debugcontainer.rssi</file>
-    <file>data/cutcross.loc</file>
-    <file>data/cutcross.l01</file>
-    <file>data/cutcrosscontainer.loc</file>
-    <file>data/cutcrosscontainer.l01</file>
-    <file>data/debugcontainer.loc</file>
-    <file>data/debugcontainer.l01</file>
+    <file>inc/client/CutcrossApplication.h</file>
+    <file>inc/client/CutcrossContainerview.h</file>
+    <file>src/client/CutcrossContainerview.cpp</file>
+    <file>src/client/CutcrossDocument.cpp</file>
+    <file>src/client/CutcrossAppui.cpp</file>
+    <file>inc/client/CutcrossAppui.h</file>
+    <file>inc/client/CutcrossDocument.h</file>
+    <file>src/client/CutcrossApplication.cpp</file>
+    <file>data/client/Cutcross.rss</file>
+    <file>inc/client/Cutcross.hrh</file>
+    <file>data/client/CutcrossContainer.rssi</file>
+    <file>inc/client/CutcrossContainer.hrh</file>
+    <file>data/client/Cutcross.loc</file>
+    <file>data/client/Cutcross.l01</file>
+    <file>data/client/CutcrossContainer.loc</file>
+    <file>data/client/CutcrossContainer.l01</file>
   </generatedFiles>
 </designerData>

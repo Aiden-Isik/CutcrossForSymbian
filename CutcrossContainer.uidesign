@@ -15,15 +15,13 @@
     <manifestEntry id="com.nokia.sdt.series60.MenuBar" version="1.0.0"/>
     <manifestEntry id="com.nokia.sdt.series60.MenuBase" version="1.0.0"/>
     <manifestEntry id="com.nokia.sdt.series60.MenuPane" version="1.0.0"/>
-    <manifestEntry id="com.nokia.sdt.series60.MenuItem" version="1.0.0"/>
-    <manifestEntry id="com.nokia.sdt.series60.MenuItemBase" version="1.0.0"/>
   </componentManifest>
-  <property id="com.nokia.sdt.symbian.dm.RESOURCE_DIRECTORY_ID">data</property>
+  <property id="com.nokia.sdt.symbian.dm.RESOURCE_DIRECTORY_ID">data/client</property>
   <property id="com.nokia.sdt.component.symbian.version">3.0.0</property>
   <property id="com.nokia.sdt.component.symbian.vendor">com.nokia.series60</property>
   <property id="com.nokia.sdt.symbian.dm.COMPONENT_PROVIDER">com.nokia.sdt.component.symbian.Symbian-Provider</property>
-  <property id="com.nokia.sdt.symbian.dm.INCLUDE_DIRECTORY_ID">inc</property>
-  <property id="com.nokia.sdt.symbian.dm.SOURCE_DIRECTORY_ID">src</property>
+  <property id="com.nokia.sdt.symbian.dm.INCLUDE_DIRECTORY_ID">inc/client</property>
+  <property id="com.nokia.sdt.symbian.dm.SOURCE_DIRECTORY_ID">src/client</property>
   <property id="com.nokia.sdt.symbian.dm.SOURCEGEN_PROVIDER">com.nokia.sdt.sourcegen.Symbian-Provider</property>
   <property id="com.nokia.sdt.symbian.dm.BUILD_DIRECTORY_ID">group</property>
   <component id="com.nokia.sdt.series60.CAknView">
@@ -87,47 +85,19 @@
     </component>
     <component id="com.nokia.sdt.series60.MenuBar">
       <compoundProperty id="location">
-        <property id="x">12</property>
-        <property id="y">274</property>
+        <property id="x">176</property>
+        <property id="y">368</property>
       </compoundProperty>
       <property id="name">optionsMenu</property>
       <compoundProperty id="size">
-        <property id="height">101</property>
-        <property id="width">327</property>
+        <property id="height">7</property>
       </compoundProperty>
       <component id="com.nokia.sdt.series60.MenuPane">
         <compoundProperty id="location"/>
         <property id="name">menuPane1</property>
         <compoundProperty id="size">
-          <property id="height">101</property>
-          <property id="width">327</property>
+          <property id="height">7</property>
         </compoundProperty>
-        <component id="com.nokia.sdt.series60.MenuItem">
-          <compoundProperty id="location">
-            <property id="x">5</property>
-            <property id="y">2</property>
-          </compoundProperty>
-          <property id="name">run_vibration_motorMenuItem</property>
-          <property id="text" type="i18n">STR_CutcrossContainerView_5</property>
-          <compoundProperty id="size">
-            <property id="width">312</property>
-            <property id="height">45</property>
-          </compoundProperty>
-          <eventBinding id="selected" handlerDisplay="HandleRun_vibration_motorMenuItemSelectedL" handlerSymbol="cpp@src//CutcrossContainerView.cpp/function(CCutcrossContainerView::HandleRun_vibration_motorMenuItemSelectedL(TInt))"/>
-        </component>
-        <component id="com.nokia.sdt.series60.MenuItem">
-          <compoundProperty id="location">
-            <property id="x">5</property>
-            <property id="y">49</property>
-          </compoundProperty>
-          <property id="name">run_condition_action_loopMenuItem</property>
-          <property id="text" type="i18n">STR_CutcrossContainerView_6</property>
-          <compoundProperty id="size">
-            <property id="width">312</property>
-            <property id="height">45</property>
-          </compoundProperty>
-          <eventBinding id="selected" handlerDisplay="HandleRun_condition_action_loopMenuItemSelectedL" handlerSymbol="cpp@src//CutcrossContainerView.cpp/function(CCutcrossContainerView::HandleRun_condition_action_loopMenuItemSelectedL(TInt))"/>
-        </component>
       </component>
     </component>
   </component>
@@ -136,8 +106,6 @@
       <string id="STR_CutcrossContainerView_1"/>
       <string id="STR_CutcrossContainerView_2"/>
       <string id="STR_CutcrossContainerView_3">Cutcross</string>
-      <string id="STR_CutcrossContainerView_5">Run vibration motor</string>
-      <string id="STR_CutcrossContainerView_6">Run condition-action</string>
     </stringTable>
   </stringBundle>
   <macroTable/>
@@ -150,9 +118,6 @@
       <resourceMapping instanceName="statusPane">r_cutcross_container_status_pane</resourceMapping>
     </resourceMappings>
     <enumMappings>
-      <enumMapping instanceName="run_vibration_motorMenuItem" propertyId="command" nameAlgorithm="com.nokia.sdt.component.symbian.NAME_ALG_COMMANDS">ECutcrossContainerViewRun_vibration_motorMenuItemCommand</enumMapping>
-      <enumMapping instanceName="debugging_InfoMenuItem" propertyId="command" nameAlgorithm="com.nokia.sdt.component.symbian.NAME_ALG_COMMANDS">ECutcrossContainerViewDebugging_InfoMenuItemCommand</enumMapping>
-      <enumMapping instanceName="run_condition_action_loopMenuItem" propertyId="command" nameAlgorithm="com.nokia.sdt.component.symbian.NAME_ALG_COMMANDS">ECutcrossContainerViewRun_condition_action_loopMenuItemCommand</enumMapping>
       <enumMapping instanceName="CutcrossContainerView" propertyId="" nameAlgorithm="com.nokia.sdt.component.symbian.NAME_ALG_VIEW_UID">ECutcrossContainerViewId</enumMapping>
       <enumMapping instanceName="title" propertyId="" nameAlgorithm="com.nokia.sdt.component.symbian.NAME_ALG_STATUS_PANE_ID">EEikStatusPaneUidTitle</enumMapping>
       <enumMapping instanceName="title" propertyId="" nameAlgorithm="com.nokia.sdt.component.symbian.NAME_ALG_CONTROL_TYPE">EAknCtTitlePane</enumMapping>
@@ -160,17 +125,17 @@
     <arrayMappings/>
   </sourceMappingState>
   <generatedFiles>
-    <file>inc/cutcrosscontainerview.h</file>
-    <file>src/cutcrosscontainerview.cpp</file>
-    <file>src/cutcrosscontainer.cpp</file>
-    <file>inc/cutcrosscontainer.h</file>
-    <file>data/cutcross.rss</file>
-    <file>data/cutcrosscontainer.rssi</file>
-    <file>inc/cutcross.hrh</file>
-    <file>inc/cutcrosscontainer.hrh</file>
-    <file>data/cutcross.loc</file>
-    <file>data/cutcross.l01</file>
-    <file>data/cutcrosscontainer.loc</file>
-    <file>data/cutcrosscontainer.l01</file>
+    <file>inc/client/cutcrosscontainerview.h</file>
+    <file>src/client/cutcrosscontainer.cpp</file>
+    <file>inc/client/cutcrosscontainer.h</file>
+    <file>src/client/cutcrosscontainerview.cpp</file>
+    <file>data/client/cutcross.rss</file>
+    <file>data/client/cutcrosscontainer.rssi</file>
+    <file>inc/client/cutcross.hrh</file>
+    <file>inc/client/cutcrosscontainer.hrh</file>
+    <file>data/client/cutcross.loc</file>
+    <file>data/client/cutcross.l01</file>
+    <file>data/client/cutcrosscontainer.loc</file>
+    <file>data/client/cutcrosscontainer.l01</file>
   </generatedFiles>
 </designerData>

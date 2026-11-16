@@ -5,7 +5,7 @@
 #include <avkon.rsg>
 #include <avkon.rh>
 #include <appinfo.rh>
-#include "Cutcross_reg.loc"
+#include "client/Cutcross_reg.loc"
 #include <Cutcross.rsg>
 
 UID2 KUidAppRegistrationResourceFile

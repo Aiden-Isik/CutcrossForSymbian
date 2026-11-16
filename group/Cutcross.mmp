@@ -10,15 +10,15 @@ EPOCSTACKSIZE	0x5000
 SYSTEMINCLUDE	\epoc32\include \epoc32\include\variant \epoc32\include\ecom \epoc32\include\libc
 USERINCLUDE		..\inc ..\data
 
-SOURCEPATH		..\data
+SOURCEPATH ..\data\client
 START RESOURCE	Cutcross.rss
 HEADER
 TARGETPATH		resource\apps
-END //RESOURCE
+END // RESOURCE
 
-START RESOURCE	Cutcross_reg.rss
+START RESOURCE Cutcross_reg.rss
 TARGETPATH		\private\10003a3f\apps
-END //RESOURCE
+END // RESOURCE
 
 LIBRARY			euser.lib apparc.lib cone.lib eikcore.lib avkon.lib
 LIBRARY			commonengine.lib efsrv.lib estor.lib eikcoctl.lib eikdlg.lib 
@@ -35,10 +35,14 @@ SOURCEPATH		..\gfx
 SOURCE	c12,1	list_icon.bmp list_icon_mask.bmp
 END
 
-SOURCEPATH		..\src
 
 #ifdef ENABLE_ABIV2_MODE
 DEBUGGABLE_UDEBONLY
 #endif
 
-SOURCE CutcrossContainerView.cpp CutcrossContainer.cpp CutcrossDocument.cpp CutcrossAppUi.cpp CutcrossApplication.cpp TimeController.cpp ActionController.cpp ConditionActionController.cpp FileHandler.cpp
+SOURCEPATH ..\src\common
+SOURCE FileHandler.cpp
+SOURCEPATH ..\src\server
+SOURCE ActionController.cpp ConditionActionController.cpp TimeController.cpp
+SOURCEPATH ..\src\client
+SOURCE CutcrossAppUi.cpp CutcrossApplication.cpp CutcrossContainer.cpp CutcrossContainerView.cpp CutcrossDocument.cpp

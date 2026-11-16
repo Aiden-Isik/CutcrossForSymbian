@@ -9,10 +9,10 @@
 // ]]] end generated region [Generated System Includes]
 
 // [[[ begin generated region: do not modify [Generated User Includes]
-#include "CutcrossAppUi.h"
-#include "Cutcross.hrh"
-#include "CutcrossContainer.hrh"
-#include "CutcrossContainerView.h"
+#include "client/CutcrossAppUi.h"
+#include "client/Cutcross.hrh"
+#include "client/CutcrossContainer.hrh"
+#include "client/CutcrossContainerView.h"
 // ]]] end generated region [Generated User Includes]
 
 // [[[ begin generated region: do not modify [Generated Constants]

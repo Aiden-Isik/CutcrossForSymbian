@@ -5,5 +5,3 @@
 #define STR_CutcrossContainerView_3 "Cutcross"
 #define STR_CutcrossContainerView_1 ""
 #define STR_CutcrossContainerView_2 ""
-#define STR_CutcrossContainerView_5 "Run vibration motor"
-#define STR_CutcrossContainerView_6 "Run condition-action"
