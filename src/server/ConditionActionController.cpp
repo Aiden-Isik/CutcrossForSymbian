@@ -1,12 +1,12 @@
 // Copyright (c) 2026 Aiden Isik
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
-#include "server/ConditionActionController.h"
-#include "server/TimeController.h"
-#include "server/ActionController.h"
+#include "ConditionActionController.h"
+#include "TimeController.h"
+#include "ActionController.h"
 
 // TEMP
-#include "common/FileHandler.h"
+#include "FileHandler.h"
 // TEMP
 
 CConditionActionController *CConditionActionController::iInstance = NULL;

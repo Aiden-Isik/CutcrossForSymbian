@@ -9,8 +9,7 @@
 #include <e32cmn.h>
 #include <f32file.h>
 
-#include "common/FileHandler.h"
-#include "server/ActionController.h" // TEMP TEST
+#include "FileHandler.h"
 
 // Condition-action file format structs
 //

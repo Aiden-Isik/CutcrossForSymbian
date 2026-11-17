@@ -2,13 +2,12 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 TARGET			Cutcross.exe
-UID				0x100039CE 0x27B05413
+UID				0x100039CE 0x27B05414
 VENDORID		0
 TARGETTYPE		exe
 EPOCSTACKSIZE	0x5000
 
 SYSTEMINCLUDE	\epoc32\include \epoc32\include\variant \epoc32\include\ecom \epoc32\include\libc
-USERINCLUDE		..\inc ..\data
 
 SOURCEPATH ..\data\client
 START RESOURCE	Cutcross.rss
@@ -41,8 +40,6 @@ DEBUGGABLE_UDEBONLY
 #endif
 
 SOURCEPATH ..\src\common
-SOURCE FileHandler.cpp
-SOURCEPATH ..\src\server
-SOURCE ActionController.cpp ConditionActionController.cpp TimeController.cpp
-SOURCEPATH ..\src\client
-SOURCE CutcrossAppUi.cpp CutcrossApplication.cpp CutcrossContainer.cpp CutcrossContainerView.cpp CutcrossDocument.cpp
+SOURCE ..\client\CutcrossAppUi.cpp ..\client\CutcrossApplication.cpp ..\client\CutcrossContainer.cpp ..\client\CutcrossContainerView.cpp ..\client\CutcrossDocument.cpp FileHandler.cpp
+
+USERINCLUDE ..\inc\common ..\data\common ..\inc\client ..\data\client

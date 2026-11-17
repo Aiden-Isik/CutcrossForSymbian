@@ -7,7 +7,7 @@
 #include <aknglobalnote.h>
 #include <hwrmvibra.h>
 
-#include "server/ActionController.h"
+#include "ActionController.h"
 
 CActionController *CActionController::iInstance = NULL;
 

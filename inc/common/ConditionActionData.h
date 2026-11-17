@@ -6,7 +6,7 @@
 
 #include <e32def.h>
 
-#include "common/Bit.h"
+#include "Bit.h"
 
 // Struct for a simple vibration action
 //

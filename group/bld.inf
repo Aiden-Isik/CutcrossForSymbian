@@ -10,8 +10,8 @@ WINSCW ARMV5 GCCE
 PRJ_EXTENSIONS
 	
 	START EXTENSION s60/mifconv
-	OPTION TARGETFILE cutcross_0x27B05413.mif
-	OPTION HEADERFILE cutcross_0x27B05413.mbg
+	OPTION TARGETFILE cutcross_0x27B05414.mif
+	OPTION HEADERFILE cutcross_0x27B05414.mbg
 	OPTION SOURCEDIR ../gfx
 	OPTION SOURCES -c32 qgn_menu_Cutcross
 	END
@@ -25,4 +25,5 @@ PRJ_MMPFILES
 #endif
 
 PRJ_MMPFILES
-Cutcross.mmp
+client.mmp
+server.mmp

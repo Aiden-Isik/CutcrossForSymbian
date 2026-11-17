@@ -1,8 +1,8 @@
 // Copyright (c) 2026 Aiden Isik
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
-#include "client/CutcrossContainer.hrh"
-#include "client/CutcrossContainer.loc"
+#include "CutcrossContainer.hrh"
+#include "CutcrossContainer.loc"
 
 RESOURCE AVKON_VIEW r_cutcross_container_cutcross_container_view
 {

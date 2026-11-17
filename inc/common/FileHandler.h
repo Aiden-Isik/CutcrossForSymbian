@@ -7,7 +7,7 @@
 #include <e32std.h>
 #include <e32base.h>
 
-#include "common/ConditionActionData.h"
+#include "ConditionActionData.h"
 
 class CFileHandler: public CBase
 {

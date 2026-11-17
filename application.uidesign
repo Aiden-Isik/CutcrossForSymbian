@@ -32,7 +32,7 @@
     <property id="className">CCutcrossApplication</property>
     <property id="documentBase">Cutcross</property>
     <property id="name">CutcrossApplication</property>
-    <property id="uid">0x27B05413</property>
+    <property id="uid">0x27B05414</property>
     <component id="com.nokia.sdt.series60.CAknDocument">
       <property id="className">CCutcrossDocument</property>
       <property id="name">CutcrossDocument</property>

@@ -7,8 +7,8 @@
 #include <e32std.h>
 #include <e32base.h>
 
-#include "common/Bit.h"
-#include "common/ConditionActionData.h"
+#include "Bit.h"
+#include "ConditionActionData.h"
 
 class CConditionActionController: public CBase
 {

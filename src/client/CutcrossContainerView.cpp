@@ -16,10 +16,10 @@
 // TODO: UI designer regenerates these without the client/. Will be fixed when executables are split.
 // [[[ begin generated region: do not modify [Generated User Includes]
 
-#include "client/Cutcross.hrh"
-#include "client/CutcrossContainerView.h"
-#include "client/CutcrossContainer.hrh"
-#include "client/CutcrossContainer.h"
+#include "Cutcross.hrh"
+#include "CutcrossContainerView.h"
+#include "CutcrossContainer.hrh"
+#include "CutcrossContainer.h"
 // ]]] end generated region [Generated User Includes]
 
 // [[[ begin generated region: do not modify [Generated Constants]

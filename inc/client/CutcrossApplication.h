@@ -9,7 +9,7 @@
 // ]]] end generated region [Generated Includes]
 
 // [[[ begin generated region: do not modify [Generated Constants]
-const TUid KUidCutcrossApplication = { 0x27B05413 };
+const TUid KUidCutcrossApplication = { 0x27B05414 };
 // ]]] end generated region [Generated Constants]
 
 /**
