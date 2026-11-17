@@ -16,6 +16,9 @@ class CConditionActionController: public CBase
         // Stand-in constructor
         static CConditionActionController *GetInstanceL();
 
+        // Initialisation code
+        void InitialiseL();
+
         // Main condition-action loop, the heart of the application
         void RunLoopL();
 
@@ -29,6 +32,9 @@ class CConditionActionController: public CBase
 
         // Constructor
         CConditionActionController();
+
+        // Cleanup code to clear any memory used by iConditions
+        void CleanupConditionActions();
 };
 
 #endif // CONDITIONACTIONCONTROLLER_H

@@ -23,13 +23,13 @@ void SetupL()
 
     // Start up the main condition-action code
     CConditionActionController *conditionActionController = CConditionActionController::GetInstanceL();
+    conditionActionController->InitialiseL();
 
-    // Vibrate the vibration motor to check everything works
-    CActionController *actionController = CActionController::GetInstanceL();
-    actionController->VibrateL(5000, 100);
+    // TEST: run the condition-action loop once
+    conditionActionController->RunLoopL();
 
     // Cleanup
-    CleanupStack::PopAndDestroy(3); // activeScheduler installation, activeScheduler
+    CleanupStack::PopAndDestroy(2); // activeScheduler installation, activeScheduler
 }
 
 GLDEF_C TInt E32Main()
@@ -42,5 +42,5 @@ GLDEF_C TInt E32Main()
 
     // Cleanup
     delete cleanup;
-    return 0;
+    return error;
 }

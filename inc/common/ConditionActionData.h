@@ -8,6 +8,8 @@
 
 #include "Bit.h"
 
+_LIT(KSAVE_FILE_PATH, "c:\\cutcrosstest.bin");
+
 // Struct for a simple vibration action
 //
 // Contains the duration, in milliseconds, to vibrate for,
