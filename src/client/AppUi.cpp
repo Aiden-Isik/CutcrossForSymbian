@@ -4,8 +4,31 @@
 #include <aknappui.h>
 #include <eikappui.h>
 
+#include <e32def.h>
+
+#include <avkon.hrh>
+
 #include "AppUi.h"
 #include "MainView.h"
+
+// Handle commands from the application framework
+void CAppUi::HandleCommandL(TInt aCommand)
+{
+    switch(aCommand)
+    {
+        case EAknSoftkeyExit:
+        case EEikCmdExit:
+        {
+            Exit();
+            break; // We should never get here, but if we do handle it gracefully
+        }
+        default:
+        {
+            break;
+        }
+            
+    }
+}
 
 // Constructors
 CAppUi::CAppUi()
@@ -20,5 +43,18 @@ void CAppUi::ConstructL()
 
     // Create default view object
     iView = CMainView::NewL(ClientRect());
+    iView->SetMopParent(this); // Owned by this object
+    AddToStackL(iView);
     return;
+}
+
+// Destructor
+CAppUi::~CAppUi()
+{
+    if(iView)
+    {
+        // Delete active view
+        RemoveFromStack(iView);
+        delete iView;
+    }
 }
