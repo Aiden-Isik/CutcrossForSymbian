@@ -4,12 +4,13 @@
 #include <e32std.h>
 #include <e32base.h>
 #include <w32std.h>
-#include <aknlists.h>
 #include <coedef.h>
 #include <coecntrl.h>
+#include <eikedwin.h>
 
 #include <avkon.hrh>
 
+#include "Version.h"
 #include "View.h"
 #include "AboutView.h"
 
@@ -19,8 +20,23 @@ void CAboutView::Draw(const TRect &aRect) const
     // Get the system graphics context
     CWindowGc &graphicsContext = SystemGc();
 
+    // Draw the about text box if it exists
+    if(iTextBox)
+    {
+        iTextBox->Draw(aRect);
+    }
+
     // Draw rectangle to screen
     graphicsContext.Clear(aRect);
+}
+
+// Handle control size changes
+void CAboutView::SizeChanged()
+{
+    if(iTextBox)
+    {
+        iTextBox->SetExtent(TPoint(0, 0), Size());
+    }
 }
 
 // Handle key events
@@ -42,6 +58,8 @@ CCoeControl *CAboutView::ComponentControl(TInt aIndex) const
 {
     switch(aIndex)
     {
+        case 0:
+            return iTextBox;
         default:
             return NULL;
     }
@@ -78,7 +96,34 @@ void CAboutView::ConstructL(const TRect &aRect)
     // Set up child controls
     iControlCount = 0;
 
-    // TODO: child controls
+    // Create an EIKON Edwin instance for the text box
+    iTextBox = new(ELeave) CEikEdwin;
+    CleanupStack::PushL(iTextBox);
+    iTextBox->ConstructL(EEikEdwinReadOnly | EEikEdwinNoHorizScrolling, 0, 0); // 0 == unlimited length, lines
+    iTextBox->SetContainerWindowL(*this);
+
+    // Populate the text box
+    _LIT(textBoxText, "Cutcross for Symbian S60 3rd Edition+ - Version " KCUTCROSS_VERSION "\n"
+                      "Copyright (c) 2026 Aiden Isik <aidenisik@member.fsf.org>\n"
+                      "https://github.com/Aiden-Isik/CutcrossForSymbian\n\n"
+
+                      "This program is free software: you can redistribute it and/or modify "
+                      "it under the terms of the GNU Affero General Public License as published by "
+                      "the Free Software Foundation, either version 3 of the License, or "
+                      "(at your option) any later version.\n\n"
+
+                      "This program is distributed in the hope that it will be useful, "
+                      "but WITHOUT ANY WARRANTY; without even the implied warranty of "
+                      "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the "
+                      "GNU Affero General Public License for more details.\n\n"
+
+                      "You should have received a copy of the GNU Affero General Public License "
+                      "along with this program.  If not, see <https://www.gnu.org/licenses/>.");
+    iTextBox->SetTextL(&textBoxText);
+    iTextBox->SetExtent(TPoint(0,0), iTextBox->MinimumSize());
+    iTextBox->ActivateL();
+    CleanupStack::Pop(); // iTextBox
+    iControlCount++;
 
     SetRect(aRect); // Set window size
     ActivateL();
@@ -87,4 +132,8 @@ void CAboutView::ConstructL(const TRect &aRect)
 // Destructor
 CAboutView::~CAboutView()
 {
+    if(iTextBox)
+    {
+        delete iTextBox;
+    }
 }

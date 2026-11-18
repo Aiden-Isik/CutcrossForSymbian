@@ -21,6 +21,9 @@ class CAboutView: public CView
         // Component control handling
         CCoeControl *ComponentControl(TInt aIndex) const;
 
+        // Handle control size changes
+        void SizeChanged();
+
         // Handle key presses
         TKeyResponse OfferKeyEventL(const TKeyEvent &aKeyEvent, TEventCode aType);
 
@@ -35,6 +38,10 @@ class CAboutView: public CView
         // Constructors
         CAboutView();
         void ConstructL(const TRect &aRect);
+
+    private:
+        // Text box
+        CEikEdwin *iTextBox;
 };
 
 #endif /* ABOUTVIEW_H_ */
