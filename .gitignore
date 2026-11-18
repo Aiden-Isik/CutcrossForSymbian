@@ -1,4 +1,6 @@
+.cproject
 .settings
 *.sis
 *.sisx
 ABLD.BAT
+backup_registration.xml
