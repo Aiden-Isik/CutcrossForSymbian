@@ -7,7 +7,6 @@ NAME CUTC
 #include <avkon.rh>
 #include <eikon.rh>
 #include <appinfo.rh>
-#include "Cutcross.hrh"
 #include "Cutcross.loc"
 
 RESOURCE RSS_SIGNATURE
@@ -34,9 +33,3 @@ RESOURCE LOCALISABLE_APP_INFO r_localisable_app_info
 		number_of_icons = 0;
 	};
 }
-RESOURCE TBUF r_application_akn_view_reference1
-{
-}
-
-
-#include "CutcrossContainer.rssi"

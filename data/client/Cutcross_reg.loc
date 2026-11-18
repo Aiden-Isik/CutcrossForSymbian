@@ -7,7 +7,7 @@
 #define qtn_caption_string "Cutcross"
 
 // Short caption string for app.
-#define qtn_short_caption_string "HW"
+#define qtn_short_caption_string "CC"
 
 #define qtn_loc_resource_file_1 "\\resource\\apps\\Cutcross"
 

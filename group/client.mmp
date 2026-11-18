@@ -19,11 +19,7 @@ START RESOURCE Cutcross_reg.rss
 TARGETPATH		\private\10003a3f\apps
 END // RESOURCE
 
-LIBRARY			euser.lib apparc.lib cone.lib eikcore.lib avkon.lib
-LIBRARY			commonengine.lib efsrv.lib estor.lib eikcoctl.lib eikdlg.lib 
-LIBRARY			eikctl.lib bafl.lib fbscli.lib aknnotify.lib aknicon.lib
-LIBRARY			etext.lib gdi.lib egul.lib insock.lib
-LIBRARY			ecom.lib InetProtUtil.lib http.lib esock.lib hwrmvibraclient.lib estlib.lib
+LIBRARY			euser.lib efsrv.lib estlib.lib eikcore.lib apparc.lib avkon.lib eiksrv.lib cone.lib
 
 LANG			01
 
@@ -40,6 +36,9 @@ DEBUGGABLE_UDEBONLY
 #endif
 
 SOURCEPATH ..\src\common
-SOURCE ..\client\CutcrossAppUi.cpp ..\client\CutcrossApplication.cpp ..\client\CutcrossContainer.cpp ..\client\CutcrossContainerView.cpp ..\client\CutcrossDocument.cpp FileHandler.cpp
+SOURCE FileHandler.cpp
 
 USERINCLUDE ..\inc\common ..\data\common ..\inc\client ..\data\client
+
+SOURCEPATH ..\src\client
+SOURCE Main.cpp Application.cpp Document.cpp AppUi.cpp MainView.cpp
