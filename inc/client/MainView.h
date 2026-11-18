@@ -5,11 +5,15 @@
 #define MAINVIEW_H_
 
 #include <e32std.h>
+#include <e32base.h>
 #include <coecntrl.h>
 
 class CMainView: public CCoeControl
 {
     public:
+        // Draw the contents of this view
+        void Draw(const TRect &aRect) const;
+
         // Two-phase constructors
         static CMainView *NewL(const TRect &aRect);
         static CMainView *NewLC(const TRect &aRect);

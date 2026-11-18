@@ -19,7 +19,7 @@ START RESOURCE Cutcross_reg.rss
 TARGETPATH		\private\10003a3f\apps
 END // RESOURCE
 
-LIBRARY			euser.lib efsrv.lib estlib.lib eikcore.lib apparc.lib avkon.lib eiksrv.lib cone.lib
+LIBRARY			euser.lib efsrv.lib estlib.lib eikcore.lib apparc.lib avkon.lib eiksrv.lib cone.lib ws32.lib
 
 LANG			01
 

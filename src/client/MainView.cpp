@@ -2,9 +2,19 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 #include <e32std.h>
+#include <e32base.h>
+#include <w32std.h>
 #include <coecntrl.h>
 
 #include "MainView.h"
+
+// Draw the contents of this view
+void CMainView::Draw(const TRect &aRect) const
+{
+    // Get the system graphics context and clear the view rectangle
+    CWindowGc &graphicsContext = SystemGc();
+    graphicsContext.Clear(aRect);
+}
 
 // Constructors
 CMainView::CMainView()
