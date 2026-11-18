@@ -6,6 +6,7 @@
 
 #include <e32std.h>
 #include <e32base.h>
+#include <aknlists.h>
 #include <coecntrl.h>
 
 class CMainView: public CCoeControl
@@ -14,11 +15,19 @@ class CMainView: public CCoeControl
         // Draw the contents of this view
         void Draw(const TRect &aRect) const;
 
+        // Component control handling
+        TInt CountComponentControls() const;
+        CCoeControl *ComponentControl(TInt aIndex) const;
+
         // Two-phase constructors
         static CMainView *NewL(const TRect &aRect);
         static CMainView *NewLC(const TRect &aRect);
 
     private:
+        // Controls
+        TInt iControlCount;
+        CAknSingleStyleListBox *iListBox;
+
         // Constructors
         CMainView();
         void ConstructL(const TRect &aRect);
