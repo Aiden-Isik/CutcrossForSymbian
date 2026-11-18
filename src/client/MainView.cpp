@@ -10,6 +10,7 @@
 
 #include <avkon.hrh>
 
+#include "View.h"
 #include "MainView.h"
 
 // Draw the contents of this view
@@ -42,12 +43,6 @@ TKeyResponse CMainView::OfferKeyEventL(const TKeyEvent &aKeyEvent, TEventCode aT
     return EKeyWasNotConsumed;
 }
 
-// Return the count of child controls in this component control
-TInt CMainView::CountComponentControls() const
-{
-    return iControlCount;
-}
-
 // Return a control based on an index
 CCoeControl *CMainView::ComponentControl(TInt aIndex) const
 {
@@ -66,8 +61,26 @@ CMainView::CMainView()
 {
 }
 
+CMainView *CMainView::NewL(const TRect &aRect)
+{
+    CMainView *self = CMainView::NewLC(aRect);
+    CleanupStack::Pop(); // NewLC
+    return self;
+}
+
+CMainView *CMainView::NewLC(const TRect &aRect)
+{
+    CMainView *self = new(ELeave) CMainView;
+    CleanupStack::PushL(self);
+    self->ConstructL(aRect);
+    return self; // Will be popped off the cleanup stack by NewL
+}
+
 void CMainView::ConstructL(const TRect &aRect)
 {
+    // Set the ID for this view
+    id = EPageMainId;
+
     // Create the window
     CreateWindowL();
 
@@ -85,19 +98,4 @@ void CMainView::ConstructL(const TRect &aRect)
 
     SetRect(aRect); // Set window size
     ActivateL();
-}
-
-CMainView *CMainView::NewL(const TRect &aRect)
-{
-    CMainView *self = CMainView::NewLC(aRect);
-    CleanupStack::Pop(); // NewLC
-    return self;
-}
-
-CMainView *CMainView::NewLC(const TRect &aRect)
-{
-    CMainView *self = new(ELeave) CMainView;
-    CleanupStack::PushL(self);
-    self->ConstructL(aRect);
-    return self; // Will be popped off the cleanup stack by NewL
 }

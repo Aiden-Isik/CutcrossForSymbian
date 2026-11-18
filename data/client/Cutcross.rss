@@ -39,11 +39,6 @@ RESOURCE MENU_PANE r_application_cutcross_menu
 {
     items =
     {
-        MENU_ITEM
-        {
-            command = EAknSoftkeyExit;
-            txt = "Exit";
-        }
     };
 }
 

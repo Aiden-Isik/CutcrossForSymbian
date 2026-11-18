@@ -10,26 +10,26 @@
 #include <coedef.h>
 #include <coecntrl.h>
 
-class CMainView: public CCoeControl
+#include "View.h"
+
+class CMainView: public CView
 {
     public:
         // Draw the contents of this view
         void Draw(const TRect &aRect) const;
 
         // Component control handling
-        TInt CountComponentControls() const;
         CCoeControl *ComponentControl(TInt aIndex) const;
 
         // Handle key presses
         TKeyResponse OfferKeyEventL(const TKeyEvent &aKeyEvent, TEventCode aType);
 
-        // Two-phase constructors
+        // Constructors
         static CMainView *NewL(const TRect &aRect);
         static CMainView *NewLC(const TRect &aRect);
 
-    private:
+    protected:
         // Controls
-        TInt iControlCount;
         CAknSingleStyleListBox *iListBox;
 
         // Constructors

@@ -3,6 +3,7 @@
 
 #include <aknappui.h>
 #include <eikappui.h>
+#include <eikmenup.h>
 
 #include <e32def.h>
 
@@ -11,6 +12,8 @@
 #include "AppUi.h"
 #include "MainView.h"
 
+#include "Cutcross.rsg"
+
 // Handle commands from the application framework
 void CAppUi::HandleCommandL(TInt aCommand)
 {
@@ -18,6 +21,7 @@ void CAppUi::HandleCommandL(TInt aCommand)
     {
         case EAknSoftkeyExit:
         case EEikCmdExit:
+        case ESwitchPageAbout:
         {
             Exit();
             break; // We should never get here, but if we do handle it gracefully
@@ -28,8 +32,38 @@ void CAppUi::HandleCommandL(TInt aCommand)
             CAknAppUi::HandleCommandL(aCommand);
             break;
         }
-            
     }
+}
+
+// Populate options menu based on the current view
+void CAppUi::DynInitMenuPaneL(TInt aResourceId, CEikMenuPane *aMenuPane)
+{
+    if(aResourceId == R_APPLICATION_CUTCROSS_MENU)
+    {
+        CEikMenuPaneItem::SData newOption;
+
+        switch(iView->GetId())
+        {
+            case EPageMainId:
+            {
+                // Add "about" menu item to the main options menu
+                newOption.iCommandId = ESwitchPageAbout;
+                newOption.iText = _L("About");
+                newOption.iCascadeId = 0;
+                newOption.iFlags = 0;
+                aMenuPane->AddMenuItemL(newOption);
+            }
+        }
+
+        // Add "exit" menu item
+        newOption.iCommandId = EEikCmdExit;
+        newOption.iText = _L("Exit");
+        newOption.iCascadeId = 0;
+        newOption.iFlags = 0;
+        aMenuPane->AddMenuItemL(newOption);
+    }
+    
+    CAknAppUi::DynInitMenuPaneL(aResourceId, aMenuPane);
 }
 
 // Constructors

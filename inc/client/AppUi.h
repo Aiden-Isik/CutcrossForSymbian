@@ -6,7 +6,16 @@
 
 #include <e32def.h>
 #include <aknappui.h>
+#include <eikmenup.h>
 #include <coecntrl.h>
+
+#include "View.h"
+
+enum TViewCommand
+{
+    ESwitchPageMain = 1000,
+    ESwitchPageAbout,
+};
 
 // We're creating a traditional Avkon application, so we inherit from CAknAppUi.
 class CAppUi: public CAknAppUi
@@ -14,6 +23,9 @@ class CAppUi: public CAknAppUi
     public:
         // Command handler
         void HandleCommandL(TInt aCommand);
+
+        // Option menu population function
+        void DynInitMenuPaneL(TInt aResourceId, CEikMenuPane *aMenuPage);
 
         // Constructors
         CAppUi();
@@ -23,7 +35,7 @@ class CAppUi: public CAknAppUi
         ~CAppUi();
 
     private:
-        CCoeControl *iView;
+        CView *iView;
 };
 
 #endif /* APPUI_H_ */
