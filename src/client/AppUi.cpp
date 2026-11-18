@@ -24,6 +24,8 @@ void CAppUi::HandleCommandL(TInt aCommand)
         }
         default:
         {
+            // We don't have a handler for this command, send it up the chain
+            CAknAppUi::HandleCommandL(aCommand);
             break;
         }
             

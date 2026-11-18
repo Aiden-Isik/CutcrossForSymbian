@@ -5,6 +5,7 @@
 #include <e32base.h>
 #include <w32std.h>
 #include <aknlists.h>
+#include <coedef.h>
 #include <coecntrl.h>
 
 #include <avkon.hrh>
@@ -25,6 +26,20 @@ void CMainView::Draw(const TRect &aRect) const
 
     // Draw rectangle to screen
     graphicsContext.Clear(aRect);
+}
+
+// Handle key events
+TKeyResponse CMainView::OfferKeyEventL(const TKeyEvent &aKeyEvent, TEventCode aType)
+{
+    if(aType == EEventKey)
+    {
+        switch(aKeyEvent.iCode)
+        {
+
+        }
+    }
+
+    return EKeyWasNotConsumed;
 }
 
 // Return the count of child controls in this component control
@@ -65,7 +80,7 @@ void CMainView::ConstructL(const TRect &aRect)
     iListBox->ConstructL(this, EAknListBoxSelectionList);
     iListBox->SetContainerWindowL(*this);
     iListBox->SetExtent(TPoint(0,0), iListBox->MinimumSize());
-    CleanupStack::Pop(iListBox);
+    CleanupStack::Pop(); // iListBox
     iControlCount++;
 
     SetRect(aRect); // Set window size

@@ -7,6 +7,7 @@
 #include <e32std.h>
 #include <e32base.h>
 #include <aknlists.h>
+#include <coedef.h>
 #include <coecntrl.h>
 
 class CMainView: public CCoeControl
@@ -18,6 +19,9 @@ class CMainView: public CCoeControl
         // Component control handling
         TInt CountComponentControls() const;
         CCoeControl *ComponentControl(TInt aIndex) const;
+
+        // Handle key presses
+        TKeyResponse OfferKeyEventL(const TKeyEvent &aKeyEvent, TEventCode aType);
 
         // Two-phase constructors
         static CMainView *NewL(const TRect &aRect);

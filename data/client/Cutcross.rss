@@ -12,18 +12,41 @@ NAME CUTC
 RESOURCE RSS_SIGNATURE
 {
 }
+
 RESOURCE TBUF
 {
 	buf = "Cutcross";
 }
+
 RESOURCE EIK_APP_INFO r_application_cutcross_app_ui
 {
 	cba = R_AVKON_SOFTKEYS_OPTIONS_EXIT;
-	status_pane = r_application_status_pane;
+	menubar = r_application_cutcross_menubar;
 }
-RESOURCE STATUS_PANE_APP_MODEL r_application_status_pane
+
+RESOURCE MENU_BAR r_application_cutcross_menubar
 {
+    titles =
+    {
+        MENU_TITLE
+        {
+            menu_pane = r_application_cutcross_menu;
+        }
+    };
 }
+
+RESOURCE MENU_PANE r_application_cutcross_menu
+{
+    items =
+    {
+        MENU_ITEM
+        {
+            command = EAknSoftkeyExit;
+            txt = "Exit";
+        }
+    };
+}
+
 RESOURCE LOCALISABLE_APP_INFO r_localisable_app_info
 {
 	short_caption = STR_CutcrossApplication_4;
