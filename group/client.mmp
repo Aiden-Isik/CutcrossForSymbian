@@ -41,4 +41,4 @@ SOURCE FileHandler.cpp
 USERINCLUDE ..\inc\common ..\data\common ..\inc\client ..\data\client
 
 SOURCEPATH ..\src\client
-SOURCE Main.cpp Application.cpp Document.cpp AppUi.cpp MainView.cpp View.cpp
+SOURCE Main.cpp Application.cpp Document.cpp AppUi.cpp MainView.cpp View.cpp AboutView.cpp

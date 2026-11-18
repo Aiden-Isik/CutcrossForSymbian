@@ -27,6 +27,9 @@ class CView: public CCoeControl
         static CView *NewL(const TRect &aRect);
         static CView *NewLC(const TRect &aRect);
 
+        // Destructor
+        ~CView();
+
     protected:
         // Control count
         TInt iControlCount;

@@ -4,15 +4,52 @@
 #include <aknappui.h>
 #include <eikappui.h>
 #include <eikmenup.h>
-
 #include <e32def.h>
+#include <e32std.h>
+#include <e32err.h>
 
 #include <avkon.hrh>
 
 #include "AppUi.h"
 #include "MainView.h"
+#include "AboutView.h"
 
 #include "Cutcross.rsg"
+
+// Switch the current view
+void CAppUi::SwitchViewL(TUint8 id)
+{
+    // Delete the current view
+    if(iView)
+    {
+        RemoveFromStack(iView);
+        delete iView;
+    }
+
+    // Create view object corresponding to the ID
+    switch(id)
+    {
+        case EPageMainId:
+        {
+            iView = CMainView::NewL(ClientRect());
+            break;
+        }
+        case EPageAboutId:
+        {
+            iView = CAboutView::NewL(ClientRect());
+            break;
+        }
+        default:
+        {
+            User::Leave(KErrArgument);
+            break; // Should never get here, but no harm in it
+        }
+    }
+
+    iView->SetMopParent(this); // Owned by this object
+    AddToStackL(iView);
+    return;
+}
 
 // Handle commands from the application framework
 void CAppUi::HandleCommandL(TInt aCommand)
@@ -21,10 +58,21 @@ void CAppUi::HandleCommandL(TInt aCommand)
     {
         case EAknSoftkeyExit:
         case EEikCmdExit:
-        case ESwitchPageAbout:
         {
             Exit();
             break; // We should never get here, but if we do handle it gracefully
+        }
+        case ESwitchPageMain:
+        {
+            // Switch the current view to the main menu page
+            SwitchViewL(EPageMainId);
+            break;
+        }
+        case ESwitchPageAbout:
+        {
+            // Switch the current view to the about page
+            SwitchViewL(EPageAboutId);
+            break;
         }
         default:
         {
@@ -52,6 +100,17 @@ void CAppUi::DynInitMenuPaneL(TInt aResourceId, CEikMenuPane *aMenuPane)
                 newOption.iCascadeId = 0;
                 newOption.iFlags = 0;
                 aMenuPane->AddMenuItemL(newOption);
+                break;
+            }
+            case EPageAboutId:
+            {
+                // Add "main menu" menu item to the about options menu
+                newOption.iCommandId = ESwitchPageMain;
+                newOption.iText = _L("Main menu");
+                newOption.iCascadeId = 0;
+                newOption.iFlags = 0;
+                aMenuPane->AddMenuItemL(newOption);
+                break;
             }
         }
 
@@ -62,7 +121,7 @@ void CAppUi::DynInitMenuPaneL(TInt aResourceId, CEikMenuPane *aMenuPane)
         newOption.iFlags = 0;
         aMenuPane->AddMenuItemL(newOption);
     }
-    
+
     CAknAppUi::DynInitMenuPaneL(aResourceId, aMenuPane);
 }
 

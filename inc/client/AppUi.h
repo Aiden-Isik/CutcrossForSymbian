@@ -35,7 +35,11 @@ class CAppUi: public CAknAppUi
         ~CAppUi();
 
     private:
+        // Default view
         CView *iView;
+
+        // Switch the current view
+        void SwitchViewL(TUint8 id);
 };
 
 #endif /* APPUI_H_ */

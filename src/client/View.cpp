@@ -43,3 +43,8 @@ void CView::ConstructL(const TRect &aRect)
 CView::CView()
 {
 }
+
+// Destructor
+CView::~CView()
+{
+}

@@ -99,3 +99,12 @@ void CMainView::ConstructL(const TRect &aRect)
     SetRect(aRect); // Set window size
     ActivateL();
 }
+
+// Destructor
+CMainView::~CMainView()
+{
+    if(iListBox)
+    {
+        delete iListBox;
+    }
+}

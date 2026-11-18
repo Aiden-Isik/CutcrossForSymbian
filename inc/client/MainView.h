@@ -28,6 +28,9 @@ class CMainView: public CView
         static CMainView *NewL(const TRect &aRect);
         static CMainView *NewLC(const TRect &aRect);
 
+        // Destructor
+        ~CMainView();
+
     protected:
         // Controls
         CAknSingleStyleListBox *iListBox;
