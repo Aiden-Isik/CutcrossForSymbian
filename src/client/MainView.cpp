@@ -19,14 +19,14 @@ void CMainView::Draw(const TRect &aRect) const
     // Get the system graphics context
     CWindowGc &graphicsContext = SystemGc();
 
+    // Draw rectangle to screen
+    graphicsContext.Clear(aRect);
+
     // Draw the main ListBox if it exists
     if(iListBox)
     {
         iListBox->Draw(aRect);
     }
-
-    // Draw rectangle to screen
-    graphicsContext.Clear(aRect);
 }
 
 // Handle key events

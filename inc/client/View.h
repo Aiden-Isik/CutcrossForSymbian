@@ -11,7 +11,6 @@
 enum TViewId
 {
     EPageMainId = 1,
-    EPageAboutId,
 };
 
 class CView: public CCoeControl

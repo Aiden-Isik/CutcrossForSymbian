@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 #include <aknappui.h>
+#include <aknmessagequerydialog.h>
 #include <eikappui.h>
 #include <eikmenup.h>
 #include <e32def.h>
@@ -12,9 +13,13 @@
 
 #include "AppUi.h"
 #include "MainView.h"
-#include "AboutView.h"
+#include "Version.h"
 
 #include "Cutcross.rsg"
+
+// Macros to convert macros which expand to non-string to string
+#define STR_HELPER(macro) #macro
+#define STR(macro) STR_HELPER(macro)
 
 // Switch the current view
 void CAppUi::SwitchViewL(TUint8 id)
@@ -34,11 +39,6 @@ void CAppUi::SwitchViewL(TUint8 id)
             iView = CMainView::NewL(ClientRect());
             break;
         }
-        case EPageAboutId:
-        {
-            iView = CAboutView::NewL(ClientRect());
-            break;
-        }
         default:
         {
             User::Leave(KErrArgument);
@@ -49,6 +49,45 @@ void CAppUi::SwitchViewL(TUint8 id)
     iView->SetMopParent(this); // Owned by this object
     AddToStackL(iView);
     return;
+}
+
+// Show the "about" dialog
+void CAppUi::ShowAboutDialogL()
+{
+    // Populate the text box
+    _LIT(textBoxHeader, "About Cutcross");
+    TPtrC headerPointer(textBoxHeader);
+
+    _LIT(textBoxText, "Cutcross for Symbian S60v3+\n\n"
+
+                      "Version " KCUTCROSS_VERSION "\n\n"
+
+                      "Built with GCC " STR(__GNUC__) "." STR(__GNUC_MINOR__) "." STR(__GNUC_PATCHLEVEL__) "\n\n"
+
+                      "Copyright (c) 2026 Aiden Isik\n"
+                      "<aidenisik@member.fsf.org>\n\n"
+
+                      "https://github.com/Aiden-Isik/CutcrossForSymbian\n\n"
+
+                      "This program is free software: you can redistribute it and/or modify "
+                      "it under the terms of the GNU Affero General Public License as published by "
+                      "the Free Software Foundation, either version 3 of the License, or "
+                      "(at your option) any later version.\n\n"
+
+                      "This program is distributed in the hope that it will be useful, "
+                      "but WITHOUT ANY WARRANTY; without even the implied warranty of "
+                      "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the "
+                      "GNU Affero General Public License for more details.\n\n"
+
+                      "You should have received a copy of the GNU Affero General Public License "
+                      "along with this program.  If not, see <https://www.gnu.org/licenses/>.");
+    TPtrC textPointer(textBoxText);
+
+    CAknMessageQueryDialog *dialog = CAknMessageQueryDialog::NewL(textPointer);
+    dialog->PrepareLC(R_AVKON_MESSAGE_QUERY_DIALOG);
+    dialog->ButtonGroupContainer().MakeCommandVisible(EAknSoftkeyCancel, EFalse);
+    dialog->QueryHeading()->SetTextL(headerPointer);
+    dialog->RunLD();
 }
 
 // Handle commands from the application framework
@@ -71,7 +110,7 @@ void CAppUi::HandleCommandL(TInt aCommand)
         case ESwitchPageAbout:
         {
             // Switch the current view to the about page
-            SwitchViewL(EPageAboutId);
+            ShowAboutDialogL();
             break;
         }
         default:
@@ -97,16 +136,6 @@ void CAppUi::DynInitMenuPaneL(TInt aResourceId, CEikMenuPane *aMenuPane)
                 // Add "about" menu item to the main options menu
                 newOption.iCommandId = ESwitchPageAbout;
                 newOption.iText = _L("About");
-                newOption.iCascadeId = 0;
-                newOption.iFlags = 0;
-                aMenuPane->AddMenuItemL(newOption);
-                break;
-            }
-            case EPageAboutId:
-            {
-                // Add "main menu" menu item to the about options menu
-                newOption.iCommandId = ESwitchPageMain;
-                newOption.iText = _L("Main menu");
                 newOption.iCascadeId = 0;
                 newOption.iFlags = 0;
                 aMenuPane->AddMenuItemL(newOption);

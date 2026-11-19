@@ -40,6 +40,9 @@ class CAppUi: public CAknAppUi
 
         // Switch the current view
         void SwitchViewL(TUint8 id);
+
+        // Show the about dialog
+        void ShowAboutDialogL();
 };
 
 #endif /* APPUI_H_ */
