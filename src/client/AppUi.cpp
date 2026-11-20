@@ -13,6 +13,7 @@
 
 #include "AppUi.h"
 #include "MainView.h"
+#include "AddView.h"
 #include "Version.h"
 
 #include "Cutcross.rsg"
@@ -37,6 +38,11 @@ void CAppUi::SwitchViewL(TUint8 id)
         case EPageMainId:
         {
             iView = CMainView::NewL(ClientRect());
+            break;
+        }
+        case EPageAddId:
+        {
+            iView = CAddView::NewL(ClientRect());
             break;
         }
         default:
@@ -113,6 +119,21 @@ void CAppUi::HandleCommandL(TInt aCommand)
             ShowAboutDialogL();
             break;
         }
+        case ESwitchPageAdd:
+        {
+            SwitchViewL(EPageAddId);
+            break;
+        }
+        case ESwitchPageAddConditions:
+        {
+            Exit(); // TODO: implement
+            break;
+        }
+        case ESwitchPageAddActions:
+        {
+            Exit(); // TODO: implement
+            break;
+        }
         default:
         {
             // We don't have a handler for this command, send it up the chain
@@ -133,15 +154,40 @@ void CAppUi::DynInitMenuPaneL(TInt aResourceId, CEikMenuPane *aMenuPane)
         {
             case EPageMainId:
             {
-                // Add "about" menu item to the main options menu
-                newOption.iCommandId = ESwitchPageAbout;
-                newOption.iText = _L("About");
+                // Add "add" menu item
+                newOption.iCommandId = ESwitchPageAdd;
+                newOption.iText = _L("Add");
                 newOption.iCascadeId = 0;
                 newOption.iFlags = 0;
                 aMenuPane->AddMenuItemL(newOption);
                 break;
             }
+            case EPageAddId:
+            {
+                // Add "main menu" menu item
+                newOption.iCommandId = ESwitchPageMain;
+                newOption.iText = _L("Main menu");
+                newOption.iCascadeId = 0;
+                newOption.iFlags = 0;
+                aMenuPane->AddMenuItemL(newOption);
+                break;
+            }
+            case EPageAddConditionsId:
+            {
+                break;
+            }
+            case EPageAddActionsId:
+            {
+                
+            }
         }
+
+        // Add "about" menu item to the main options menu
+        newOption.iCommandId = ESwitchPageAbout;
+        newOption.iText = _L("About");
+        newOption.iCascadeId = 0;
+        newOption.iFlags = 0;
+        aMenuPane->AddMenuItemL(newOption);
 
         // Add "exit" menu item
         newOption.iCommandId = EEikCmdExit;

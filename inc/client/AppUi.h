@@ -15,6 +15,9 @@ enum TViewCommand
 {
     ESwitchPageMain = 1000,
     ESwitchPageAbout,
+    ESwitchPageAdd,
+    ESwitchPageAddConditions,
+    ESwitchPageAddActions,
 };
 
 // We're creating a traditional Avkon application, so we inherit from CAknAppUi.
