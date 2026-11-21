@@ -15,6 +15,7 @@
 #include "MainView.h"
 #include "AddView.h"
 #include "AddConditionsView.h"
+#include "AddActionsView.h"
 #include "Version.h"
 
 #include "Cutcross.rsg"
@@ -59,7 +60,7 @@ void CAppUi::SwitchViewL(TUint8 id)
         }
         case EPageAddActionsId:
         {
-            iView = CAddConditionsView::NewL(ClientRect()); // TODO actions view
+            iView = CAddActionsView::NewL(ClientRect()); // TODO actions view
             break;
         }
         default:

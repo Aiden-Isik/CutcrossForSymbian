@@ -17,6 +17,7 @@
 #include "AddView.h"
 #include "AppUi.h"
 
+// Defines the ordering of the ListBox items
 enum TListBoxItems
 {
     EListBoxItemAddConditions = 0,
@@ -81,17 +82,20 @@ void CAddView::HandleListBoxEventL(CEikListBox *aListBox, TListBoxEvent aEvent)
         case EEventItemDoubleClicked:
         {
             // Send the appropriate command back up the chain to CAppUi
-            switch(iListBox->CurrentItemIndex())
+            if(iListBox)
             {
-                case EListBoxItemAddConditions:
+                switch(iListBox->CurrentItemIndex())
                 {
-                    ((CAppUi*)ControlEnv()->AppUi())->HandleCommandL(ESwitchPageAddConditions);
-                    break;
-                }
-                case EListBoxItemAddActions:
-                {
-                    ((CAppUi*)ControlEnv()->AppUi())->HandleCommandL(ESwitchPageAddActions);
-                    break;
+                    case EListBoxItemAddConditions:
+                    {
+                        ((CAppUi*)ControlEnv()->AppUi())->HandleCommandL(ESwitchPageAddConditions);
+                        break;
+                    }
+                    case EListBoxItemAddActions:
+                    {
+                        ((CAppUi*)ControlEnv()->AppUi())->HandleCommandL(ESwitchPageAddActions);
+                        break;
+                    }
                 }
             }
         }

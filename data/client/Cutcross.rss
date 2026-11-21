@@ -42,6 +42,185 @@ RESOURCE MENU_PANE r_application_cutcross_menu
     };
 }
 
+// Condition prompt resources
+
+RESOURCE DIALOG r_application_cutcross_query_condition_year
+{
+    flags = EGeneralQueryFlags;
+    buttons = R_AVKON_SOFTKEYS_OK_CANCEL;
+    items =
+    {
+        DLG_LINE
+        {
+            type = EAknCtQuery;
+            id = EGeneralQuery;
+            control = AVKON_DATA_QUERY
+            {
+                layout = ENumberLayout;
+                label = "Enter year and press \"Ok\", or \"Cancel\" to not set a year:";
+                control = AVKON_INTEGER_EDWIN
+                {
+                    min = 0;
+                    max = 65535;
+                    maxlength = 5;
+                };
+            };
+        }
+    };
+}
+
+RESOURCE DIALOG r_application_cutcross_query_condition_month
+{
+    flags = EGeneralQueryFlags;
+    buttons = R_AVKON_SOFTKEYS_OK_CANCEL;
+    items =
+    {
+        DLG_LINE
+        {
+            type = EAknCtQuery;
+            id = EGeneralQuery;
+            control = AVKON_DATA_QUERY
+            {
+                layout = ENumberLayout;
+                label = "Enter month number and press \"Ok\", or \"Cancel\" to not set a month:";
+                control = AVKON_INTEGER_EDWIN
+                {
+                    min = 1;
+                    max = 12;
+                    maxlength = 2;
+                };
+            };
+        }
+    };
+}
+
+RESOURCE DIALOG r_application_cutcross_query_condition_day
+{
+    flags = EGeneralQueryFlags;
+    buttons = R_AVKON_SOFTKEYS_OK_CANCEL;
+    items =
+    {
+        DLG_LINE
+        {
+            type = EAknCtQuery;
+            id = EGeneralQuery;
+            control = AVKON_DATA_QUERY
+            {
+                layout = ENumberLayout;
+                label = "Enter date and press \"Ok\", or \"Cancel\" to not set a date:";
+                control = AVKON_INTEGER_EDWIN
+                {
+                    min = 1;
+                    max = 31;
+                    maxlength = 2;
+                };
+            };
+        }
+    };
+}
+
+RESOURCE DIALOG r_application_cutcross_query_condition_hour
+{
+    flags = EGeneralQueryFlags;
+    buttons = R_AVKON_SOFTKEYS_OK_CANCEL;
+    items =
+    {
+        DLG_LINE
+        {
+            type = EAknCtQuery;
+            id = EGeneralQuery;
+            control = AVKON_DATA_QUERY
+            {
+                layout = ENumberLayout;
+                label = "Enter hour and press \"Ok\", or \"Cancel\" to not set an hour:";
+                control = AVKON_INTEGER_EDWIN
+                {
+                    min = 0;
+                    max = 23;
+                    maxlength = 2;
+                };
+            };
+        }
+    };
+}
+
+RESOURCE DIALOG r_application_cutcross_query_condition_minute
+{
+    flags = EGeneralQueryFlags;
+    buttons = R_AVKON_SOFTKEYS_OK_CANCEL;
+    items =
+    {
+        DLG_LINE
+        {
+            type = EAknCtQuery;
+            id = EGeneralQuery;
+            control = AVKON_DATA_QUERY
+            {
+                layout = ENumberLayout;
+                label = "Enter minute and press \"Ok\", or \"Cancel\" to not set a minute:";
+                control = AVKON_INTEGER_EDWIN
+                {
+                    min = 0;
+                    max = 59;
+                    maxlength = 2;
+                };
+            };
+        }
+    };
+}
+
+// Action prompt resources
+
+RESOURCE DIALOG r_application_cutcross_query_action_vibrate_duration
+{
+    flags = EGeneralQueryFlags;
+    buttons = R_AVKON_SOFTKEYS_OK_CANCEL;
+    items =
+    {
+        DLG_LINE
+        {
+            type = EAknCtQuery;
+            id = EGeneralQuery;
+            control = AVKON_DATA_QUERY
+            {
+                layout = ENumberLayout;
+                label = "Enter vibration duration (in milliseconds) and press \"Ok\", or \"Cancel\" to not set a duration:";
+                control = AVKON_INTEGER_EDWIN
+                {
+                    min = 0;
+                    max = 65535;
+                    maxlength = 5;
+                };
+            };
+        }
+    };
+}
+
+RESOURCE DIALOG r_application_cutcross_query_action_vibrate_intensity
+{
+    flags = EGeneralQueryFlags;
+    buttons = R_AVKON_SOFTKEYS_OK_CANCEL;
+    items =
+    {
+        DLG_LINE
+        {
+            type = EAknCtQuery;
+            id = EGeneralQuery;
+            control = AVKON_DATA_QUERY
+            {
+                layout = ENumberLayout;
+                label = "Enter vibration intensity (from 0% to 100%) and press \"Ok\", or \"Cancel\" to use the default 100%:";
+                control = AVKON_INTEGER_EDWIN
+                {
+                    min = 0;
+                    max = 100;
+                    maxlength = 3;
+                };
+            };
+        }
+    };
+}
+
 RESOURCE LOCALISABLE_APP_INFO r_localisable_app_info
 {
 	short_caption = STR_CutcrossApplication_4;
