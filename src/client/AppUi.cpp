@@ -14,6 +14,7 @@
 #include "AppUi.h"
 #include "MainView.h"
 #include "AddView.h"
+#include "AddConditionsView.h"
 #include "Version.h"
 
 #include "Cutcross.rsg"
@@ -29,7 +30,13 @@ void CAppUi::SwitchViewL(TUint8 id)
     if(iView)
     {
         RemoveFromStack(iView);
-        delete iView;
+
+        if(iPreviousView)
+        {
+            delete iPreviousView;
+            iPreviousView = iView;
+            iView = NULL;
+        }
     }
 
     // Create view object corresponding to the ID
@@ -43,6 +50,16 @@ void CAppUi::SwitchViewL(TUint8 id)
         case EPageAddId:
         {
             iView = CAddView::NewL(ClientRect());
+            break;
+        }
+        case EPageAddConditionsId:
+        {
+            iView = CAddConditionsView::NewL(ClientRect());
+            break;
+        }
+        case EPageAddActionsId:
+        {
+            iView = CAddConditionsView::NewL(ClientRect()); // TODO actions view
             break;
         }
         default:
@@ -126,12 +143,12 @@ void CAppUi::HandleCommandL(TInt aCommand)
         }
         case ESwitchPageAddConditions:
         {
-            Exit(); // TODO: implement
+            SwitchViewL(EPageAddConditionsId);
             break;
         }
         case ESwitchPageAddActions:
         {
-            Exit(); // TODO: implement
+            SwitchViewL(EPageAddActionsId);
             break;
         }
         default:
@@ -178,7 +195,7 @@ void CAppUi::DynInitMenuPaneL(TInt aResourceId, CEikMenuPane *aMenuPane)
             }
             case EPageAddActionsId:
             {
-                
+                break;
             }
         }
 
@@ -215,6 +232,7 @@ void CAppUi::ConstructL()
     iView = CMainView::NewL(ClientRect());
     iView->SetMopParent(this); // Owned by this object
     AddToStackL(iView);
+    iPreviousView = NULL;
     return;
 }
 

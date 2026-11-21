@@ -41,6 +41,9 @@ class CAppUi: public CAknAppUi
         // Default view
         CView *iView;
 
+        // Previous view, kept so it isn't deleted whilst still active
+        CView *iPreviousView;
+
         // Switch the current view
         void SwitchViewL(TUint8 id);
 
