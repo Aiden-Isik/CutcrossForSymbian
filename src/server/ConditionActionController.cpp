@@ -41,7 +41,7 @@ void CConditionActionController::InitialiseL()
     // and ignore it, it might just have not been created yet.
     CFileHandler *fileHandler = CFileHandler::GetInstanceL();
     struct Conditions loadResult;
-    TRAPD(error, loadResult=fileHandler->LoadConditionDataL(KSAVE_FILE_PATH));
+    TRAPD(error, loadResult=fileHandler->LoadConditionDataL(KSaveFileName));
 
     if(error == KErrNone)
     {
