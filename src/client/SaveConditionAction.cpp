@@ -3,6 +3,7 @@
 
 #include <e32std.h>
 #include <e32cmn.h>
+#include <string.h>
 
 #include "SaveConditionAction.h"
 #include "ConditionActionData.h"
@@ -183,7 +184,7 @@ void CSaveConditionAction::InitialiseConditionsL()
                 }
             }
 
-            delete iConditions->conditions;
+            delete[] iConditions->conditions;
             iConditions->conditions = NULL;
         }
 
@@ -193,7 +194,7 @@ void CSaveConditionAction::InitialiseConditionsL()
 
     // Load the save file if possible
     CFileHandler *fileHandler = CFileHandler::GetInstanceL();
-    Conditions conditions;
+    struct Conditions conditions;
     iConditions = new(ELeave) Conditions;
     TRAPD(error, conditions=fileHandler->LoadConditionDataL(KSaveFileName));
 
@@ -201,13 +202,51 @@ void CSaveConditionAction::InitialiseConditionsL()
     if(error)
     {
         // We failed to read the file. Create a new blank set of conditions and actions
-        memset(iConditions, 0, sizeof(Conditions));
+        memset(iConditions, 0, sizeof(struct Conditions));
     }
     else
     {
         // The file was read successfully, use the data it contained
-        memcpy(iConditions, &conditions, sizeof(Conditions));
+        memcpy(iConditions, &conditions, sizeof(struct Conditions));
     }
+}
+
+void CSaveConditionAction::AddConditionFromUnsavedL()
+{
+    // Make sure conditions and unsaved condition actually exist
+    if(!iConditions || !iUnsavedCondition)
+    {
+        User::Leave(KErrNotFound);
+    }
+
+    // Create the new conditions array, which will replace the old one
+    TUint16 oldCount = iConditions->conditions ? iConditions->count : 0;
+    struct Condition *conditions = new(ELeave) Condition[oldCount + 1]; // +1 for new condition
+
+    // Copy the current conditions, but only if they actually exist
+    if(oldCount > 0)
+    {
+        memcpy(conditions, iConditions->conditions, sizeof(struct Condition) * oldCount);
+    }
+
+    // Append the new condition
+    memcpy(&(conditions[oldCount]), iUnsavedCondition, sizeof(struct Condition));
+
+    // Free the old conditions array
+    delete[] iConditions->conditions;
+    iUnsavedCondition->timeCondition = NULL; // We own these pointers now. Prevent cleanup code from deleting them.
+    iUnsavedCondition->vibrationAction = NULL;
+
+    // Point the new conditions array to ours, newly appended
+    iConditions->conditions = conditions;
+    iConditions->count = oldCount + 1;
+}
+
+// Save conditions to file
+void CSaveConditionAction::SaveConditionsToFileL()
+{
+    CFileHandler *fileHandler = CFileHandler::GetInstanceL();
+    fileHandler->SaveConditionDataL(iConditions, KSaveFileName);
 }
 
 // Constructor

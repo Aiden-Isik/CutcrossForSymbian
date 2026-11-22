@@ -26,6 +26,10 @@ class CSaveConditionAction: public CBase
 
         // Initialise all condition-actions
         static void InitialiseConditionsL();
+        static void AddConditionFromUnsavedL();
+
+        // Save to file
+        static void SaveConditionsToFileL();
 
     private:
         // The singleton object created from this class

@@ -18,6 +18,7 @@
 #include "AddActionsView.h"
 #include "Version.h"
 #include "ConditionActionData.h"
+#include "SaveConditionAction.h"
 
 #include "Cutcross.rsg"
 
@@ -153,6 +154,15 @@ void CAppUi::HandleCommandL(TInt aCommand)
             SwitchViewL(EPageAddActionsId);
             break;
         }
+        case EAddSave:
+        {
+            // Save the unsaved condition-action data set in the add menu,
+            // then save the result to file
+            CSaveConditionAction *saveConditionAction = CSaveConditionAction::GetInstanceL();
+            saveConditionAction->AddConditionFromUnsavedL();
+            saveConditionAction->SaveConditionsToFileL();
+            break;
+        }
         default:
         {
             // We don't have a handler for this command, send it up the chain
@@ -261,6 +271,11 @@ void CAppUi::ConstructL()
     iView->SetMopParent(this); // Owned by this object
     AddToStackL(iView);
     iPreviousView = NULL;
+
+    // Initialise condition-action data
+    CSaveConditionAction *saveConditionAction = CSaveConditionAction::GetInstanceL();
+    saveConditionAction->InitialiseConditionsL();
+    saveConditionAction->InitialiseUnsavedL();
 }
 
 // Destructor
