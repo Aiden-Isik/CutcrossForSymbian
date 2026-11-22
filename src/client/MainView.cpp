@@ -12,6 +12,8 @@
 
 #include "View.h"
 #include "MainView.h"
+#include "AppUi.h"
+#include "SaveConditionAction.h"
 
 // Draw the contents of this view
 void CMainView::Draw(const TRect &aRect) const
@@ -95,6 +97,10 @@ void CMainView::ConstructL(const TRect &aRect)
     iListBox->SetExtent(TPoint(0,0), iListBox->MinimumSize());
     CleanupStack::Pop(); // iListBox
     iControlCount++;
+
+    // Set up condition-action save class
+    CSaveConditionAction *saveConditionAction = CSaveConditionAction::GetInstanceL();
+    saveConditionAction->InitialiseUnsavedL();
 
     SetRect(aRect); // Set window size
     ActivateL();

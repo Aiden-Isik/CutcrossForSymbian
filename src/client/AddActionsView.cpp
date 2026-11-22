@@ -17,6 +17,7 @@
 #include "View.h"
 #include "AddActionsView.h"
 #include "AppUi.h"
+#include "SaveConditionAction.h"
 
 #include "Cutcross.rsg"
 
@@ -90,23 +91,31 @@ void CAddActionsView::HandleListBoxEventL(CEikListBox *aListBox, TListBoxEvent a
                 {
                     case EListBoxItemVibration:
                     {
+                        // Vibration settings
+                        TUint16 duration = 1000; // Default 1s
+                        TUint8 intensity = 100; // Default 100%
+
                         // Request vibration settings
+                        // Duration
                         TInt value;
                         CAknNumberQueryDialog *dialog = CAknNumberQueryDialog::NewL(value);
 
                         if(dialog->ExecuteLD(R_APPLICATION_CUTCROSS_QUERY_ACTION_VIBRATE_DURATION))
                         {
-                            // TODO: conditions
+                            duration = value;
                         }
 
-                        // Month
+                        // Intensity
                         dialog = CAknNumberQueryDialog::NewL(value);
 
                         if(dialog->ExecuteLD(R_APPLICATION_CUTCROSS_QUERY_ACTION_VIBRATE_INTENSITY))
                         {
-                            // TODO: conditions
+                            intensity = value;
                         }
 
+                        // Set unsaved vibration settings
+                        CSaveConditionAction *saveConditionAction = CSaveConditionAction::GetInstanceL();
+                        saveConditionAction->AddUnsavedActionVibrateL(duration, intensity);
                         break;
                     }
                 }

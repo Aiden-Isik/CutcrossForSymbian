@@ -17,6 +17,7 @@
 #include "AddConditionsView.h"
 #include "AddActionsView.h"
 #include "Version.h"
+#include "ConditionActionData.h"
 
 #include "Cutcross.rsg"
 
@@ -60,7 +61,7 @@ void CAppUi::SwitchViewL(TUint8 id)
         }
         case EPageAddActionsId:
         {
-            iView = CAddActionsView::NewL(ClientRect()); // TODO actions view
+            iView = CAddActionsView::NewL(ClientRect());
             break;
         }
         default:
@@ -178,10 +179,24 @@ void CAppUi::DynInitMenuPaneL(TInt aResourceId, CEikMenuPane *aMenuPane)
                 newOption.iCascadeId = 0;
                 newOption.iFlags = 0;
                 aMenuPane->AddMenuItemL(newOption);
+
+                // Add "delete menu item"
+                newOption.iCommandId = EMainDelete;
+                newOption.iText = _L("Delete");
+                newOption.iCascadeId = 0;
+                newOption.iFlags = 0;
+                aMenuPane->AddMenuItemL(newOption);
                 break;
             }
             case EPageAddId:
             {
+                // Add "save" menu item
+                newOption.iCommandId = EAddSave;
+                newOption.iText = _L("Save");
+                newOption.iCascadeId = 0;
+                newOption.iFlags = 0;
+                aMenuPane->AddMenuItemL(newOption);
+
                 // Add "main menu" menu item
                 newOption.iCommandId = ESwitchPageMain;
                 newOption.iText = _L("Main menu");
@@ -192,10 +207,22 @@ void CAppUi::DynInitMenuPaneL(TInt aResourceId, CEikMenuPane *aMenuPane)
             }
             case EPageAddConditionsId:
             {
+                // Add "back" menu item
+                newOption.iCommandId = ESwitchPageAdd;
+                newOption.iText = _L("Back");
+                newOption.iCascadeId = 0;
+                newOption.iFlags = 0;
+                aMenuPane->AddMenuItemL(newOption);
                 break;
             }
             case EPageAddActionsId:
             {
+                // Add "back" menu item
+                newOption.iCommandId = ESwitchPageAdd;
+                newOption.iText = _L("Back");
+                newOption.iCascadeId = 0;
+                newOption.iFlags = 0;
+                aMenuPane->AddMenuItemL(newOption);
                 break;
             }
         }
@@ -234,7 +261,6 @@ void CAppUi::ConstructL()
     iView->SetMopParent(this); // Owned by this object
     AddToStackL(iView);
     iPreviousView = NULL;
-    return;
 }
 
 // Destructor

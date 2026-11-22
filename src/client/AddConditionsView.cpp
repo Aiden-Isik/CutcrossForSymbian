@@ -18,6 +18,7 @@
 #include "AddConditionsView.h"
 #include "AppUi.h"
 #include "Bit.h"
+#include "SaveConditionAction.h"
 
 #include "Cutcross.rsg"
 
@@ -92,19 +93,20 @@ void CAddConditionsView::HandleListBoxEventL(CEikListBox *aListBox, TListBoxEven
                 {
                     case EListBoxItemDate:
                     {
-                        //if(!iConditions.conditions)
-                        //{
-                        //    iConditions.conditions = new(ELeave) Conditions;
-                        //}
+                        // Date conditions
+                        TUint16 year;
+                        TUint8 month;
+                        TUint8 day;
+                        TUint8 used;
 
-                        // Request date conditions
                         // Year
                         TInt value;
                         CAknNumberQueryDialog *dialog = CAknNumberQueryDialog::NewL(value);
 
                         if(dialog->ExecuteLD(R_APPLICATION_CUTCROSS_QUERY_CONDITION_YEAR))
                         {
-                            // TODO: conditions
+                            year = value;
+                            used |= BIT(KTIME_USED_YEAR_BIT);
                         }
 
                         // Month
@@ -112,7 +114,8 @@ void CAddConditionsView::HandleListBoxEventL(CEikListBox *aListBox, TListBoxEven
 
                         if(dialog->ExecuteLD(R_APPLICATION_CUTCROSS_QUERY_CONDITION_MONTH))
                         {
-                            // TODO: conditions
+                            month = value;
+                            used |= BIT(KTIME_USED_MONTH_BIT);
                         }
 
                         // Day
@@ -120,30 +123,44 @@ void CAddConditionsView::HandleListBoxEventL(CEikListBox *aListBox, TListBoxEven
 
                         if(dialog->ExecuteLD(R_APPLICATION_CUTCROSS_QUERY_CONDITION_DAY))
                         {
-                            // TODO: conditions
+                            day = value;
+                            used |= BIT(KTIME_USED_DAY_BIT);
                         }
 
+                        // Set unsaved date data based on user input
+                        CSaveConditionAction *saveConditionAction = CSaveConditionAction::GetInstanceL();
+                        saveConditionAction->AddUnsavedConditionDateL(year, month, day, used);
                         break;
                     }
                     case EListBoxItemTime:
                     {
-                        // Request time conditions
+                        // Time conditions
+                        TUint8 hour;
+                        TUint8 minute;
+                        TUint8 used;
+
+                        // Hour
                         TInt value;
                         CAknNumberQueryDialog *dialog = CAknNumberQueryDialog::NewL(value);
     
                         if(dialog->ExecuteLD(R_APPLICATION_CUTCROSS_QUERY_CONDITION_HOUR))
                         {
-                            // TODO: conditions
+                            hour = value;
+                            used |= BIT(KTIME_USED_HOUR_BIT);
                         }
     
-                        // Month
+                        // Minute
                         dialog = CAknNumberQueryDialog::NewL(value);
     
                         if(dialog->ExecuteLD(R_APPLICATION_CUTCROSS_QUERY_CONDITION_MINUTE))
                         {
-                            // TODO: conditions
+                            minute = value;
+                            used |= BIT(KTIME_USED_MINUTE_BIT);
                         }
 
+                        // Set unsaved time data
+                        CSaveConditionAction *saveConditionAction = CSaveConditionAction::GetInstanceL();
+                        saveConditionAction->AddUnsavedConditionTimeL(hour, minute, used);
                         break;
                     }
                 }

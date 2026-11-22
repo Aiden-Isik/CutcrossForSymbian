@@ -10,6 +10,7 @@
 #include <coecntrl.h>
 
 #include "View.h"
+#include "ConditionActionData.h"
 
 enum TViewCommand
 {
@@ -18,6 +19,8 @@ enum TViewCommand
     ESwitchPageAdd,
     ESwitchPageAddConditions,
     ESwitchPageAddActions,
+    EAddSave,
+    EMainDelete,
 };
 
 // We're creating a traditional Avkon application, so we inherit from CAknAppUi.

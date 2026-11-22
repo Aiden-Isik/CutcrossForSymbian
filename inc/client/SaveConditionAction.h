@@ -1,0 +1,39 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+// Copyright (c) 2026 Aiden Isik
+
+#ifndef SAVECONDITIONACTION_H
+#define SAVECONDITIONACTION_H
+
+#include <e32std.h>
+#include <e32base.h>
+
+#include "ConditionActionData.h"
+
+class CSaveConditionAction: public CBase
+{
+    public:
+        // Stand-in constructor
+        static CSaveConditionAction *GetInstanceL();
+
+        // Clear unsaved condition-action
+        static void ClearUnsaved();
+
+        // Initialise unsaved condition-action
+        static void InitialiseUnsavedL();
+        static void AddUnsavedConditionDateL(TUint16 aYear, TUint8 aMonth, TUint8 aDay, TUint8 aUsed);
+        static void AddUnsavedConditionTimeL(TUint8 aHour, TUint8 aMinute, TUint8 aUsed);
+        static void AddUnsavedActionVibrateL(TUint16 aDuration, TUint8 aIntensity);
+
+    private:
+        // The singleton object created from this class
+        // Initialised to NULL as per C++ standard for static variables
+        static CSaveConditionAction *iInstance;
+
+        // Unsaved condition-action
+        static Condition *iUnsavedCondition;
+
+        // Constructor
+        CSaveConditionAction();
+};
+
+#endif // SAVECONDITIONACTION_H
