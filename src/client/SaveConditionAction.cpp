@@ -43,10 +43,17 @@ void CSaveConditionAction::InitialiseUnsavedL()
 
     // Allocate condition-action
     iUnsavedCondition = new(ELeave) Condition;
+    memset(iUnsavedCondition, 0, sizeof(Condition));
 }
 
 void CSaveConditionAction::AddUnsavedConditionDateL(TUint16 aYear, TUint8 aMonth, TUint8 aDay, TUint8 aUsed)
 {
+    // Initialise unsaved condition if it isn't already
+    if(!iUnsavedCondition)
+    {
+        InitialiseUnsavedL();
+    }
+
     // Allocate memory for date-time conditions if required
     if(!iUnsavedCondition->timeCondition)
     {
@@ -85,6 +92,12 @@ void CSaveConditionAction::AddUnsavedConditionDateL(TUint16 aYear, TUint8 aMonth
 
 void CSaveConditionAction::AddUnsavedConditionTimeL(TUint8 aHour, TUint8 aMinute, TUint8 aUsed)
 {
+    // Initialise unsaved condition if it isn't already
+    if(!iUnsavedCondition)
+    {
+        InitialiseUnsavedL();
+    }
+
     // Allocate memory for date-time conditions if required
     if(!iUnsavedCondition->timeCondition)
     {
@@ -121,6 +134,12 @@ void CSaveConditionAction::AddUnsavedConditionTimeL(TUint8 aHour, TUint8 aMinute
 
 void CSaveConditionAction::AddUnsavedActionVibrateL(TUint16 aDuration, TUint8 aIntensity)
 {
+    // Initialise unsaved condition if it isn't already
+    if(!iUnsavedCondition)
+    {
+        InitialiseUnsavedL();
+    }
+
     // Allocate memory for vibration data if required
     if(!iUnsavedCondition->vibrationAction)
     {
