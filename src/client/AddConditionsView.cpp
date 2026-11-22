@@ -97,7 +97,7 @@ void CAddConditionsView::HandleListBoxEventL(CEikListBox *aListBox, TListBoxEven
                         TUint16 year;
                         TUint8 month;
                         TUint8 day;
-                        TUint8 used;
+                        TUint8 used = 0;
 
                         // Year
                         TInt value;
@@ -137,7 +137,7 @@ void CAddConditionsView::HandleListBoxEventL(CEikListBox *aListBox, TListBoxEven
                         // Time conditions
                         TUint8 hour;
                         TUint8 minute;
-                        TUint8 used;
+                        TUint8 used = 0;
 
                         // Hour
                         TInt value;
