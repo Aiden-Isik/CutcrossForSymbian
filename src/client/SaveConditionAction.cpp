@@ -2,6 +2,7 @@
 // Copyright (c) 2026 Aiden Isik
 
 #include <e32std.h>
+#include <e32cmn.h>
 
 #include "SaveConditionAction.h"
 #include "ConditionActionData.h"
@@ -10,6 +11,7 @@
 
 CSaveConditionAction *CSaveConditionAction::iInstance = NULL;
 Condition *CSaveConditionAction::iUnsavedCondition = NULL;
+Conditions *CSaveConditionAction::iConditions = NULL;
 
 // Clear unsaved condition-action
 void CSaveConditionAction::ClearUnsaved()
@@ -160,7 +162,52 @@ void CSaveConditionAction::AddUnsavedActionVibrateL(TUint16 aDuration, TInt8 aIn
 // Initialise all condition-actions
 void CSaveConditionAction::InitialiseConditionsL()
 {
-    
+    // Free any conditions memory which may be in use, to start with a clean slate
+    if(iConditions)
+    {
+        if(iConditions->conditions)
+        {
+            // Delete all conditions and actions present
+            for(TUint16 i = 0; i < iConditions->count; i++)
+            {
+                if(iConditions->conditions[i].timeCondition)
+                {
+                    delete iConditions->conditions[i].timeCondition;
+                    iConditions->conditions[i].timeCondition = NULL;
+                }
+
+                if(iConditions->conditions[i].vibrationAction)
+                {
+                    delete iConditions->conditions[i].vibrationAction;
+                    iConditions->conditions[i].vibrationAction = NULL;
+                }
+            }
+
+            delete iConditions->conditions;
+            iConditions->conditions = NULL;
+        }
+
+        delete iConditions;
+        iConditions = NULL;
+    }
+
+    // Load the save file if possible
+    CFileHandler *fileHandler = CFileHandler::GetInstanceL();
+    Conditions conditions;
+    iConditions = new(ELeave) Conditions;
+    TRAPD(error, conditions=fileHandler->LoadConditionDataL(KSaveFileName));
+
+    // If an error was encountered reading the file, create blank condition-actions
+    if(error)
+    {
+        // We failed to read the file. Create a new blank set of conditions and actions
+        memset(iConditions, 0, sizeof(Conditions));
+    }
+    else
+    {
+        // The file was read successfully, use the data it contained
+        memcpy(iConditions, &conditions, sizeof(Conditions));
+    }
 }
 
 // Constructor

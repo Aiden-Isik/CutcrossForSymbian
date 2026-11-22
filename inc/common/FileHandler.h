@@ -9,6 +9,8 @@
 
 #include "ConditionActionData.h"
 
+_LIT(KSaveFileName, "c:\\cutcross.bin");
+
 class CFileHandler: public CBase
 {
     public:
