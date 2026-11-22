@@ -132,7 +132,7 @@ void CSaveConditionAction::AddUnsavedConditionTimeL(TUint8 aHour, TUint8 aMinute
     *used |= (aUsed & timeFieldsMask);
 }
 
-void CSaveConditionAction::AddUnsavedActionVibrateL(TUint16 aDuration, TUint8 aIntensity)
+void CSaveConditionAction::AddUnsavedActionVibrateL(TUint16 aDuration, TInt8 aIntensity)
 {
     // Initialise unsaved condition if it isn't already
     if(!iUnsavedCondition)
@@ -155,6 +155,12 @@ void CSaveConditionAction::AddUnsavedActionVibrateL(TUint16 aDuration, TUint8 aI
     // Set duration and intensity
     iUnsavedCondition->vibrationAction->duration = aDuration;
     iUnsavedCondition->vibrationAction->intensity = aIntensity;
+}
+
+// Initialise all condition-actions
+void CSaveConditionAction::InitialiseConditionsL()
+{
+    
 }
 
 // Constructor

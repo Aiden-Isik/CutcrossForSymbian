@@ -93,7 +93,7 @@ void CAddActionsView::HandleListBoxEventL(CEikListBox *aListBox, TListBoxEvent a
                     {
                         // Vibration settings
                         TUint16 duration = 1000; // Default 1s
-                        TUint8 intensity = 100; // Default 100%
+                        TInt8 intensity = 100; // Default 100%
 
                         // Request vibration settings
                         // Duration

@@ -22,7 +22,10 @@ class CSaveConditionAction: public CBase
         static void InitialiseUnsavedL();
         static void AddUnsavedConditionDateL(TUint16 aYear, TUint8 aMonth, TUint8 aDay, TUint8 aUsed);
         static void AddUnsavedConditionTimeL(TUint8 aHour, TUint8 aMinute, TUint8 aUsed);
-        static void AddUnsavedActionVibrateL(TUint16 aDuration, TUint8 aIntensity);
+        static void AddUnsavedActionVibrateL(TUint16 aDuration, TInt8 aIntensity);
+
+        // Initialise all condition-actions
+        static void InitialiseConditionsL();
 
     private:
         // The singleton object created from this class
@@ -31,6 +34,9 @@ class CSaveConditionAction: public CBase
 
         // Unsaved condition-action
         static Condition *iUnsavedCondition;
+
+        // All condition-actions
+        static Conditions *iConditions;
 
         // Constructor
         CSaveConditionAction();
