@@ -5,7 +5,7 @@
 #define BIT_H_
 
 // Bitfield manipulation macros
-#define BIT(bit) (1 << bit)
-#define BITFIELD_BIT(field, bit) ((field >> bit) & 1)
+#define BIT(bit) (1 << (bit))
+#define BITFIELD_BIT(field, bit) (((field) >> (bit)) & 1)
 
 #endif /* BIT_H_ */
