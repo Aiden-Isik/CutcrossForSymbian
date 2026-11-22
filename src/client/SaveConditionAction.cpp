@@ -111,8 +111,8 @@ void CSaveConditionAction::AddUnsavedConditionTimeL(TUint8 aHour, TUint8 aMinute
     TUint8 *used = &(iUnsavedCondition->timeCondition->used);
     TUint8 timeFieldsMask = BIT(KTIME_USED_HOUR_BIT) |
                             BIT(KTIME_USED_MINUTE_BIT) |
-                            BIT(KTIME_USED_SECOND_BIT |
-                            BIT(KTIME_USED_MICROSECOND_BIT));
+                            BIT(KTIME_USED_SECOND_BIT) |
+                            BIT(KTIME_USED_MICROSECOND_BIT);
     *used &= ~timeFieldsMask;
 
     // Set times
