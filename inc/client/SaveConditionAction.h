@@ -31,6 +31,9 @@ class CSaveConditionAction: public CBase
         // Save to file
         static void SaveConditionsToFileL();
 
+        // Return conditions
+        static struct Conditions *GetConditions();
+
     private:
         // The singleton object created from this class
         // Initialised to NULL as per C++ standard for static variables

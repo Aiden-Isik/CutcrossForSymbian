@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 #include <e32std.h>
+#include <e32cmn.h>
 #include <e32base.h>
 #include <w32std.h>
 #include <aknlists.h>
@@ -34,15 +35,22 @@ void CMainView::Draw(const TRect &aRect) const
 // Handle key events
 TKeyResponse CMainView::OfferKeyEventL(const TKeyEvent &aKeyEvent, TEventCode aType)
 {
-    if(aType == EEventKey)
+    // Forward keys to the ListBox
+    if(iListBox)
     {
-        switch(aKeyEvent.iCode)
-        {
-
-        }
+        return iListBox->OfferKeyEventL(aKeyEvent, aType);
     }
 
     return EKeyWasNotConsumed;
+}
+
+// Handle view size changes
+void CMainView::SizeChanged()
+{
+    if(iListBox)
+    {
+        iListBox->SetRect(Rect());
+    }
 }
 
 // Return a control based on an index
@@ -55,6 +63,26 @@ CCoeControl *CMainView::ComponentControl(TInt aIndex) const
             
         default:
             return NULL;
+    }
+}
+
+// Handle list box item selections
+void CMainView::HandleListBoxEventL(CEikListBox *aListBox, TListBoxEvent aEvent)
+{
+    switch(aEvent)
+    {
+        case EEventEnterKeyPressed:
+        case EEventItemDoubleClicked:
+        {
+            // Send the appropriate command back up the chain to CAppUi
+            if(iListBox)
+            {
+                switch(iListBox->CurrentItemIndex())
+                {
+                    
+                }
+            }
+        }
     }
 }
 
@@ -95,12 +123,35 @@ void CMainView::ConstructL(const TRect &aRect)
     iListBox->ConstructL(this, EAknListBoxSelectionList);
     iListBox->SetContainerWindowL(*this);
     iListBox->SetExtent(TPoint(0,0), iListBox->MinimumSize());
-    CleanupStack::Pop(); // iListBox
-    iControlCount++;
 
     // Set up condition-action save class
     CSaveConditionAction *saveConditionAction = CSaveConditionAction::GetInstanceL();
     saveConditionAction->InitialiseUnsavedL();
+    saveConditionAction->InitialiseConditionsL();
+
+    // Show loaded condition-action pairs
+    struct Conditions *conditions = saveConditionAction->GetConditions();
+    CDesCArray *listBoxItems = new(ELeave) CDesCArrayFlat(1); // Granularity of 1, we expect an arbitrary number of items
+    CleanupStack::PushL(listBoxItems);
+
+    for(TUint16 i = 0; i < conditions->count; i++)
+    {
+        // 7 is the max size our string will take, '\t#' + max '65536'
+        TBuf<7> itemString;
+        itemString.Format(_L("\t#%d"), i + 1);
+
+        // Create the ListBox item
+        listBoxItems->AppendL(itemString);
+    }
+
+    // Finalise setting up ListBox
+    iListBox->Model()->SetItemTextArray(listBoxItems);
+    iListBox->Model()->SetOwnershipType(ELbmOwnsItemArray); // ListBox owns the item array memory now
+    CleanupStack::Pop(); // listBoxItems
+    iListBox->HandleItemAdditionL();
+    iListBox->SetListBoxObserver(this);
+    CleanupStack::Pop(); // iListBox
+    iControlCount++;
 
     SetRect(aRect); // Set window size
     ActivateL();

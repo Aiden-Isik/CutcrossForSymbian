@@ -12,14 +12,18 @@
 
 #include "View.h"
 
-class CMainView: public CView
+class CMainView: public CView, public MEikListBoxObserver
 {
     public:
         // Draw the contents of this view
         void Draw(const TRect &aRect) const;
 
+        // Handle change in size
+        void SizeChanged();
+
         // Component control handling
         CCoeControl *ComponentControl(TInt aIndex) const;
+        void HandleListBoxEventL(CEikListBox *aListBox, TListBoxEvent aEvent);
 
         // Handle key presses
         TKeyResponse OfferKeyEventL(const TKeyEvent &aKeyEvent, TEventCode aType);

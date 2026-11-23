@@ -83,10 +83,14 @@ void CSaveConditionAction::AddUnsavedConditionDateL(TUint16 aYear, TUint8 aMonth
     {
         User::LeaveIfError(date->SetMonth((TMonth)(aMonth - 1))); // January is encoded as 0, February 1, etc
     }
+    else
+    {
+        User::LeaveIfError(date->SetMonth(EJanuary)); // Default to January so 31 days are valid
+    }
 
     if(BITFIELD_BIT(aUsed, KTIME_USED_DAY_BIT))
     {
-        User::LeaveIfError(date->SetDay(aDay));
+        User::LeaveIfError(date->SetDay(aDay - 1)); // 0-based encoding
     }
 
     // Finally, set the appropriate used bits in the time bitfield
@@ -247,6 +251,11 @@ void CSaveConditionAction::SaveConditionsToFileL()
 {
     CFileHandler *fileHandler = CFileHandler::GetInstanceL();
     fileHandler->SaveConditionDataL(iConditions, KSaveFileName);
+}
+
+struct Conditions *CSaveConditionAction::GetConditions()
+{
+    return iConditions;
 }
 
 // Constructor
