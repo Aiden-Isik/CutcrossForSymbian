@@ -22,6 +22,9 @@ class CView: public CCoeControl
         // Getters
         TUint8 GetId();
 
+        // Handle command from the application framework
+        virtual void CView::HandleCommandL(TInt aCommand);
+
         // Count component controls
         TInt CountComponentControls() const;
 

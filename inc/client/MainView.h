@@ -21,6 +21,9 @@ class CMainView: public CView, public MEikListBoxObserver
         // Handle change in size
         void SizeChanged();
 
+        // Handle commands from the application framework
+        void CMainView::HandleCommandL(TInt aCommand);
+
         // Component control handling
         CCoeControl *ComponentControl(TInt aIndex) const;
         void HandleListBoxEventL(CEikListBox *aListBox, TListBoxEvent aEvent);

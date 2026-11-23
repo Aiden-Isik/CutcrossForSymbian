@@ -53,6 +53,24 @@ void CMainView::SizeChanged()
     }
 }
 
+// Handle commands from the application framework
+void CMainView::HandleCommandL(TInt aCommand)
+{
+    switch(aCommand)
+    {
+        case EMainDelete:
+        {
+            // Delete selected item
+            CSaveConditionAction *saveConditionAction = CSaveConditionAction::GetInstanceL();
+            saveConditionAction->DeleteConditionL(iListBox->CurrentItemIndex());
+
+            // Save changes
+            saveConditionAction->SaveConditionsToFileL();
+            break;
+        }
+    }
+}
+
 // Return a control based on an index
 CCoeControl *CMainView::ComponentControl(TInt aIndex) const
 {

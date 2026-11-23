@@ -164,8 +164,8 @@ void CSaveConditionAction::AddUnsavedActionVibrateL(TUint16 aDuration, TInt8 aIn
     iUnsavedCondition->vibrationAction->intensity = aIntensity;
 }
 
-// Initialise all condition-actions
-void CSaveConditionAction::InitialiseConditionsL()
+// Clear all condition-actions
+void CSaveConditionAction::ClearConditions()
 {
     // Free any conditions memory which may be in use, to start with a clean slate
     if(iConditions)
@@ -195,6 +195,12 @@ void CSaveConditionAction::InitialiseConditionsL()
         delete iConditions;
         iConditions = NULL;
     }
+}
+
+// Initialise all condition-actions
+void CSaveConditionAction::InitialiseConditionsL()
+{
+    ClearConditions();
 
     // Load the save file if possible
     CFileHandler *fileHandler = CFileHandler::GetInstanceL();
@@ -225,7 +231,8 @@ void CSaveConditionAction::AddConditionFromUnsavedL()
 
     // Create the new conditions array, which will replace the old one
     TUint16 oldCount = iConditions->conditions ? iConditions->count : 0;
-    struct Condition *conditions = new(ELeave) Condition[oldCount + 1]; // +1 for new condition
+    struct Condition *conditions = new(ELeave) struct Condition[oldCount + 1]; // +1 for new condition
+    CleanupStack::PushL(conditions);
 
     // Copy the current conditions, but only if they actually exist
     if(oldCount > 0)
@@ -244,6 +251,54 @@ void CSaveConditionAction::AddConditionFromUnsavedL()
     // Point the new conditions array to ours, newly appended
     iConditions->conditions = conditions;
     iConditions->count = oldCount + 1;
+    CleanupStack::Pop(); // conditions
+}
+
+void CSaveConditionAction::DeleteConditionL(TUint16 index)
+{
+    // Make sure conditions actually exists
+    if(!iConditions)
+    {
+        User::Leave(KErrNotFound);
+    }
+
+    // Make sure index exists
+    if(index >= iConditions->count)
+    {
+        User::Leave(KErrArgument);
+    }
+
+    // Create the new conditions array to replace the old one
+    TUint16 oldCount = iConditions->count;
+
+    if(oldCount > 1)
+    {
+        struct Condition *conditions = new(ELeave) struct Condition[oldCount - 1];
+        CleanupStack::PushL(conditions);
+
+        // Copy everything except the index to delete
+        memcpy(conditions, iConditions->conditions, sizeof(struct Condition) * index);
+        memcpy(&(conditions[index]), &(iConditions->conditions[index + 1]), sizeof(struct Condition) * (oldCount - index - 1));
+
+        // Free the old conditions array
+        delete iConditions->conditions[index].timeCondition;
+        delete iConditions->conditions[index].vibrationAction;
+        delete[] iConditions->conditions;
+
+        // Point the new conditions array to ours
+        iConditions->conditions = conditions;
+        iConditions->count = oldCount - 1;
+        CleanupStack::Pop(); // conditions
+    }
+    else if(oldCount == 1)
+    {
+        // Just delete the single old condition
+        ClearConditions();
+
+        // Then re-initialise it blank
+        iConditions = new(ELeave) struct Conditions;
+        memset(iConditions, 0, sizeof(struct Conditions));
+    }
 }
 
 // Save conditions to file

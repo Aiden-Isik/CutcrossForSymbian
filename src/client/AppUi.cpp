@@ -163,6 +163,14 @@ void CAppUi::HandleCommandL(TInt aCommand)
             saveConditionAction->SaveConditionsToFileL();
             break;
         }
+        case EMainDelete:
+        {
+            // Get MainView to delete the condition, since it owns that ListBox,
+            // then reload the main page.
+            iView->HandleCommandL(aCommand);
+            SwitchViewL(EPageMainId);
+            break;
+        }
         default:
         {
             // We don't have a handler for this command, send it up the chain

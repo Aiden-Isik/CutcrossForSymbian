@@ -25,8 +25,10 @@ class CSaveConditionAction: public CBase
         static void AddUnsavedActionVibrateL(TUint16 aDuration, TInt8 aIntensity);
 
         // Initialise all condition-actions
+        static void ClearConditions();
         static void InitialiseConditionsL();
         static void AddConditionFromUnsavedL();
+        static void DeleteConditionL(TUint16 index);
 
         // Save to file
         static void SaveConditionsToFileL();

@@ -12,6 +12,11 @@ TUint8 CView::GetId()
     return id;
 }
 
+// Handle commands from the application framework
+void CView::HandleCommandL(TInt aCommand)
+{
+}
+
 // Return the count of child controls in this component control
 TInt CView::CountComponentControls() const
 {
