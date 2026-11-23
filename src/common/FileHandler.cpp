@@ -160,7 +160,7 @@ struct Conditions CFileHandler::LoadConditionDataL(const TDesC &aFilename)
                        sizeof(ConditionsFileConditionActionV0) * header->conditionActionCount,
                        file);
 
-    if(readResult != sizeof(ConditionsFileConditionActionV0))
+    if(readResult != sizeof(ConditionsFileConditionActionV0) * header->conditionActionCount)
     {
         User::Leave(KErrEof);
     }
@@ -181,7 +181,7 @@ struct Conditions CFileHandler::LoadConditionDataL(const TDesC &aFilename)
     for(TUint16 i = 0; i < conditions.count; i++)
     {
         // Conditions
-        conditions.conditions->hasFired = false;
+        conditions.conditions[i].hasFired = false;
 
         // Time condition
         if(BITFIELD_BIT(conditionAction[i].conditionData.conditionsSet, KCONDITION_USED_TIME_BIT))
