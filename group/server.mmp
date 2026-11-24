@@ -19,4 +19,4 @@ SYSTEMINCLUDE \epoc32\include \epoc32\include\variant \epoc32\include\ecom \epoc
 SOURCEPATH ..\src\server
 SOURCE BluetoothController.cpp
 
-CAPABILITY LocalServices NetworkServices ReadUserData
+CAPABILITY LocalServices NetworkServices ReadUserData AllFiles

@@ -9,7 +9,7 @@
 
 #include "ConditionActionData.h"
 
-_LIT(KSaveFileName, "c:\\cutcross.bin");
+_LIT(KSaveFileName, "c:\\private\\27B05414\\cutcross.bin");
 
 class CFileHandler: public CBase
 {

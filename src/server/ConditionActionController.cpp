@@ -1,6 +1,10 @@
 // Copyright (c) 2026 Aiden Isik
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+#include <unistd.h>
+#include <e32base.h>
+#include <e32std.h>
+
 #include "ConditionActionController.h"
 #include "ConditionActionData.h"
 #include "TimeController.h"
@@ -73,90 +77,97 @@ void CConditionActionController::RunLoopL()
     CBluetoothController *bluetoothController = CBluetoothController::GetInstanceL();
     CActionController *actionController = CActionController::GetInstanceL();
 
-    // Update all conditions
-    timeController->UpdateTime();
-
-    // Only update the bluetooth controller if there is a corresponding condition
-    // The scan takes a while and can lag the system, so accept the extra overhead
-    // here to avoid that where possible.
-    for(TUint16 i = 0; i < iConditions.count; i++)
+    while(ETrue)
     {
-        if(iConditions.conditions[i].bluetoothDeviceCondition)
+        InitialiseL();
+
+        // Update all conditions
+        timeController->UpdateTime();
+        
+        // Only update the bluetooth controller if there is a corresponding condition
+        // The scan takes a while and can lag the system, so accept the extra overhead
+        // here to avoid that where possible.
+        for(TUint16 i = 0; i < iConditions.count; i++)
         {
-            bluetoothController->UpdateBluetoothMacsL();
-            break;
-        }
-    }
-
-    // We have a member struct called iConditions which contains information about every
-    // set of conditions set up by the user. For every set, check if the condition has been met,
-    // and if it has, fire the associated actions.
-    for(TUint16 i = 0; i < iConditions.count; i++)
-    {
-        // Retrieve current conditions and compare them against the conditions to fire actions on.
-        TUint16 totalConditions = 0;
-        TUint16 metConditions = 0;
-
-        // Time condition present
-        if(iConditions.conditions[i].timeCondition)
-        {
-            totalConditions++;
-
-            TDateTime *targetDateTime = &(iConditions.conditions[i].timeCondition->time);
-            TDateTime currentDateTime = timeController->GetTime();
-            TUint8 usedTimes = iConditions.conditions[i].timeCondition->used;
-
-            // Check that the time specified by the user is the current time.
-            if((currentDateTime.Year() == targetDateTime->Year() || !BITFIELD_BIT(usedTimes, KTIME_USED_YEAR_BIT))
-               && (currentDateTime.Month() == targetDateTime->Month() || !BITFIELD_BIT(usedTimes, KTIME_USED_MONTH_BIT))
-               && (currentDateTime.Day() == targetDateTime->Day() || !BITFIELD_BIT(usedTimes, KTIME_USED_DAY_BIT))
-               && (currentDateTime.Hour() == targetDateTime->Hour() || !BITFIELD_BIT(usedTimes, KTIME_USED_HOUR_BIT))
-               && (currentDateTime.Minute() == targetDateTime->Minute() || !BITFIELD_BIT(usedTimes, KTIME_USED_MINUTE_BIT)))
+            if(iConditions.conditions[i].bluetoothDeviceCondition)
             {
-                metConditions++;
+                bluetoothController->UpdateBluetoothMacsL();
+                break;
             }
         }
-
-        // Bluetooth condition present
-        if(iConditions.conditions[i].bluetoothDeviceCondition)
+        
+        // We have a member struct called iConditions which contains information about every
+        // set of conditions set up by the user. For every set, check if the condition has been met,
+        // and if it has, fire the associated actions.
+        for(TUint16 i = 0; i < iConditions.count; i++)
         {
-            totalConditions++;
-
-            // Loop through all present MACs to check for a match
-            for(TInt j = 0; j < bluetoothController->GetMacs().Count(); j++)
+            // Retrieve current conditions and compare them against the conditions to fire actions on.
+            TUint16 totalConditions = 0;
+            TUint16 metConditions = 0;
+        
+            // Time condition present
+            if(iConditions.conditions[i].timeCondition)
             {
-                if(bluetoothController->GetMacs()[j] == iConditions.conditions[i].bluetoothDeviceCondition->macAddress)
+                totalConditions++;
+        
+                TDateTime *targetDateTime = &(iConditions.conditions[i].timeCondition->time);
+                TDateTime currentDateTime = timeController->GetTime();
+                TUint8 usedTimes = iConditions.conditions[i].timeCondition->used;
+        
+                // Check that the time specified by the user is the current time.
+                if((currentDateTime.Year() == targetDateTime->Year() || !BITFIELD_BIT(usedTimes, KTIME_USED_YEAR_BIT))
+                   && (currentDateTime.Month() == targetDateTime->Month() || !BITFIELD_BIT(usedTimes, KTIME_USED_MONTH_BIT))
+                   && (currentDateTime.Day() == targetDateTime->Day() || !BITFIELD_BIT(usedTimes, KTIME_USED_DAY_BIT))
+                   && (currentDateTime.Hour() == targetDateTime->Hour() || !BITFIELD_BIT(usedTimes, KTIME_USED_HOUR_BIT))
+                   && (currentDateTime.Minute() == targetDateTime->Minute() || !BITFIELD_BIT(usedTimes, KTIME_USED_MINUTE_BIT)))
                 {
                     metConditions++;
-                    break;
                 }
             }
-        }
-
-        // If the met conditions equals the total number of conditions, every required condition
-        // was satisfied. Fire the appropriate actions.
-        if(totalConditions == metConditions)
-        {
-            // If we have already fired actions for these conditions, don't do it again.
-            // This prevents duplicate firing on every condition-action loop.
-            if(!iConditions.conditions[i].hasFired)
+        
+            // Bluetooth condition present
+            if(iConditions.conditions[i].bluetoothDeviceCondition)
             {
-                iConditions.conditions[i].hasFired = true;
-
-                // Fire the vibration action, if it exists
-                if(iConditions.conditions[i].vibrationAction)
+                totalConditions++;
+        
+                // Loop through all present MACs to check for a match
+                for(TInt j = 0; j < bluetoothController->GetMacs().Count(); j++)
                 {
-                    TUint16 duration = iConditions.conditions[i].vibrationAction->duration;
-                    TInt8 intensity = iConditions.conditions[i].vibrationAction->intensity;
-                    actionController->VibrateL(duration, intensity);
+                    if(bluetoothController->GetMacs()[j] == iConditions.conditions[i].bluetoothDeviceCondition->macAddress)
+                    {
+                        metConditions++;
+                        break;
+                    }
                 }
             }
+        
+            // If the met conditions equals the total number of conditions, every required condition
+            // was satisfied. Fire the appropriate actions.
+            if(totalConditions == metConditions)
+            {
+                // If we have already fired actions for these conditions, don't do it again.
+                // This prevents duplicate firing on every condition-action loop.
+                if(!iConditions.conditions[i].hasFired)
+                {
+                    iConditions.conditions[i].hasFired = true;
+        
+                    // Fire the vibration action, if it exists
+                    if(iConditions.conditions[i].vibrationAction)
+                    {
+                        TUint16 duration = iConditions.conditions[i].vibrationAction->duration;
+                        TInt8 intensity = iConditions.conditions[i].vibrationAction->intensity;
+                        actionController->VibrateL(duration, intensity);
+                    }
+                }
+            }
+            else // If totalConditions != metConditions
+            {
+                // The conditions have not been met. Fire the next time they are.
+                iConditions.conditions[i].hasFired = false;
+            }
         }
-        else // If totalConditions != metConditions
-        {
-            // The conditions have not been met. Fire the next time they are.
-            iConditions.conditions[i].hasFired = false;
-        }
+
+        sleep(15);
     }
 }
 
