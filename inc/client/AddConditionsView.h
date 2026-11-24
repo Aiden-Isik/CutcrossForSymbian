@@ -49,6 +49,10 @@ class CAddConditionsView: public CView, public MEikListBoxObserver
     private:
         // Conditions to write
         Conditions iConditions;
+
+        // Hex string handling
+        TBool BufferIsHex(TDesC &aBuffer);
+        TUint64 HexToU64L(TDesC &aBuffer);
 };
 
 #endif /* ADDCONDITIONSVIEW_H_ */

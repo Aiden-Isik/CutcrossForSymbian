@@ -81,9 +81,10 @@ void CConditionActionController::RunLoopL()
     // here to avoid that where possible.
     for(TUint16 i = 0; i < iConditions.count; i++)
     {
-        if(iConditions.conditions->bluetoothDeviceCondition)
+        if(iConditions.conditions[i].bluetoothDeviceCondition)
         {
             bluetoothController->UpdateBluetoothMacsL();
+            break;
         }
     }
 

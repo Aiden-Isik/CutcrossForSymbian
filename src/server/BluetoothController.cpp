@@ -44,7 +44,7 @@ void CBluetoothController::UpdateBluetoothMacsL()
     while(status == KErrNone)
     {
         // Get the next bluetooth MAC address
-        TBTDevAddr deviceAddress = ((TBTSockAddr&)nameEntry().iAddr).BTAddr().Des();
+        TBTDevAddr deviceAddress = ((TBTSockAddr&)nameEntry().iAddr).BTAddr();
         const TPtrC8 deviceAddressBytes = deviceAddress.Des();
         TUint64 tempAddress = 0;
 

@@ -145,6 +145,24 @@ void CSaveConditionAction::AddUnsavedConditionTimeL(TUint8 aHour, TUint8 aMinute
     *used |= (aUsed & timeFieldsMask);
 }
 
+void CSaveConditionAction::AddUnsavedConditionBluetoothDeviceL(TUint64 aMacAddress)
+{
+    // Initialise unsaved condition if it isn't already
+    if(!iUnsavedCondition)
+    {
+        InitialiseUnsavedL();
+    }
+
+    // Allocate memory for bluetooth device data if required
+    if(!iUnsavedCondition->bluetoothDeviceCondition)
+    {
+        iUnsavedCondition->bluetoothDeviceCondition = new(ELeave) struct BluetoothDeviceCondition;
+    }
+
+    // Save bluetooth MAC
+    iUnsavedCondition->bluetoothDeviceCondition->macAddress = aMacAddress;
+}
+
 void CSaveConditionAction::AddUnsavedActionVibrateL(TUint16 aDuration, TInt8 aIntensity)
 {
     // Initialise unsaved condition if it isn't already
@@ -156,7 +174,7 @@ void CSaveConditionAction::AddUnsavedActionVibrateL(TUint16 aDuration, TInt8 aIn
     // Allocate memory for vibration data if required
     if(!iUnsavedCondition->vibrationAction)
     {
-        iUnsavedCondition->vibrationAction = new(ELeave) VibrationAction;
+        iUnsavedCondition->vibrationAction = new(ELeave) struct VibrationAction;
     }
 
     // Check intensity is between -100% and 100%

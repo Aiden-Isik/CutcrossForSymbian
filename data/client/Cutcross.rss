@@ -169,6 +169,32 @@ RESOURCE DIALOG r_application_cutcross_query_condition_minute
     };
 }
 
+RESOURCE DIALOG r_application_cutcross_query_condition_bluetooth
+{
+    flags = EGeneralQueryFlags;
+    buttons = R_AVKON_SOFTKEYS_OK_CANCEL;
+    items =
+    {
+        DLG_LINE
+        {
+            type = EAknCtQuery;
+            id = EGeneralQuery;
+            control = AVKON_DATA_QUERY
+            {
+                layout = EDataLayout;
+                label = "Enter bluetooth MAC address (hex, characters 0-9, A-F only):";
+                control = EDWIN
+                {
+                    flags = EEikEdwinNoHorizScrolling | EEikEdwinResizable;
+                    width = 12;
+                    maxlength = 12;
+                    max_view_height_in_lines = 1;
+                };
+            };
+        }
+    };
+}
+
 // Action prompt resources
 
 RESOURCE DIALOG r_application_cutcross_query_action_vibrate_duration

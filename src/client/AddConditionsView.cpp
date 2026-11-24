@@ -27,6 +27,7 @@ enum TListBoxItems
 {
     EListBoxItemDate = 0,
     EListBoxItemTime,
+    EListBoxItemBluetooth,
 };
 
 // Draw the contents of this view
@@ -78,6 +79,57 @@ CCoeControl *CAddConditionsView::ComponentControl(TInt aIndex) const
     }
 }
 
+// Check whether a given text buffer contains only hex characters
+TBool CAddConditionsView::BufferIsHex(TDesC &aBuffer)
+{
+    if(aBuffer.Length() == 0)
+    {
+        return EFalse;
+    }
+
+    for(TInt i = 0; i < aBuffer.Length(); i++)
+    {
+        if(!TChar(aBuffer[i]).IsHexDigit())
+        {
+            return EFalse;
+        }
+    }
+
+    // All checks passed, all digits are valid hexadecimal
+    return ETrue;
+}
+
+// Convert a hex string to a TUint64
+TUint64 CAddConditionsView::HexToU64L(TDesC &aBuffer)
+{
+    // If the buffer is not a valid length, leave
+    if(aBuffer.Length() == 0 || aBuffer.Length() > 16)
+    {
+        User::Leave(KErrArgument);
+    }
+
+    // Loop through each character and add each
+    TUint64 returnValue = 0;
+
+    for(TInt i = 0; i < aBuffer.Length(); i++)
+    {
+        // Convert character to digit
+        _LIT(hexDigits, "0123456789abcdef");
+        TInt digit = hexDigits().LocateF(TChar(aBuffer[i]));
+
+        // Make sure digit was valid
+        if(digit == KErrNotFound)
+        {
+            User::Leave(KErrArgument);
+        }
+
+        // Shift the new digit in
+        returnValue = (returnValue << 4) | (TUint64)digit;
+    }
+
+    return returnValue;
+}
+
 // Handle list box item selections
 void CAddConditionsView::HandleListBoxEventL(CEikListBox *aListBox, TListBoxEvent aEvent)
 {
@@ -94,9 +146,9 @@ void CAddConditionsView::HandleListBoxEventL(CEikListBox *aListBox, TListBoxEven
                     case EListBoxItemDate:
                     {
                         // Date conditions
-                        TUint16 year;
-                        TUint8 month;
-                        TUint8 day;
+                        TUint16 year = 0;
+                        TUint8 month = 0;
+                        TUint8 day = 0;
                         TUint8 used = 0;
 
                         // Year
@@ -135,8 +187,8 @@ void CAddConditionsView::HandleListBoxEventL(CEikListBox *aListBox, TListBoxEven
                     case EListBoxItemTime:
                     {
                         // Time conditions
-                        TUint8 hour;
-                        TUint8 minute;
+                        TUint8 hour = 0;
+                        TUint8 minute = 0;
                         TUint8 used = 0;
 
                         // Hour
@@ -162,6 +214,30 @@ void CAddConditionsView::HandleListBoxEventL(CEikListBox *aListBox, TListBoxEven
                         CSaveConditionAction *saveConditionAction = CSaveConditionAction::GetInstanceL();
                         saveConditionAction->AddUnsavedConditionTimeL(hour, minute, used);
                         break;
+                    }
+                    case EListBoxItemBluetooth:
+                    {
+                        // Bluetooth MAC condition
+                        TBuf<12> macAddressString;
+
+                        // Prompt the user for a valid hex string until we get it
+                        while(!BufferIsHex(macAddressString))
+                        {
+                            CAknTextQueryDialog *dialog = CAknTextQueryDialog::NewL(macAddressString);
+
+                            if(!dialog->ExecuteLD(R_APPLICATION_CUTCROSS_QUERY_CONDITION_BLUETOOTH))
+                            {
+                                // User pressed cancel, don't do anything
+                                return;
+                            }
+                        }
+
+                        // User entered a valid hex string and didn't cancel.
+                        // Convert to TUint64 and store.
+                        CSaveConditionAction *saveConditionAction = CSaveConditionAction::GetInstanceL();
+                        saveConditionAction->AddUnsavedConditionBluetoothDeviceL(HexToU64L(macAddressString));
+
+                        // TODO: Show popup with manufacturer to user via API
                     }
                 }
             }
@@ -216,6 +292,7 @@ void CAddConditionsView::ConstructL(const TRect &aRect)
     CleanupStack::PushL(listBoxItems);
     listBoxItems->InsertL(EListBoxItemDate, _L("\tDate"));
     listBoxItems->InsertL(EListBoxItemTime, _L("\tTime"));
+    listBoxItems->InsertL(EListBoxItemBluetooth, _L("\tBluetooth Address"));
     iListBox->Model()->SetItemTextArray(listBoxItems);
     iListBox->Model()->SetOwnershipType(ELbmOwnsItemArray); // ListBox owns the item array memory now
     CleanupStack::Pop(); // listBoxItems
