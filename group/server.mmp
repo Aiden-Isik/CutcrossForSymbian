@@ -12,6 +12,11 @@ SOURCE ActionController.cpp ConditionActionController.cpp TimeController.cpp Mai
 SOURCEPATH ..\src\common
 SOURCE FileHandler.cpp
 
-LIBRARY hwrmvibraclient.lib estlib.lib efsrv.lib aknnotify.lib euser.lib
+LIBRARY hwrmvibraclient.lib estlib.lib efsrv.lib aknnotify.lib euser.lib esock.lib insock.lib bluetooth.lib
 USERINCLUDE ..\inc\common ..\inc\server ..\data\common ..\data\server
 SYSTEMINCLUDE \epoc32\include \epoc32\include\variant \epoc32\include\ecom \epoc32\include\libc
+
+SOURCEPATH ..\src\server
+SOURCE BluetoothController.cpp
+
+CAPABILITY LocalServices NetworkServices ReadUserData

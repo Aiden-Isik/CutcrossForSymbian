@@ -4,6 +4,7 @@
 #include <limits.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include <e32err.h>
 #include <e32cmn.h>
@@ -44,14 +45,16 @@ struct __attribute__((packed)) ConditionsFileHeaderV0
 
 // Condition-action file format condition data, version 0
 //
-// 0x0 - 0x2: Year
-// 0x2 - 0x3: Month
-// 0x3 - 0x4: Day
-// 0x4 - 0x5: Hour
-// 0x5 - 0x6: Minute
-// 0x6 - 0x7: Bitfield specifying which time fields are used
-// 0x7 - 0x8: Bitfield specifying which conditions are set
+// 0x0 - 0x2:  Year
+// 0x2 - 0x3:  Month
+// 0x3 - 0x4:  Day
+// 0x4 - 0x5:  Hour
+// 0x5 - 0x6:  Minute
+// 0x6 - 0x7:  Bitfield specifying which time fields are used
+// 0x7 - 0xF:  MAC address
+// 0xF - 0x10: Bitfield specifying which conditions are set
 #define KCONDITION_USED_TIME_BIT 0
+#define KCONDITION_USED_BLUETOOTH_DEVICE_BIT 1
 
 struct __attribute__((packed)) ConditionsFileConditionTimeV0
 {
@@ -63,16 +66,22 @@ struct __attribute__((packed)) ConditionsFileConditionTimeV0
         TUint8 used;
 };
 
+struct __attribute__((packed)) ConditionsFileConditionBluetoothDeviceV0
+{
+        TUint64 macAddress;
+};
+
 struct __attribute__((packed)) ConditionsFileConditionDataV0
 {
         struct ConditionsFileConditionTimeV0 time;
+        struct ConditionsFileConditionBluetoothDeviceV0 bluetoothDevice;
         TUint8 conditionsSet;
 };
 
 // Condition-action file format action data, version 0
 //
-// 0x0 - 0x2: Vibration intensity
-// 0x2 - 0x3: Vibration duration
+// 0x0 - 0x2: Vibration duration
+// 0x2 - 0x3: Vibration intensity
 // 0x3 - 0x4: Bitfield specifying which actions are set
 #define KACTION_USED_VIBRATE_BIT 0
 
@@ -201,6 +210,17 @@ struct Conditions CFileHandler::LoadConditionDataL(const TDesC &aFilename)
                                                                                 0));
         }
 
+        // Bluetooth device condition
+        if(BITFIELD_BIT(conditionAction[i].conditionData.conditionsSet, KCONDITION_USED_BLUETOOTH_DEVICE_BIT))
+        {
+            conditions.conditions[i].bluetoothDeviceCondition = new(ELeave) struct BluetoothDeviceCondition;
+            CleanupStack::PushL(conditions.conditions[i].bluetoothDeviceCondition);
+            conditionActionCleanups++;
+
+            conditions.conditions[i].bluetoothDeviceCondition->macAddress =
+                conditionAction[i].conditionData.bluetoothDevice.macAddress;
+        }
+
         // Actions
         // Vibration action
         if(BITFIELD_BIT(conditionAction[i].actionData.actionsSet, KACTION_USED_VIBRATE_BIT))
@@ -273,6 +293,17 @@ void CFileHandler::SaveConditionDataL(const struct Conditions *aConditions, cons
             fileTime->day = (TUint8)runningTime->Day();
             fileTime->hour = (TUint8)runningTime->Hour();
             fileTime->minute = (TUint8)runningTime->Minute();
+        }
+
+        // If the bluetooth device condition exists, store it here
+        if(aConditions->conditions[i].bluetoothDeviceCondition)
+        {
+            // Set the bluetooth device condition bitfield flag
+            conditionActionData[i].conditionData.conditionsSet |= BIT(KCONDITION_USED_BLUETOOTH_DEVICE_BIT);
+
+            // Store the MAC address
+            conditionActionData[i].conditionData.bluetoothDevice.macAddress =
+                aConditions->conditions[i].bluetoothDeviceCondition->macAddress;
         }
 
         // If the vibration action exists, translate it and store it here

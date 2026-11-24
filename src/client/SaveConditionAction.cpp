@@ -26,6 +26,12 @@ void CSaveConditionAction::ClearUnsaved()
             iUnsavedCondition->timeCondition = NULL;
         }
 
+        if(iUnsavedCondition->bluetoothDeviceCondition)
+        {
+            delete iUnsavedCondition->bluetoothDeviceCondition;
+            iUnsavedCondition->bluetoothDeviceCondition = NULL;
+        }
+
         // Actions
         if(iUnsavedCondition->vibrationAction)
         {
@@ -60,7 +66,7 @@ void CSaveConditionAction::AddUnsavedConditionDateL(TUint16 aYear, TUint8 aMonth
     // Allocate memory for date-time conditions if required
     if(!iUnsavedCondition->timeCondition)
     {
-        iUnsavedCondition->timeCondition = new(ELeave) TimeCondition;
+        iUnsavedCondition->timeCondition = new(ELeave) struct TimeCondition;
 
         // Make sure time field bitfield is zeroed
         iUnsavedCondition->timeCondition->used = 0;
@@ -108,7 +114,7 @@ void CSaveConditionAction::AddUnsavedConditionTimeL(TUint8 aHour, TUint8 aMinute
     // Allocate memory for date-time conditions if required
     if(!iUnsavedCondition->timeCondition)
     {
-        iUnsavedCondition->timeCondition = new(ELeave) TimeCondition;
+        iUnsavedCondition->timeCondition = new(ELeave) struct TimeCondition;
 
         // Make sure time field bitfield is zeroed
         iUnsavedCondition->timeCondition->used = 0;
@@ -181,6 +187,12 @@ void CSaveConditionAction::ClearConditions()
                     iConditions->conditions[i].timeCondition = NULL;
                 }
 
+                if(iConditions->conditions[i].bluetoothDeviceCondition)
+                {
+                    delete iConditions->conditions[i].bluetoothDeviceCondition;
+                    iConditions->conditions[i].bluetoothDeviceCondition = NULL;
+                }
+
                 if(iConditions->conditions[i].vibrationAction)
                 {
                     delete iConditions->conditions[i].vibrationAction;
@@ -246,6 +258,7 @@ void CSaveConditionAction::AddConditionFromUnsavedL()
     // Free the old conditions array
     delete[] iConditions->conditions;
     iUnsavedCondition->timeCondition = NULL; // We own these pointers now. Prevent cleanup code from deleting them.
+    iUnsavedCondition->bluetoothDeviceCondition = NULL;
     iUnsavedCondition->vibrationAction = NULL;
 
     // Point the new conditions array to ours, newly appended
@@ -283,6 +296,7 @@ void CSaveConditionAction::DeleteConditionL(TUint16 index)
         // Free the old conditions array
         delete iConditions->conditions[index].timeCondition;
         delete iConditions->conditions[index].vibrationAction;
+        delete iConditions->conditions[index].bluetoothDeviceCondition;
         delete[] iConditions->conditions;
 
         // Point the new conditions array to ours

@@ -33,8 +33,6 @@ TDateTime CTimeController::GetTime()
 // Constructor
 CTimeController::CTimeController()
 {
-    // Set the initial date/time
-    UpdateTime();
 }
 
 // Stand-in constructor

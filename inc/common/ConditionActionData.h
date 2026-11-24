@@ -38,6 +38,11 @@ struct TimeCondition
         TUint8 used; // Bitfield
 };
 
+struct BluetoothDeviceCondition
+{
+        TUint64 macAddress;
+};
+
 // Struct for a single set of conditions
 //
 // It contains pointers to and counts of whichever condition types are used.
@@ -52,6 +57,7 @@ struct TimeCondition
 struct Condition
 {
         struct TimeCondition *timeCondition;
+        struct BluetoothDeviceCondition *bluetoothDeviceCondition;
         struct VibrationAction *vibrationAction;
         TBool hasFired;
 };

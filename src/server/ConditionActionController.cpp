@@ -4,6 +4,7 @@
 #include "ConditionActionController.h"
 #include "ConditionActionData.h"
 #include "TimeController.h"
+#include "BluetoothController.h"
 #include "ActionController.h"
 #include "FileHandler.h"
 #include "Bit.h"
@@ -27,7 +28,13 @@ void CConditionActionController::CleanupConditionActions()
             delete iConditions.conditions->vibrationAction;
         }
 
-        delete iConditions.conditions;
+        if(iConditions.conditions->bluetoothDeviceCondition)
+        {
+            delete iConditions.conditions->bluetoothDeviceCondition;
+        }
+
+        delete[] iConditions.conditions;
+        iConditions.conditions = NULL;
     }
 
     iConditions.count = 0;
@@ -49,7 +56,7 @@ void CConditionActionController::InitialiseL()
         CleanupConditionActions();
         iConditions = loadResult;
     }
-    else if(error != KErrPathNotFound)
+    else if(error != KErrPathNotFound && error != KErrNotFound)
     {
         // Re-leave with the same error we received
         User::Leave(error);
@@ -63,10 +70,22 @@ void CConditionActionController::RunLoopL()
 {
     // Condition and action controllers
     CTimeController *timeController = CTimeController::GetInstanceL();
+    CBluetoothController *bluetoothController = CBluetoothController::GetInstanceL();
     CActionController *actionController = CActionController::GetInstanceL();
 
     // Update all conditions
     timeController->UpdateTime();
+
+    // Only update the bluetooth controller if there is a corresponding condition
+    // The scan takes a while and can lag the system, so accept the extra overhead
+    // here to avoid that where possible.
+    for(TUint16 i = 0; i < iConditions.count; i++)
+    {
+        if(iConditions.conditions->bluetoothDeviceCondition)
+        {
+            bluetoothController->UpdateBluetoothMacsL();
+        }
+    }
 
     // We have a member struct called iConditions which contains information about every
     // set of conditions set up by the user. For every set, check if the condition has been met,
@@ -94,6 +113,22 @@ void CConditionActionController::RunLoopL()
                && (currentDateTime.Minute() == targetDateTime->Minute() || !BITFIELD_BIT(usedTimes, KTIME_USED_MINUTE_BIT)))
             {
                 metConditions++;
+            }
+        }
+
+        // Bluetooth condition present
+        if(iConditions.conditions[i].bluetoothDeviceCondition)
+        {
+            totalConditions++;
+
+            // Loop through all present MACs to check for a match
+            for(TInt j = 0; j < bluetoothController->GetMacs().Count(); j++)
+            {
+                if(bluetoothController->GetMacs()[j] == iConditions.conditions[i].bluetoothDeviceCondition->macAddress)
+                {
+                    metConditions++;
+                    break;
+                }
             }
         }
 
