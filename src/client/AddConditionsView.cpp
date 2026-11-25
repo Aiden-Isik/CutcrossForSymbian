@@ -158,7 +158,7 @@ void CAddConditionsView::HandleListBoxEventL(CEikListBox *aListBox, TListBoxEven
                         TUint8 used = 0;
 
                         // Year
-                        TInt value;
+                        TInt value = 2026;
                         CAknNumberQueryDialog *dialog = CAknNumberQueryDialog::NewL(value);
 
                         if(dialog->ExecuteLD(R_APPLICATION_CUTCROSS_QUERY_CONDITION_YEAR))
@@ -168,6 +168,7 @@ void CAddConditionsView::HandleListBoxEventL(CEikListBox *aListBox, TListBoxEven
                         }
 
                         // Month
+                        value = 1;
                         dialog = CAknNumberQueryDialog::NewL(value);
 
                         if(dialog->ExecuteLD(R_APPLICATION_CUTCROSS_QUERY_CONDITION_MONTH))
@@ -177,6 +178,7 @@ void CAddConditionsView::HandleListBoxEventL(CEikListBox *aListBox, TListBoxEven
                         }
 
                         // Day
+                        value = 1;
                         dialog = CAknNumberQueryDialog::NewL(value);
 
                         if(dialog->ExecuteLD(R_APPLICATION_CUTCROSS_QUERY_CONDITION_DAY))
@@ -198,7 +200,7 @@ void CAddConditionsView::HandleListBoxEventL(CEikListBox *aListBox, TListBoxEven
                         TUint8 used = 0;
 
                         // Hour
-                        TInt value;
+                        TInt value = 0;
                         CAknNumberQueryDialog *dialog = CAknNumberQueryDialog::NewL(value);
     
                         if(dialog->ExecuteLD(R_APPLICATION_CUTCROSS_QUERY_CONDITION_HOUR))
@@ -208,6 +210,7 @@ void CAddConditionsView::HandleListBoxEventL(CEikListBox *aListBox, TListBoxEven
                         }
     
                         // Minute
+                        value = 0;
                         dialog = CAknNumberQueryDialog::NewL(value);
     
                         if(dialog->ExecuteLD(R_APPLICATION_CUTCROSS_QUERY_CONDITION_MINUTE))
