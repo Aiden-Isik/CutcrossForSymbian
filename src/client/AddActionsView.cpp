@@ -97,7 +97,7 @@ void CAddActionsView::HandleListBoxEventL(CEikListBox *aListBox, TListBoxEvent a
 
                         // Request vibration settings
                         // Duration
-                        TInt value;
+                        TInt value = 1000;
                         CAknNumberQueryDialog *dialog = CAknNumberQueryDialog::NewL(value);
 
                         if(dialog->ExecuteLD(R_APPLICATION_CUTCROSS_QUERY_ACTION_VIBRATE_DURATION))
@@ -106,6 +106,7 @@ void CAddActionsView::HandleListBoxEventL(CEikListBox *aListBox, TListBoxEvent a
                         }
 
                         // Intensity
+                        value = 100;
                         dialog = CAknNumberQueryDialog::NewL(value);
 
                         if(dialog->ExecuteLD(R_APPLICATION_CUTCROSS_QUERY_ACTION_VIBRATE_INTENSITY))
