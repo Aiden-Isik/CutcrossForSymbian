@@ -22,19 +22,22 @@ void CConditionActionController::CleanupConditionActions()
     // Also set any remaining fields to their default values.
     if(iConditions.conditions)
     {
-        if(iConditions.conditions->timeCondition)
+        for(TUint16 i = 0; i < iConditions.count; i++)
         {
-            delete iConditions.conditions->timeCondition;
-        }
-
-        if(iConditions.conditions->vibrationAction)
-        {
-            delete iConditions.conditions->vibrationAction;
-        }
-
-        if(iConditions.conditions->bluetoothDeviceCondition)
-        {
-            delete iConditions.conditions->bluetoothDeviceCondition;
+            if(iConditions.conditions[i].timeCondition)
+            {
+                delete iConditions.conditions[i].timeCondition;
+            }
+        
+            if(iConditions.conditions[i].vibrationAction)
+            {
+                delete iConditions.conditions[i].vibrationAction;
+            }
+        
+            if(iConditions.conditions[i].bluetoothDeviceCondition)
+            {
+                delete iConditions.conditions[i].bluetoothDeviceCondition;
+            }
         }
 
         delete[] iConditions.conditions;

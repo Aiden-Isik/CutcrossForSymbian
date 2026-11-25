@@ -25,7 +25,7 @@ void SetupL()
     CConditionActionController *conditionActionController = CConditionActionController::GetInstanceL();
     conditionActionController->InitialiseL();
 
-    // TEST: run the condition-action loop once
+    // Run the condition-action loop
     conditionActionController->RunLoopL();
 
     // Cleanup
