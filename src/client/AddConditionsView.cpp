@@ -227,7 +227,7 @@ void CAddConditionsView::HandleListBoxEventL(CEikListBox *aListBox, TListBoxEven
                         TBuf<12> macAddressString;
 
                         // Prompt the user for a valid hex string until we get it
-                        while(!BufferIsHex(macAddressString))
+                        while(!BufferIsHex(macAddressString) || macAddressString.Length() != 12)
                         {
                             CAknTextQueryDialog *dialog = CAknTextQueryDialog::NewL(macAddressString);
 
