@@ -167,7 +167,7 @@ void CAppUi::HandleCommandL(TInt aCommand)
         {
             // Get MainView to delete the condition, since it owns that ListBox,
             // then reload the main page.
-            iView->HandleCommandL(aCommand);
+            TRAP_IGNORE(iView->HandleCommandL(aCommand));
             SwitchViewL(EPageMainId);
             break;
         }
