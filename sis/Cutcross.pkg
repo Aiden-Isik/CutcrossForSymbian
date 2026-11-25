@@ -31,5 +31,5 @@
 "stub"										 							-"c:\private\27B05414\stub"
 
 ; Server files to install
-"$(EPOCROOT)epoc32\release\$(PLATFORM)\$(TARGET)\CutcrossServer.exe"	-"c:\sys\bin\CutcrossServer.exe"
+"$(EPOCROOT)epoc32\release\$(PLATFORM)\$(TARGET)\CutcrossServer.exe"	-"c:\sys\bin\CutcrossServer.exe", FR, RI
 "$(EPOCROOT)epoc32\data\z\resource\apps\Cutcross_startup.rsc"			-"c:\private\101f875a\import\[27B05415].rsc"
