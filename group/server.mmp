@@ -19,4 +19,10 @@ SYSTEMINCLUDE \epoc32\include \epoc32\include\variant \epoc32\include\ecom \epoc
 SOURCEPATH ..\src\server
 SOURCE BluetoothController.cpp
 
+SOURCEPATH ..\data\server
+START RESOURCE Cutcross_startup.rss
+HEADER
+TARGETPATH resource\apps
+END // RESOURCE Cutcross_startup.rss
+
 CAPABILITY LocalServices NetworkServices ReadUserData AllFiles

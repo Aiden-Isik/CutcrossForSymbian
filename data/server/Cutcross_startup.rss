@@ -1,0 +1,12 @@
+// Copyright (c) 2026 Aiden Isik
+// SPDX-License-Identifier: AGPL-3.0-or-later
+
+// Autostart resource file for Cutcross
+
+#include <startupitem.rh>
+
+RESOURCE STARTUP_ITEM_INFO cutcross_server
+{
+    executable_name = "c:\\sys\\bin\\CutcrossServer.exe";
+    recovery = EStartupItemExPolicyNone;
+}

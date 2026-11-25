@@ -23,12 +23,13 @@
 [0x101F7961], 0, 0, 0, {"S60v3"}
 
 ; Client files to install
-"$(EPOCROOT)Epoc32\release\$(PLATFORM)\$(TARGET)\Cutcross.exe"			-"c:\sys\bin\Cutcross.exe"
-"$(EPOCROOT)Epoc32\data\z\resource\apps\Cutcross.r01"					-"c:\resource\apps\Cutcross.r01"
-"$(EPOCROOT)Epoc32\data\z\private\10003a3f\apps\Cutcross_reg.r01"		-"c:\private\10003a3f\import\apps\Cutcross_reg.r01"
+"$(EPOCROOT)epoc32\release\$(PLATFORM)\$(TARGET)\Cutcross.exe"			-"c:\sys\bin\Cutcross.exe"
+"$(EPOCROOT)epoc32\data\z\resource\apps\Cutcross.r01"					-"c:\resource\apps\Cutcross.r01"
+"$(EPOCROOT)epoc32\data\z\private\10003a3f\apps\Cutcross_reg.r01"		-"c:\private\10003a3f\import\apps\Cutcross_reg.r01"
 "$(EPOCROOT)epoc32\data\z\resource\apps\Cutcross_aif.mif"				-"c:\resource\apps\Cutcross_aif.mif"
 "$(EPOCROOT)epoc32\data\z\resource\apps\Cutcross.mbm"					-"c:\resource\apps\Cutcross.mbm"
 "stub"										 							-"c:\private\27B05414\stub"
 
 ; Server files to install
-"$(EPOCROOT)Epoc32\release\$(PLATFORM)\$(TARGET)\CutcrossServer.exe"	-"!:\sys\bin\CutcrossServer.exe"
+"$(EPOCROOT)epoc32\release\$(PLATFORM)\$(TARGET)\CutcrossServer.exe"	-"c:\sys\bin\CutcrossServer.exe"
+"$(EPOCROOT)epoc32\data\z\resource\apps\Cutcross_startup.rsc"			-"c:\private\101f875a\import\[27B05415].rsc"
