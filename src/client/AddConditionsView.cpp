@@ -2,15 +2,20 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 #include <e32std.h>
+#include <e32def.h>
 #include <e32base.h>
 #include <w32std.h>
 #include <aknlists.h>
 #include <aknquerydialog.h>
+#include <aknnotewrappers.h>
 #include <coedef.h>
 #include <coecntrl.h>
 #include <badesca.h>
 #include <eikscrlb.h>
 #include <eikenv.h>
+#include <http.h>
+#include <uri8.h>
+#include <utf.h>
 
 #include <avkon.hrh>
 
@@ -19,6 +24,7 @@
 #include "AppUi.h"
 #include "Bit.h"
 #include "SaveConditionAction.h"
+#include "HttpHandler.h"
 
 #include "Cutcross.rsg"
 
@@ -237,7 +243,60 @@ void CAddConditionsView::HandleListBoxEventL(CEikListBox *aListBox, TListBoxEven
                         CSaveConditionAction *saveConditionAction = CSaveConditionAction::GetInstanceL();
                         saveConditionAction->AddUnsavedConditionBluetoothDeviceL(HexToU64L(macAddressString));
 
-                        // TODO: Show popup with manufacturer to user via API
+                        // Convert to 8-bit for manufacturer lookup
+                        TBuf8<12> macAddressStringUtf8;
+                        CnvUtfConverter::ConvertFromUnicodeToUtf8(macAddressStringUtf8, macAddressString);
+
+                        // Construct the bluetooth manufacturer lookup API URI
+                        TBuf8<sizeof("http://api.maclookup.app/v2/macs/000000/company/name")> bluetoothApiUri;
+                        bluetoothApiUri.Append(_L8("http://api.maclookup.app/v2/macs/"));
+                        bluetoothApiUri.Append(macAddressStringUtf8.Mid(0, 6));
+                        bluetoothApiUri.Append(_L8("/company/name"));
+
+                        // Open an HTTP session with the HTTP server
+                        RHTTPSession httpSession;
+                        httpSession.OpenL();
+                        CleanupClosePushL(httpSession);
+
+                        // Set up HTTP handler
+                        CHttpHandler *httpHandler = new(ELeave) CHttpHandler;
+                        CleanupStack::PushL(httpHandler);
+                        httpHandler->iHttpResponseBody.CreateL(0); // Initialise HTTP response body
+
+                        // Make the API call to get the bluetooth manufacturer
+                        TUriParser8 bluetoothApiUriParser;
+                        User::LeaveIfError(bluetoothApiUriParser.Parse(bluetoothApiUri));
+                        RHTTPTransaction httpTransaction = httpSession.OpenTransactionL(bluetoothApiUriParser, *httpHandler);
+                        httpTransaction.SubmitL(); // Send the request
+                        CActiveScheduler::Start();
+
+                        // If we failed to query the API, just fail silently.
+                        // It's not critical to the MAC condition and is purely informational.
+                        if(httpHandler->iHttpStatusCode == 200)
+                        {
+                            // Convert response to UTF-16 for display
+                            const TDesC8 &responseBody = httpHandler->iHttpResponseBody;
+                            HBufC *bluetoothManufacturer = CnvUtfConverter::ConvertToUnicodeFromUtf8L(responseBody);
+                            CleanupStack::PushL(bluetoothManufacturer);
+                            bluetoothManufacturer->Des().TrimAll();
+
+                            // Construct the string informing the user of the manufacturer
+                            TPtrC manufacturerInfoPrefix = _L("Device manufacturer: ");
+                            HBufC *manufacturerInfo = HBufC::NewL(manufacturerInfoPrefix.Length() + bluetoothManufacturer->Length());
+                            CleanupStack::PushL(manufacturerInfo);
+                            manufacturerInfo->Des().Append(manufacturerInfoPrefix);
+                            manufacturerInfo->Des().Append(*bluetoothManufacturer);
+
+                            // Show the popup
+                            CAknInformationNote *manufacturerPopup = new(ELeave) CAknInformationNote(ETrue);
+                            manufacturerPopup->ExecuteLD(*manufacturerInfo);
+
+                            // Cleanup
+                            CleanupStack::PopAndDestroy(2); // bluetoothManufacturer
+                        }
+
+                        // Cleanup
+                        CleanupStack::PopAndDestroy(2); // httpHandler, httpSession
                     }
                 }
             }

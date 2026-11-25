@@ -11,6 +11,7 @@
 #include <coecntrl.h>
 #include <eiklbo.h>
 #include <eiklbx.h>
+#include <http.h>
 
 #include "View.h"
 #include "ConditionActionData.h"
