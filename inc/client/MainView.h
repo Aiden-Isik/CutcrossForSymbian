@@ -26,6 +26,7 @@ class CMainView: public CView, public MEikListBoxObserver
 
         // Component control handling
         CCoeControl *ComponentControl(TInt aIndex) const;
+        void ShowConditionInformationL(TInt aIndex);
         void HandleListBoxEventL(CEikListBox *aListBox, TListBoxEvent aEvent);
 
         // Handle key presses

@@ -8,6 +8,7 @@
 #include <aknlists.h>
 #include <coedef.h>
 #include <coecntrl.h>
+#include <aknmessagequerydialog.h> 
 
 #include <avkon.hrh>
 
@@ -15,6 +16,8 @@
 #include "MainView.h"
 #include "AppUi.h"
 #include "SaveConditionAction.h"
+#include "Bit.h"
+#include "ConditionActionData.h"
 
 // Draw the contents of this view
 void CMainView::Draw(const TRect &aRect) const
@@ -84,6 +87,117 @@ CCoeControl *CMainView::ComponentControl(TInt aIndex) const
     }
 }
 
+// Show condition-action information in a dialog
+void CMainView::ShowConditionInformationL(TInt aIndex)
+{
+    CSaveConditionAction *saveConditionAction = CSaveConditionAction::GetInstanceL();
+    struct Conditions *conditions = saveConditionAction->GetConditions();
+
+    // Make sure conditions struct exists
+    if(!conditions || !conditions->conditions)
+    {
+        User::Leave(KErrNotFound);
+    }
+
+    // Make sure index is within range
+    if(aIndex >= conditions->count)
+    {
+        User::Leave(KErrArgument);
+    }
+
+    // Set header information
+    _LIT(textBoxHeader, "Condition Information");
+    TPtrC headerPointer(textBoxHeader);
+
+    // Set body information
+    // Conditions
+    HBufC *conditionInformation = HBufC::NewL(sizeof("Conditions:\n"));
+    CleanupStack::PushL(conditionInformation);
+    conditionInformation->Des().Append(_L("Conditions:\n"));
+
+    // Date/time condition
+    if(conditions->conditions[aIndex].timeCondition)
+    {
+        TUint8 used = conditions->conditions[aIndex].timeCondition->used;
+        TDateTime *dateTime = &(conditions->conditions[aIndex].timeCondition->time);
+
+        if(BITFIELD_BIT(used, KTIME_USED_YEAR_BIT))
+        {
+            conditionInformation = conditionInformation->ReAllocL(conditionInformation->Length() + sizeof("Year: 65535\n")); // 65535 max
+            CleanupStack::Pop(); // old conditionInformation
+            CleanupStack::PushL(conditionInformation);
+            conditionInformation->Des().AppendFormat(_L("Year: %d\n"), dateTime->Year());
+        }
+
+        if(BITFIELD_BIT(used, KTIME_USED_MONTH_BIT))
+        {
+            conditionInformation = conditionInformation->ReAllocL(conditionInformation->Length() + sizeof("Month: 12\n")); // 12 max
+            CleanupStack::Pop(); // old conditionInformation
+            CleanupStack::PushL(conditionInformation);
+            conditionInformation->Des().AppendFormat(_L("Month: %d\n"), (TUint8)dateTime->Month() + 1); // 0-encoded
+        }
+
+        if(BITFIELD_BIT(used, KTIME_USED_DAY_BIT))
+        {
+            conditionInformation = conditionInformation->ReAllocL(conditionInformation->Length() + sizeof("Day: 31\n")); // 31 max
+            CleanupStack::Pop(); // old conditionInformation
+            CleanupStack::PushL(conditionInformation);
+            conditionInformation->Des().AppendFormat(_L("Day: %d\n"), dateTime->Day() + 1); // 0-encoded
+        }
+
+        if(BITFIELD_BIT(used, KTIME_USED_HOUR_BIT))
+        {
+            conditionInformation = conditionInformation->ReAllocL(conditionInformation->Length() + sizeof("Hour: 23\n")); // 23 max
+            CleanupStack::Pop(); // old conditionInformation
+            CleanupStack::PushL(conditionInformation);
+            conditionInformation->Des().AppendFormat(_L("Hour: %d\n"), dateTime->Hour());
+        }
+
+        if(BITFIELD_BIT(used, KTIME_USED_MINUTE_BIT))
+        {
+            conditionInformation = conditionInformation->ReAllocL(conditionInformation->Length() + sizeof("Minute: 59\n")); // 31 max
+            CleanupStack::Pop(); // old conditionInformation
+            CleanupStack::PushL(conditionInformation);
+            conditionInformation->Des().AppendFormat(_L("Minute: %d\n"), dateTime->Minute());
+        }
+    }
+
+    // Bluetooth device condition
+    if(conditions->conditions[aIndex].bluetoothDeviceCondition)
+    {
+        conditionInformation = conditionInformation->ReAllocL(conditionInformation->Length() + sizeof("Bluetooth MAC: 000000000000\n"));
+        CleanupStack::Pop(); // old conditionInformation
+        CleanupStack::PushL(conditionInformation);
+        conditionInformation->Des().AppendFormat(_L("Bluetooth MAC: %.12LX\n"), conditions->conditions[aIndex].bluetoothDeviceCondition->macAddress);
+    }
+
+    // Actions
+    conditionInformation = conditionInformation->ReAllocL(conditionInformation->Length() + sizeof("\nActions:\n"));
+    CleanupStack::Pop(); // old conditionInformation
+    CleanupStack::PushL(conditionInformation);
+    conditionInformation->Des().Append(_L("\nActions:\n"));
+
+    // Vibration action
+    if(conditions->conditions[aIndex].vibrationAction)
+    {
+        struct VibrationAction *vibration = conditions->conditions[aIndex].vibrationAction;
+        conditionInformation = conditionInformation->ReAllocL(conditionInformation->Length() + sizeof("Vibration: 100% for 65535ms\n"));
+        CleanupStack::Pop(); // old conditionInformation
+        CleanupStack::PushL(conditionInformation);
+        conditionInformation->Des().AppendFormat(_L("Vibration: %d%% for %dms\n"), vibration->intensity, vibration->duration);
+    }
+
+    // Display the dialog with all the information we have retrieved
+    CAknMessageQueryDialog *dialog = CAknMessageQueryDialog::NewL(*conditionInformation);
+    dialog->PrepareLC(R_AVKON_MESSAGE_QUERY_DIALOG);
+    dialog->ButtonGroupContainer().MakeCommandVisible(EAknSoftkeyCancel, EFalse);
+    dialog->QueryHeading()->SetTextL(headerPointer);
+    dialog->RunLD();
+
+    // Cleanup
+    CleanupStack::PopAndDestroy(); // conditionInformation
+}
+
 // Handle list box item selections
 void CMainView::HandleListBoxEventL(CEikListBox *aListBox, TListBoxEvent aEvent)
 {
@@ -92,13 +206,10 @@ void CMainView::HandleListBoxEventL(CEikListBox *aListBox, TListBoxEvent aEvent)
         case EEventEnterKeyPressed:
         case EEventItemDoubleClicked:
         {
-            // Send the appropriate command back up the chain to CAppUi
             if(iListBox)
             {
-                switch(iListBox->CurrentItemIndex())
-                {
-                    
-                }
+                // Show information on the currently selected condition-action set
+                ShowConditionInformationL(iListBox->CurrentItemIndex());
             }
         }
     }

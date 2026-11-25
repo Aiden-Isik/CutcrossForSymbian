@@ -292,7 +292,7 @@ void CAddConditionsView::HandleListBoxEventL(CEikListBox *aListBox, TListBoxEven
                             manufacturerPopup->ExecuteLD(*manufacturerInfo);
 
                             // Cleanup
-                            CleanupStack::PopAndDestroy(2); // bluetoothManufacturer
+                            CleanupStack::PopAndDestroy(2); // manufacturerInfo, bluetoothManufacturer
                         }
 
                         // Cleanup
